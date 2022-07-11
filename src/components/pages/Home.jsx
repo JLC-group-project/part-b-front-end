@@ -1,8 +1,15 @@
 import React from "react";
 
-function Home() {
+function Home({image, openingHours}) {
   return (
-    <h1 className="text-3xl font-bold underline">Welcome to Home!</h1>
+    <div>
+      <ul>
+        <li>
+          <img src="https://picsum.photos/200/300" alt="home page image" />
+        </li>
+        <li> {openingHours} </li>
+      </ul>
+    </div>
   );
 }
 
