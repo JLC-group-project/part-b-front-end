@@ -1,8 +1,8 @@
 import React from "react";
 
-function Home({image, openingHours}) {
+function Home({openingHours}) {
   return (
-    <div>
+    <div className="flex font-sans">
       <ul>
         <li>
           <img src="https://picsum.photos/200/300" alt="home page image" />
