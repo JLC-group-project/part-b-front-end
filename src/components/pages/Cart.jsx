@@ -6,15 +6,19 @@ function Cart({ cartItems, onAdd, onRemove }) {
   const totalPrice = itemsPrice + taxPrice;
 
   return (
-    <div className="max-w-sm">
-      <div className="mb-4 flex items-center justify-between">
+    <div>
+      {/* container */}
+      <div className="mb-4 flex items-center justify-between bg-orange-200">
         <h2 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
           Cart Items
         </h2>
         {cartItems.length === 0 && <div>Cart is empty</div>}
         {cartItems.map((item) => (
+          // one item
           <div key={item.id}>
-            <div>{item.name}</div>
+            <div className="truncate text-sm font-medium text-gray-900 dark:text-white">
+              {item.name}
+            </div>
             <div>
               <button
                 onClick={() => onRemove(item)}
@@ -30,7 +34,7 @@ function Cart({ cartItems, onAdd, onRemove }) {
               </button>
             </div>
 
-            <div>
+            <div className="truncate text-sm font-medium text-gray-900 dark:text-white">
               {item.qty} x ${item.price.toFixed(2)}
             </div>
           </div>
@@ -40,25 +44,40 @@ function Cart({ cartItems, onAdd, onRemove }) {
           <>
             <hr></hr>
             <div>
-              <div>Items Price</div>
-              <div className="ml-4">${itemsPrice.toFixed(2)}</div>
+              <div className="truncate text-sm font-medium text-gray-900 dark:text-white">
+                Items Price
+              </div>
+              <div className="truncate text-sm font-medium text-gray-900 dark:text-white">
+                ${itemsPrice.toFixed(2)}
+              </div>
             </div>
             <div>
-              <div>GST</div>
-              <div>${taxPrice.toFixed(2)}</div>
+              <div className="truncate text-sm font-medium text-gray-900 dark:text-white">
+                GST
+              </div>
+              <div className="truncate text-sm font-medium text-gray-900 dark:text-white">
+                ${taxPrice.toFixed(2)}
+              </div>
             </div>
 
             <div>
               <div>
-                <strong>Total Price</strong>
+                <strong className="truncate text-sm font-medium text-gray-900 dark:text-white">
+                  Total Price
+                </strong>
               </div>
               <div>
-                <strong>${totalPrice.toFixed(2)}</strong>
+                <strong className="truncate text-sm font-medium text-gray-900 dark:text-white">
+                  ${totalPrice.toFixed(2)}
+                </strong>
               </div>
             </div>
             <hr />
             <div>
-              <button onClick={() => alert("Implement Checkout!")}>
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={() => alert("Implement Checkout!")}
+              >
                 Checkout
               </button>
             </div>

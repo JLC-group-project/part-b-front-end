@@ -7,7 +7,7 @@ function Home({openingHours}) {
         <li>
           <img src="https://picsum.photos/200/300" alt="home page image" />
         </li>
-        <li> {openingHours} </li>
+        <li> Opening hours: {openingHours} </li>
       </ul>
     </div>
   );

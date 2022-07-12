@@ -6,7 +6,7 @@ import Menu from "./pages/Menu";
 import AdminHomePage from "./pages/AdminHomePage";
 import Cart from "./pages/Cart";
 import data from "./data";
-import Main from "./main";
+import Main from "./pages/Main";
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -43,14 +43,23 @@ function App() {
   return (
     <BrowserRouter>
       <Nav countCartItems={cartItems.length} />
-      <Main products={products} onAdd={onAdd} />
+
       {/* <Cart cartItems={cartItems} onAdd={onAdd} onRemove={onRemove} /> */}
 
       <Routes>
         <Route path="/" element={<Home openingHours="0900-1700" />} />
         <Route path="/menu" element={<Menu />} />
+        <Route
+          path="/Main"
+          element={<Main products={products} onAdd={onAdd} />}
+        />
         <Route path="/admin" element={<AdminHomePage />} />
-        <Route path="/cart" element={<Cart cartItems={ cartItems} onAdd={onAdd} onRemove={onRemove} />} />
+        <Route
+          path="/cart"
+          element={
+            <Cart cartItems={cartItems} onAdd={onAdd} onRemove={onRemove} />
+          }
+        />
         <Route path="*" element={<h4>Page not Found!</h4>} />
       </Routes>
     </BrowserRouter>
