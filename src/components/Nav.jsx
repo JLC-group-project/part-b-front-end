@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
 
 function Nav() {
   return (
@@ -35,7 +35,7 @@ function Nav() {
       <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
         <div className="text-sm lg:flex-grow">
           <Link
-            to="menu"
+            to="/menu/Drinks"
             className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
           >
             Menu
@@ -54,4 +54,4 @@ function Nav() {
   );
 }
 
-export default Nav
+export default Nav;
