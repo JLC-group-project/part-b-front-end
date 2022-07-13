@@ -7,6 +7,15 @@ import AdminHomePage from "./pages/AdminHomePage";
 import Cart from "./pages/Cart";
 import data from "./data";
 import Main from "./pages/Main";
+import {
+  useStripe,
+  useElements,
+  PaymentElement,
+} from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import CheckoutForm from "./pages/CheckoutForm";
+
+const stripePromise = loadStripe("pk_test_L1f0e3XAzjsG7jtp4uN7L9ql");
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -43,12 +52,14 @@ function App() {
   return (
     <BrowserRouter>
       <Nav countCartItems={cartItems.length} />
+      {/* <CheckoutForm /> */}
 
       {/* <Cart cartItems={cartItems} onAdd={onAdd} onRemove={onRemove} /> */}
 
       <Routes>
         <Route path="/" element={<Home openingHours="0900-1700" />} />
         <Route path="/menu" element={<Menu />} />
+        <Route path="Checkout" element={<CheckoutForm />} />
         <Route
           path="/Main"
           element={<Main products={products} onAdd={onAdd} />}
@@ -57,7 +68,12 @@ function App() {
         <Route
           path="/cart"
           element={
-            <Cart cartItems={cartItems} onAdd={onAdd} onRemove={onRemove} />
+            <Cart
+              cartItems={cartItems}
+              onAdd={onAdd}
+              onRemove={onRemove}
+              setCartItems={setCartItems}
+            />
           }
         />
         <Route path="*" element={<h4>Page not Found!</h4>} />

@@ -1,9 +1,33 @@
 import React from "react";
+import Product from "../Product";
 
-function Cart({ cartItems, onAdd, onRemove }) {
+function Cart({ cartItems, onAdd, onRemove, setCartItems }) {
   const itemsPrice = cartItems.reduce((a, c) => a + c.qty * c.price, 0);
   const taxPrice = itemsPrice * 0.14;
   const totalPrice = itemsPrice + taxPrice;
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(cartItems);
+  };
+
+  // const onRemove = (product) => {
+  //   const exist = cartItems.find((x) => x.id === product.id);
+  //   if (exist.qty === 1) {
+  //     setCartItems(cartItems.filter((x) => x.id !== product.id));
+  //   } else {
+  //     setCartItems(
+  //       cartItems.map((x) =>
+  //         x.id === product.id ? { ...exist, qty: exist.qty - 1 } : x
+  //       )
+  //     );
+  //   }
+  // };
+
+  const handleReset = (event) => {
+    event.preventDefault();
+    setCartItems([]);
+  };
 
   return (
     <div>
@@ -76,9 +100,15 @@ function Cart({ cartItems, onAdd, onRemove }) {
             <div>
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={() => alert("Implement Checkout!")}
+                onClick={handleSubmit}
               >
                 Checkout
+              </button>
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={handleReset}
+              >
+                Reset
               </button>
             </div>
           </>
