@@ -5,24 +5,38 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems }) {
   const itemsPrice = cartItems.reduce((a, c) => a + c.qty * c.price, 0);
   const taxPrice = itemsPrice * 0.14;
   const totalPrice = itemsPrice + taxPrice;
+  const api =
+    import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000";
 
-  const handleSubmit = (event) => {
+  async function addOrder(cartItems, totalPrice) {
+    const newCheckout = { cartItems, totalPrice };
+    const res = await fetch(`${api}/orders`, {
+      method: "post",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newCheckout),
+    });
+    const returnedEntry = await res.json();
+    dispatch({
+      type: "newCheckout",
+      data: returnedCheckout,
+    });
+    return newCheckout;
+  }
+
+  async function submit(e) {
+    e.preventDefault();
+    const id = await addEntry(cartItems, totalPrice);
+    nav(`/entry/${id}`);
+  }
+
+  const handleCheckout = (event) => {
+    const checkout = { cartItems, totalPrice };
     event.preventDefault();
-    console.log(cartItems);
+    console.log(checkout);
   };
-
-  // const onRemove = (product) => {
-  //   const exist = cartItems.find((x) => x.id === product.id);
-  //   if (exist.qty === 1) {
-  //     setCartItems(cartItems.filter((x) => x.id !== product.id));
-  //   } else {
-  //     setCartItems(
-  //       cartItems.map((x) =>
-  //         x.id === product.id ? { ...exist, qty: exist.qty - 1 } : x
-  //       )
-  //     );
-  //   }
-  // };
 
   const handleReset = (event) => {
     event.preventDefault();
@@ -100,7 +114,7 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems }) {
             <div>
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={handleSubmit}
+                onClick={handleCheckout}
               >
                 Checkout
               </button>
