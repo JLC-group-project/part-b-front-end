@@ -1,10 +1,25 @@
 import React from "react";
-import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import BakeryContext from "./BakeryContext";
+import Show from "./Show";
+import { useState, useEffect } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 function Menu({ items }) {
-  const { category } = useParams();
+  const { cate } = useParams();
   const [categories, setCategories] = useState(["Drinks", "Bakery"]);
+  const [item, setItem] = useState();
+  const navigate = useNavigate();
+  const bakeryContext = BakeryContext;
+
+  function handleItem(value) {
+    setItem(value); // change the setIte state, give ite a object as value
+    <bakeryContext.Provider value={item}>
+      <Show />
+    </bakeryContext.Provider>;
+    // push the item into the session storage
+    navigate("/show");
+  }
+  console.log(item);
 
   return (
     <>
@@ -21,11 +36,11 @@ function Menu({ items }) {
         </ul>
       </div>
       <div>
-        <h2>{category}</h2>
+        <h2>{cate}</h2>
 
         {items.map(
           (item) =>
-            item.category === category && (
+            item.category === cate && (
               <div className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                 <Link to={`/menu/${item.name}`}>
                   <img className="rounded-t-lg" src="#" />
@@ -39,6 +54,7 @@ function Menu({ items }) {
                   <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                     {item.price}
                   </p>
+                  {/*Ternary Operators to change the button as bakery do not need customize */}
                   {item.category === "Drinks" ? (
                     <Link
                       to={`/menu/${item.category}/${item.name}`}
@@ -48,12 +64,14 @@ function Menu({ items }) {
                       Customise
                     </Link>
                   ) : (
-                    <Link
-                      to="#"
+                    <button
+                      onClick={() => {
+                        handleItem(item);
+                      }}
                       className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
                       ADD
-                    </Link>
+                    </button>
                   )}
                 </div>
               </div>

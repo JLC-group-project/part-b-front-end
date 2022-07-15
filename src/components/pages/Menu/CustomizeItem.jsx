@@ -1,12 +1,12 @@
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-function CustomizeItem({ items }) {
+function CustomizeItem({ items, customize }) {
   const ices = ["Hot", "None", "Little", "Iced"];
   const milks = ["Lactose free", "Almond milk", "Skim milk", "Regular"];
   const sizes = ["Large", "Medium", "Small"];
   const sugars = [1, 2, 3, 4, 5];
-  const { ite, category } = useParams();
+  const { it, category } = useParams();
   const [item, setItem] = useState();
   const [ice, setIce] = useState("Iced");
   const [sugar, setSugar] = useState(1);
@@ -15,10 +15,11 @@ function CustomizeItem({ items }) {
 
   //Find the right item according to the params
   useEffect(() => {
-    setItem(items.find((obj) => obj.name === ite));
+    setItem(items.find((obj) => obj.name === it));
   }, []);
   //trigger the change of the item customize object according to the customer's choices.
   function handleSizeChange(e) {
+    console.log(e);
     let value;
     setSize(e.target.value);
     setItem({
@@ -50,7 +51,6 @@ function CustomizeItem({ items }) {
       customize: { ...item.customize, milk: e.target.value },
     });
   }
-  console.log(item);
 
   return (
     <>
@@ -64,6 +64,7 @@ function CustomizeItem({ items }) {
         <select
           id="default"
           className="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Choose the size of you drink"
           value={size}
           onChange={(event) => handleSizeChange(event)}
         >
@@ -146,7 +147,6 @@ function CustomizeItem({ items }) {
           })}
         </select>
       </div>
-      <h2>{`${ice},${sugar},${milk},${size}`}</h2>
       <button
         to="#"
         className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
