@@ -13,11 +13,12 @@ function Menu({ items }) {
 
   function handleItem(value) {
     setItem(value); // change the setIte state, give ite a object as value
-    <bakeryContext.Provider value={item}>
+    <bakeryContext.Provider value={value}>
       <Show />
     </bakeryContext.Provider>;
     // push the item into the session storage
-    navigate("/show");
+    // navigate("/show");
+    console.log(item);
   }
   console.log(item);
 

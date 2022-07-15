@@ -19,7 +19,6 @@ function CustomizeItem({ items, customize }) {
   }, []);
   //trigger the change of the item customize object according to the customer's choices.
   function handleSizeChange(e) {
-    console.log(e);
     let value;
     setSize(e.target.value);
     setItem({

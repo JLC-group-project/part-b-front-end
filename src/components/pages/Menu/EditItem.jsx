@@ -4,11 +4,14 @@ import { useState } from "react";
 
 function EditItem() {
   const { it, cate } = useParams();
+  const [item, setItem] = useState({
+    category: "",
+    name: "",
+    price: "",
+  });
   const [picture, setPicture] = useState();
   const [img, setImg] = useState(null);
   const categories = ["Drinks", "Bakery"];
-  const [category, setCategory] = useState();
-  let item = JSON;
 
   function onChangePicture(e) {
     if (e.target.files[0]) {
@@ -44,17 +47,23 @@ function EditItem() {
             type="text"
             placeholder="Latte"
             required
+            onChange={(e) => {
+              setItem({ name: e.target.value });
+            }}
           />
         </div>
         <div className="mb-6">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="productprice"
+            htmlFor="product price"
+            onChange={(e) => {
+              setItem({ price: e.target.value });
+            }}
           >
             Product Price:
           </label>
           <input
-            className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border border-grey-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             placeholder="$5.00"
             required
@@ -63,7 +72,7 @@ function EditItem() {
         <div>
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="prodectprice"
+            htmlFor="productprice"
             required
           >
             Product Category:
@@ -72,8 +81,9 @@ function EditItem() {
             required
             id="default"
             className="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            value={category}
-            onChange={(event) => setCategory(event.target.value)}
+            onChange={(e) => {
+              setItem({ category: e.target.value });
+            }}
           >
             <option>Choose the Category</option>
             {categories.map((each, index) => {
@@ -84,6 +94,28 @@ function EditItem() {
               );
             })}
           </select>
+        </div>
+        <h1>{`${item.name}`}</h1>
+        <h1>{`${item.price}`}</h1>
+        <h1>{`${item.category}`}</h1>
+        <div>
+          <button
+            onClick={() => {
+              handleItem(item);
+            }}
+            className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Save
+          </button>
+        </div>
+        <div>
+          <Link
+            to="/admin/menu/Drinks"
+            className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+            variant="danger"
+          >
+            Cancel
+          </Link>
         </div>
       </div>
     </div>
