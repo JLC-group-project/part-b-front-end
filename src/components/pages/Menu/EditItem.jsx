@@ -3,12 +3,9 @@ import { useParams, Link } from "react-router-dom";
 import { useState } from "react";
 
 function EditItem() {
-  const { it, cate } = useParams();
-  const [item, setItem] = useState({
-    category: "",
-    name: "",
-    price: "",
-  });
+  const { item, cate } = useParams();
+  const [product, setProduct] = useState({});
+  const ite = {};
   const [picture, setPicture] = useState();
   const [img, setImg] = useState(null);
   const categories = ["Drinks", "Bakery"];
@@ -24,9 +21,29 @@ function EditItem() {
       reader.readAsDataURL(e.target.files[0]);
     }
   }
+
+  function handleProductName(e) {
+    setProduct(() => ({
+      ...product,
+      name: e.target.value,
+    }));
+  }
+  function handleProductPrice(e) {
+    setProduct(() => ({
+      ...product,
+      price: e.target.value,
+    }));
+  }
+  function handleProductCategory(e) {
+    setProduct((item) => ({
+      ...product,
+      category: e.target.value,
+    }));
+  }
+
   return (
     <div>
-      <h3>Edit {it}</h3>
+      <h3>Edit {item}</h3>
       <div>
         <h3>Choose a product image:</h3>
         <input type="file" onChange={(e) => onChangePicture(e)} />
@@ -47,18 +64,13 @@ function EditItem() {
             type="text"
             placeholder="Latte"
             required
-            onChange={(e) => {
-              setItem({ name: e.target.value });
-            }}
+            onChange={(event) => handleProductName(event)}
           />
         </div>
         <div className="mb-6">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="product price"
-            onChange={(e) => {
-              setItem({ price: e.target.value });
-            }}
           >
             Product Price:
           </label>
@@ -67,6 +79,7 @@ function EditItem() {
             type="text"
             placeholder="$5.00"
             required
+            onChange={(event) => handleProductPrice(event)}
           />
         </div>
         <div>
@@ -81,9 +94,7 @@ function EditItem() {
             required
             id="default"
             className="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            onChange={(e) => {
-              setItem({ category: e.target.value });
-            }}
+            onChange={(event) => handleProductCategory(event)}
           >
             <option>Choose the Category</option>
             {categories.map((each, index) => {
@@ -95,13 +106,14 @@ function EditItem() {
             })}
           </select>
         </div>
-        <h1>{`${item.name}`}</h1>
-        <h1>{`${item.price}`}</h1>
-        <h1>{`${item.category}`}</h1>
+        <h1>{console.log(product)}</h1>
+        <h1>{`${product.name}`}</h1>
+        <h1>{`${product.price}`}</h1>
+        <h1>{`${product.category}`}</h1>
         <div>
           <button
             onClick={() => {
-              handleItem(item);
+              handleItem(ite);
             }}
             className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >

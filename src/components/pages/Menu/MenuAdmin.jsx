@@ -5,14 +5,15 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 function Menu({ items }) {
   const { cate } = useParams();
   const categories = ["Drinks", "Bakery"];
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   function handleDeleted(item) {
     const index = items.findIndex((object) => {
       return object.name === item.name;
     });
+    // Find the item by index
     items.splice(index, 1);
-    history(`/admin/menu/${cate}`);
+    navigate(`/admin/menu/${cate}`);
   }
 
   return (
