@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import Cloudinary from "../../Cloudinary";
 
 function CreateItem({ addItem }) {
   const [product, setProduct] = useState({});
@@ -51,13 +52,7 @@ function CreateItem({ addItem }) {
   return (
     <div>
       <h3>Create Product</h3>
-      <div>
-        <h3>Choose a product image:</h3>
-        <input type="file" onChange={(e) => onChangePicture(e)} />
-      </div>
-      <div>
-        {{ img } && <img src={img} className="object-cover h-96 w-192" />}
-      </div>
+      <Cloudinary />
       <div className="form">
         <div className="mb-4">
           <label

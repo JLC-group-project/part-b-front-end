@@ -29,6 +29,13 @@ function App() {
     { category: "Bakery", name: "Almond Croissant", price: "$4.50" },
   ]);
 
+  const customize = {
+    ice: "Iced",
+    sugar: "1",
+    milk: "Regular",
+    size: "Medium",
+  };
+
   function addItem(product) {
     setItems([...items, product]);
     return items;
@@ -53,13 +60,6 @@ function App() {
   //   }
   //   // getItems();
   // ), [])
-
-  const customize = {
-    ice: "Iced",
-    sugar: "1",
-    milk: "Regular",
-    size: "Medium",
-  };
 
   // useEffect(async () => {
   //   const res = fetch("http://localhost:4000/menu");
