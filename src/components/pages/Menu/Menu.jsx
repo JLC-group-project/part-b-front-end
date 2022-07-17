@@ -7,20 +7,20 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 function Menu({ items }) {
   const { cate } = useParams();
   const [categories, setCategories] = useState(["Drinks", "Bakery"]);
-  const [item, setItem] = useState();
+  const [product, setProduct] = useState();
   const navigate = useNavigate();
   const bakeryContext = BakeryContext;
 
   function handleItem(value) {
-    setItem(value); // change the setIte state, give ite a object as value
-    <bakeryContext.Provider value={value}>
+    setProduct(value); // change the setIte state, give ite a object as value
+    <bakeryContext.Provider value={product}>
       <Show />
     </bakeryContext.Provider>;
     // push the item into the session storage
     // navigate("/show");
-    console.log(item);
+    console.log(product);
   }
-  console.log(item);
+  console.log(product);
 
   return (
     <>

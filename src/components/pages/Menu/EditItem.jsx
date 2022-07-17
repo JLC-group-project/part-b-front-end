@@ -1,14 +1,14 @@
 import React from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-function EditItem() {
+function EditItem({ editItem }) {
   const { item, cate } = useParams();
   const [product, setProduct] = useState({});
-  const ite = {};
   const [picture, setPicture] = useState();
   const [img, setImg] = useState(null);
   const categories = ["Drinks", "Bakery"];
+  const navigate = useNavigate();
 
   function onChangePicture(e) {
     if (e.target.files[0]) {
@@ -41,6 +41,13 @@ function EditItem() {
     }));
   }
 
+  async function submit(e) {
+    e.preventDefault;
+    await editItem(item, product);
+    console.log("Hello" + product.name);
+    navigate(`/admin/menu/${product.category}`);
+  }
+
   return (
     <div>
       <h3>Edit {item}</h3>
@@ -62,7 +69,7 @@ function EditItem() {
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
-            placeholder="Latte"
+            placeholder={item}
             required
             onChange={(event) => handleProductName(event)}
           />
@@ -112,9 +119,7 @@ function EditItem() {
         <h1>{`${product.category}`}</h1>
         <div>
           <button
-            onClick={() => {
-              handleItem(ite);
-            }}
+            onClick={submit}
             className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Save

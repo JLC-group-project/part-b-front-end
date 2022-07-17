@@ -1,10 +1,10 @@
 import React from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-function CreateItem() {
+function CreateItem({ addItem }) {
   const [product, setProduct] = useState({});
-  const ite = {};
+  const navigate = useNavigate();
   const [picture, setPicture] = useState();
   const [img, setImg] = useState(null);
   const categories = ["Drinks", "Bakery"];
@@ -27,17 +27,25 @@ function CreateItem() {
       name: e.target.value,
     }));
   }
+
   function handleProductPrice(e) {
     setProduct(() => ({
       ...product,
       price: e.target.value,
     }));
   }
+
   function handleProductCategory(e) {
     setProduct((item) => ({
       ...product,
       category: e.target.value,
     }));
+  }
+
+  async function submit(e) {
+    e.preventDefault;
+    await addItem(product);
+    navigate(`/admin/menu/${product.category}`);
   }
 
   return (
@@ -105,15 +113,12 @@ function CreateItem() {
             })}
           </select>
         </div>
-        <h1>{console.log(product)}</h1>
         <h1>{`${product.name}`}</h1>
         <h1>{`${product.price}`}</h1>
         <h1>{`${product.category}`}</h1>
         <div>
           <button
-            onClick={() => {
-              handleItem(ite);
-            }}
+            onClick={submit}
             className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Save
