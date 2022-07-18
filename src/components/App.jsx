@@ -10,7 +10,7 @@ import CreateItem from "./pages/Menu/CreateItem";
 import EditItem from "./pages/Menu/EditItem";
 import Show from "./pages/Menu/Show";
 
-const api = import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000";
+const api = import.meta.env.VITE_API_ENDPOINT || "http://localhost:4040";
 
 function App() {
   //hardcode items object and customize to transfer to the components need them
@@ -28,6 +28,8 @@ function App() {
     { category: "Bakery", name: "Bagel", price: "$4.50" },
     { category: "Bakery", name: "Almond Croissant", price: "$4.50" },
   ]);
+  // const [store, dispatch] = useState();
+  // const { items } = store;
 
   const customize = {
     ice: "Iced",
@@ -35,6 +37,24 @@ function App() {
     milk: "Regular",
     size: "Medium",
   };
+  //fetch all the items and set the state object with the object fetched.
+  //  useEffect(async () => {
+  //     const res = await fetch(`${api}/menu`);
+  //     setItems(await res.json())
+  //   }, []);
+
+  useEffect(() => {
+    async function getItems() {
+      const res = await fetch(`${api}/menu`);
+      // dispatch({
+      //   type: "setItems",
+      //   data: await res.json(),
+      // });
+      setItems(await res.json());
+    }
+    getItems();
+  }, []);
+  console.log(items);
 
   async function addItem(product) {
     // setItems([...items, product]);
@@ -54,6 +74,7 @@ function App() {
     });
     return returnedItem._id;
   }
+
   function editItem(name, product) {
     const indexOfObject = items.findIndex((object) => {
       object.name === name;
@@ -63,19 +84,19 @@ function App() {
     return items;
   }
 
-  useEffect(
-    () =>
-      async function getItems() {
-        const res = await fetch(`${api}/menu`);
-        setItems(await res.json());
-        // dispatch({
-        //   type: "setItems",
-        //   data: await res.json(),
-        // });
-      },
-    // getItems();
-    []
-  );
+  // useEffect(
+  //   () =>
+  //     async function getItems() {
+  //       const res = await fetch(`${api}/menu`);
+  //       setItems(await res.json());
+  //       // dispatch({
+  //       //   type: "setItems",
+  //       //   data: await res.json(),
+  //       // });
+  //     },
+  //   // getItems();
+  //   []
+  // );
 
   // useEffect(async () => {
   //   const res = fetch("http://localhost:4000/menu");
