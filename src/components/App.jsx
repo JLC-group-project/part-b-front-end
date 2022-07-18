@@ -10,7 +10,7 @@ import CreateItem from "./pages/Menu/CreateItem";
 import EditItem from "./pages/Menu/EditItem";
 import Show from "./pages/Menu/Show";
 
-const api = import.meta.env.VITE_API_ENDPOINT || "http:// localhost:4000";
+const api = import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000";
 
 function App() {
   //hardcode items object and customize to transfer to the components need them
@@ -36,30 +36,46 @@ function App() {
     size: "Medium",
   };
 
-  function addItem(product) {
-    setItems([...items, product]);
-    return items;
+  async function addItem(product) {
+    // setItems([...items, product]);
+    // return items;
+    const res = await fetch(`${api}/menu`, {
+      method: "post",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(product),
+    });
+    const returnedItem = await res.json();
+    dispatch({
+      type: "addItem",
+      data: returnedItem,
+    });
+    return returnedItem._id;
   }
   function editItem(name, product) {
     const indexOfObject = items.findIndex((object) => {
       object.name === name;
     });
-    setItems([...items.splice(indexOfObject, 1), product]);
+    setItems([items.splice(indexOfObject, 1)]);
+    setItems([...items, product]);
     return items;
   }
 
-  // useEffect(() => (
-  //   async function getItems() {
-  //     // const res = await fetch(`${api}/menu`);
-  //     const res = fetch("localhost:4000/menu");
-  //     setItems(await res.json());
-  //     // dispatch({
-  //     //   type: "setItems",
-  //     //   data: await res.json(),
-  //     // });
-  //   }
-  //   // getItems();
-  // ), [])
+  useEffect(
+    () =>
+      async function getItems() {
+        const res = await fetch(`${api}/menu`);
+        setItems(await res.json());
+        // dispatch({
+        //   type: "setItems",
+        //   data: await res.json(),
+        // });
+      },
+    // getItems();
+    []
+  );
 
   // useEffect(async () => {
   //   const res = fetch("http://localhost:4000/menu");
