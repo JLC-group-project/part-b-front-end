@@ -14,15 +14,13 @@ import {
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "./pages/CheckoutForm";
-
-const stripePromise = loadStripe("pk_test_L1f0e3XAzjsG7jtp4uN7L9ql");
+import ProductDisplay from "./pages/ProductDisplay";
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
   const { products } = data;
 
   
-
   // this function adds product to cart
   const onAdd = (product) => {
     const exist = cartItems.find((x) => x.id === product.id);
@@ -78,6 +76,7 @@ function App() {
             />
           }
         />
+        <Route path="/ProductDisplay" element={<ProductDisplay cartItems={ cartItems} />}/>
         <Route path="*" element={<h4>Page not Found!</h4>} />
       </Routes>
     </BrowserRouter>
