@@ -8,13 +8,12 @@ import { useState, useEffect } from "react";
 import Menu from "./pages/Menu/Menu";
 import CreateItem from "./pages/Menu/CreateItem";
 import EditItem from "./pages/Menu/EditItem";
-import Show from "./pages/Menu/Show";
 
 const api = import.meta.env.VITE_API_ENDPOINT || "http://localhost:4040";
 
 function App() {
   //hardcode items object and customize to transfer to the components need them
-  const [items, setItems] = useState([
+  const [menuItems, setMenuItems] = useState([
     {
       category: "Drinks",
       name: "Latte",
@@ -28,81 +27,58 @@ function App() {
     { category: "Bakery", name: "Bagel", price: "$4.50" },
     { category: "Bakery", name: "Almond Croissant", price: "$4.50" },
   ]);
-  // const [store, dispatch] = useState();
-  // const { items } = store;
 
-  const customize = {
-    ice: "Iced",
-    sugar: "1",
-    milk: "Regular",
-    size: "Medium",
-  };
-  //fetch all the items and set the state object with the object fetched.
-  //  useEffect(async () => {
-  //     const res = await fetch(`${api}/menu`);
-  //     setItems(await res.json())
-  //   }, []);
+  const [orderItem, setOrderItem] = useState();
+  function itemToApp(item) {
+    setOrderItem(item);
+  }
+  console.log(orderItem);
 
   useEffect(() => {
-    async function getItems() {
+    async function getMenuItems() {
       const res = await fetch(`${api}/menu`);
       // dispatch({
       //   type: "setItems",
       //   data: await res.json(),
       // });
-      setItems(await res.json());
+      setMenuItems(await res.json());
     }
-    getItems();
+    getMenuItems();
   }, []);
-  console.log(items);
 
-  async function addItem(product) {
-    // setItems([...items, product]);
-    // return items;
+  async function addMenuItem(product) {
     const res = await fetch(`${api}/menu`, {
       method: "post",
       headers: {
-        Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(product),
     });
-    const returnedItem = await res.json();
-    dispatch({
-      type: "addItem",
-      data: returnedItem,
-    });
-    return returnedItem._id;
+    const returnItem = await res.json();
+    setMenuItems([returnItem, ...menuItems]);
   }
 
-  function editItem(name, product) {
-    const indexOfObject = items.findIndex((object) => {
-      object.name === name;
+  async function editMenuItem(item, product) {
+    console.log(item);
+    console.log(product);
+    const res = await fetch(`${api}/menu/${item}`, {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(product),
     });
-    setItems([items.splice(indexOfObject, 1)]);
-    setItems([...items, product]);
-    return items;
+    const returnItem = await res.json();
+    setItems([...items, returnItem]);
   }
 
-  // useEffect(
-  //   () =>
-  //     async function getItems() {
-  //       const res = await fetch(`${api}/menu`);
-  //       setItems(await res.json());
-  //       // dispatch({
-  //       //   type: "setItems",
-  //       //   data: await res.json(),
-  //       // });
-  //     },
-  //   // getItems();
-  //   []
-  // );
-
-  // useEffect(async () => {
-  //   const res = fetch("http://localhost:4000/menu");
-  //   setItems(await res.json());
-  //   console.log("HELLO" + res);
-  // });
+  async function deleteMenuItem(item) {
+    const id = item._id;
+    await fetch(`${api}/menu/${id}`, {
+      method: "delete",
+    });
+    location.reload(false);
+  }
 
   return (
     <BrowserRouter>
@@ -110,24 +86,31 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         {/* <Route path="/menu" element={<Menu />} /> */}
-        <Route path="/menu/:cate" element={<Menu items={items} />} />
+        <Route
+          path="/menu/:cate"
+          element={<Menu menuItems={menuItems} itemToApp={itemToApp} />}
+        />
         <Route
           path="/menu/:cate/:item"
-          element={<CustomizeItem items={items} customize={customize} />}
+          element={<CustomizeItem itemToApp={itemToApp} />}
         />
-        <Route path="/admin/menu/:cate" element={<MenuAdmin items={items} />} />
+        <Route
+          path="/admin/menu/:cate"
+          element={
+            <MenuAdmin menuItems={menuItems} deleteItem={deleteMenuItem} />
+          }
+        />
         <Route
           path="/admin/menu/create"
-          element={<CreateItem addItem={addItem} />}
+          element={<CreateItem addMenuItem={addMenuItem} />}
         />
 
         <Route
           path="/admin/menu/:cate/:item/edit"
-          element={<EditItem editItem={editItem} />}
+          element={<EditItem editMenuItem={editMenuItem} />}
         />
 
         <Route path="*" element={<h4>Page not Found!</h4>} />
-        <Route path="/show" element={<Show />} />
       </Routes>
     </BrowserRouter>
   );

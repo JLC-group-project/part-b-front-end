@@ -1,8 +1,9 @@
 import React from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
+import Cloudinary from "../../Cloudinary";
 
-function EditItem({ editItem }) {
+function Menu({ editMenuItem }) {
   const { item, cate } = useParams();
   const [product, setProduct] = useState({});
   const [picture, setPicture] = useState();
@@ -10,17 +11,17 @@ function EditItem({ editItem }) {
   const categories = ["Drinks", "Bakery"];
   const navigate = useNavigate();
 
-  function onChangePicture(e) {
-    if (e.target.files[0]) {
-      console.log("picture: ", e.target.files);
-      setPicture(e.target.files[0]);
-      const reader = new FileReader();
-      reader.addEventListener("load", () => {
-        setImg(reader.result);
-      });
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  }
+  // function onChangePicture(e) {
+  //   if (e.target.files[0]) {
+  //     console.log("picture: ", e.target.files);
+  //     setPicture(e.target.files[0]);
+  //     const reader = new FileReader();
+  //     reader.addEventListener("load", () => {
+  //       setImg(reader.result);
+  //     });
+  //     reader.readAsDataURL(e.target.files[0]);
+  //   }
+  // }
 
   function handleProductName(e) {
     setProduct(() => ({
@@ -41,23 +42,16 @@ function EditItem({ editItem }) {
     }));
   }
 
-  async function submit(e) {
+  async function handleEdit(e, item, product) {
     e.preventDefault;
-    await editItem(item, product);
-    console.log("Hello" + product.name);
+    await editMenuItem(item, product);
     navigate(`/admin/menu/${product.category}`);
   }
 
   return (
     <div>
       <h3>Edit {item}</h3>
-      <div>
-        <h3>Choose a product image:</h3>
-        <input type="file" onChange={(e) => onChangePicture(e)} />
-      </div>
-      <div>
-        {{ img } && <img src={img} className="object-cover h-96 w-192" />}
-      </div>
+      <Cloudinary />
       <div className="form">
         <div className="mb-4">
           <label
@@ -69,7 +63,7 @@ function EditItem({ editItem }) {
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
-            placeholder={item}
+            placeholder="Latte"
             required
             onChange={(event) => handleProductName(event)}
           />
@@ -84,7 +78,7 @@ function EditItem({ editItem }) {
           <input
             className="shadow appearance-none border border-grey-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
-            placeholder="$5.00"
+            placeholder="6.00"
             required
             onChange={(event) => handleProductPrice(event)}
           />
@@ -92,7 +86,7 @@ function EditItem({ editItem }) {
         <div>
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="productprice"
+            htmlFor="product price"
             required
           >
             Product Category:
@@ -119,7 +113,7 @@ function EditItem({ editItem }) {
         <h1>{`${product.category}`}</h1>
         <div>
           <button
-            onClick={submit}
+            onClick={(e) => handleEdit(e, item, product)}
             className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Save
@@ -138,4 +132,4 @@ function EditItem({ editItem }) {
     </div>
   );
 }
-export default EditItem;
+export default Menu;

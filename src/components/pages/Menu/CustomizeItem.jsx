@@ -1,85 +1,53 @@
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-function CustomizeItem({ items }) {
+function CustomizeItem({ itemToApp }) {
   const ices = ["Hot", "None", "Little", "Iced"];
   const milks = ["Lactose free", "Almond milk", "Skim milk", "Regular"];
   const sizes = ["Large", "Medium", "Small"];
   const sugars = [1, 2, 3, 4, 5];
   const { item, category } = useParams();
-  const [customize, setCustomize] = useState({
+  const [customization, setCustomization] = useState({
     size: "Medium",
     sugar: "1",
     milk: "Regular",
     ice: "Iced",
   });
-  // const [ice, setIce] = useState("Iced");
-  // const [sugar, setSugar] = useState(1);
-  // const [milk, setMilk] = useState("Regular");
-  // const [size, setSize] = useState("Medium");
 
-  //Find the right item according to the params
-  // useEffect(() => {
-  //   setItem(items.find((obj) => obj.name === it));
-  // }, []);
-  //trigger the change of the item customize object according to the customer's choices.
-  // function handleSizeChange(e) {
-  //   let value;
-  //   setSize(e.target.value);
-  //   setItem({
-  //     ...item,
-  //     customize: { ...item.customize, size: e.target.value },
-  //   });
-  // }
-  // function handleSugarChange(e) {
-  //   let value;
-  //   setSugar(e.target.value);
-  //   setItem({
-  //     ...item,
-  //     customize: { ...item.customize, sugar: e.target.value },
-  //   });
-  // }
-  // function handleIceChange(e) {
-  //   let value;
-  //   setIce(e.target.value);
-  //   setItem({
-  //     ...item,
-  //     customize: { ...item.customize, ice: e.target.value },
-  //   });
-  // }
-  // function handleMilkChange(e) {
-  //   let value;
-  //   setMilk(e.target.value);
-  //   setItem({
-  //     ...item,
-  //     customize: { ...item.customize, milk: e.target.value },
-  //   });
-  // }
+  function handleAdd(e, item, customization) {
+    e.preventDefault;
+    const newItem = { item, customization };
+    itemToApp(newItem);
+    // navigate(`#`)
+    console.log(newItem);
+  }
+
+  console.log(customization);
 
   function handleCustomizeSugar(e) {
-    setCustomize(() => ({
-      ...customize,
+    setCustomization(() => ({
+      ...customization,
       sugar: e.target.value,
     }));
   }
 
   function handleCustomizeIce(e) {
-    setCustomize(() => ({
-      ...customize,
+    setCustomization(() => ({
+      ...customization,
       ice: e.target.value,
     }));
   }
 
   function handleCustomizeSize(e) {
-    setCustomize(() => ({
-      ...customize,
+    setCustomization(() => ({
+      ...customization,
       size: e.target.value,
     }));
   }
 
   function handleCustomizeMilk(e) {
-    setCustomize(() => ({
-      ...customize,
+    setCustomization(() => ({
+      ...customization,
       milk: e.target.value,
     }));
   }
@@ -97,7 +65,7 @@ function CustomizeItem({ items }) {
           id="default"
           className="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Choose the size of you drink"
-          value={customize.size}
+          value={customization.size}
           onChange={(event) => handleCustomizeSize(event)}
         >
           <option>Choose the size of you drink </option>
@@ -120,7 +88,7 @@ function CustomizeItem({ items }) {
         <select
           id="default"
           className="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          value={customize.sugar}
+          value={customization.sugar}
           onChange={(event) => handleCustomizeSugar(event)}
         >
           <option>Choose the sugar level</option>
@@ -143,7 +111,7 @@ function CustomizeItem({ items }) {
         <select
           id="default"
           className="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          value={customize.milk}
+          value={customization.milk}
           onChange={(event) => handleCustomizeMilk(event)}
         >
           <option>Choose the milk</option>
@@ -166,7 +134,7 @@ function CustomizeItem({ items }) {
         <select
           id="default"
           className="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          value={customize.ice}
+          value={customization.ice}
           onChange={(event) => handleCustomizeIce(event)}
         >
           <option>Choose the Ice level</option>
@@ -179,12 +147,11 @@ function CustomizeItem({ items }) {
           })}
         </select>
       </div>
-      {console.log(customize)}
       <button
-        to="#"
-        className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        onClick={(e) => handleAdd(e, item, customization)}
+        className="inline-flex menuItems-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       >
-        ADD
+        Add To Cart
       </button>
     </>
   );
