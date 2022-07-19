@@ -12,8 +12,8 @@ function App() {
     fetch("http://localhost:4000/orders")
       .then((response) => response.json())
       .then((json) => {
-        // console.log(`order: ${json}`)
-        setOrders(json)        
+        // console.log(`Order: ${json}`)
+        setOrders(json)
         // let incompleteOrders = json.filter((order) => order.complete == true);
         // setOrders(incompleteOrders);
       });
@@ -25,7 +25,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<Menu />} />
-        <Route path="/orders" element={<Orders orders={orders} />} />
+        <Route
+          path="/orders"
+          element={<Orders orders={orders} history={false} />}
+        />
+        <Route
+          path="/orders/history"
+          element={<Orders orders={orders} history={true} />}
+        />
         <Route path="*" element={<h4>Page not Found!</h4>} />
       </Routes>
     </BrowserRouter>

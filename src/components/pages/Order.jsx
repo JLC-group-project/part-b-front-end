@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Order({ price, orders }) {
+function Order({ price, orders}) {
   
   return (
     <>
