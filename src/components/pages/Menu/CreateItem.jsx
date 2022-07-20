@@ -107,10 +107,6 @@ function CreateItem({ addMenuItem }) {
             })}
           </select>
         </div>
-        <h1>{`${product.name}`}</h1>
-        <h1>{`${product.price}`}</h1>
-        <h1>{`${product.category}`}</h1>
-        <h1>{console.log(product)}</h1>
         <div>
           <button
             onClick={(e) => submit(e, product)}

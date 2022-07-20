@@ -41,10 +41,6 @@ function App() {
   useEffect(() => {
     async function getMenuItems() {
       const res = await fetch(`${api}/menu`);
-      // dispatch({
-      //   type: "setItems",
-      //   data: await res.json(),
-      // });
       setMenuItems(await res.json());
     }
     getMenuItems();
@@ -70,8 +66,6 @@ function App() {
       },
       body: JSON.stringify(product),
     });
-    const returnItem = await res.json();
-    setItems([...items, returnItem]);
   }
 
   async function deleteMenuItem(item) {
@@ -87,7 +81,6 @@ function App() {
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* <Route path="/menu" element={<Menu />} /> */}
         <Route path="/about_us" element={<AboutUs />} />
         <Route path="/admin/about_us" element={<AboutUsAdmin />} />
         <Route path="/admin/about_us/edit" element={<AboutUsAdminEdit />} />
@@ -104,7 +97,7 @@ function App() {
         <Route
           path="/admin/menu/:cate"
           element={
-            <MenuAdmin menuItems={menuItems} deleteItem={deleteMenuItem} />
+            <MenuAdmin menuItems={menuItems} deleteMenuItem={deleteMenuItem} />
           }
         />
         <Route

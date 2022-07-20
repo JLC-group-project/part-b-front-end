@@ -46,6 +46,7 @@ function Menu({ editMenuItem }) {
     e.preventDefault;
     await editMenuItem(item, product);
     navigate(`/admin/menu/${product.category}`);
+    location.reload(false);
   }
 
   return (
@@ -63,7 +64,7 @@ function Menu({ editMenuItem }) {
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
-            placeholder="Latte"
+            placeholder={item}
             required
             onChange={(event) => handleProductName(event)}
           />
@@ -78,9 +79,9 @@ function Menu({ editMenuItem }) {
           <input
             className="shadow appearance-none border border-grey-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
-            placeholder="6.00"
+            placeholder="6.50"
             required
-            onChange={(event) => handleProductPrice(event)}
+            onChange={(event) => handleProductPrice(event, item)}
           />
         </div>
         <div>
@@ -95,7 +96,7 @@ function Menu({ editMenuItem }) {
             required
             id="default"
             className="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            onChange={(event) => handleProductCategory(event)}
+            onChange={(event) => handleProductCategory(event, item)}
           >
             <option>Choose the Category</option>
             {categories.map((each, index) => {
