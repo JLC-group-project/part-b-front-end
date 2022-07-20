@@ -14,7 +14,7 @@ import HomeAdminEdit from "./pages/Home/HomeAdminEdit";
 import AboutUsAdmin from "./pages/AboutUs/AboutUsAdmin";
 import AboutUsAdminEdit from "./pages/AboutUs/AboutUsAdminEdit";
 
-const api = import.meta.env.VITE_API_ENDPOINT || "http://localhost:4040";
+const api = import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000/api/v1";
 
 function App() {
   //hardcode items object and customize to transfer to the components need them
