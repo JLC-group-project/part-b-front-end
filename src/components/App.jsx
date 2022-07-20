@@ -9,7 +9,7 @@ function App() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:4000/orders")
+    fetch("http://localhost:4000/api/v1/orders")
       .then((response) => response.json())
       .then((json) => {
         // console.log(`Order: ${json}`)

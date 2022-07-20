@@ -47,7 +47,7 @@ function Orders({ orders, history }) {
   }
 
   function handleClick(id, event, index) {
-    fetch(`http://localhost:4000/orders/${id}`, {
+    fetch(`http://localhost:4000/api/v1/orders/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
