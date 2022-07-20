@@ -33,10 +33,27 @@ function App() {
     { category: "Bakery", name: "Almond Croissant", price: "$4.50" },
   ]);
 
-  const [orderItem, setOrderItem] = useState();
+  const [orderItem, setOrderItem] = useState([]);
+  
   function itemToApp(item) {
-    setOrderItem(item);
+    // setOrderItem(item);
+    
+    let cart = JSON.parse(sessionStorage.getItem("cart"));
+    cart = [...cart, item]
+    sessionStorage.setItem("cart", JSON.stringify(cart))
   }
+
+  // Initialise session storage
+  useEffect(() => {
+    // Access cart from session storage
+    let cart = sessionStorage.getItem("cart");
+    // If cart doesn't exist
+    if (cart === null) {
+      // Initialize cart as an empty array
+      sessionStorage.setItem("cart", JSON.stringify([]));
+    }
+  }, []);
+
 
   useEffect(() => {
     async function getMenuItems() {
@@ -92,7 +109,7 @@ function App() {
         />
         <Route
           path="/menu/:cate/:item"
-          element={<CustomizeItem itemToApp={itemToApp} />}
+          element={<CustomizeItem itemToApp={itemToApp} api={api} />}
         />
         <Route
           path="/admin/menu/:cate"
