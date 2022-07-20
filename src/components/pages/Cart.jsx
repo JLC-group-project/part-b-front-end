@@ -118,7 +118,7 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems }) {
             </div>
 
             <div className="truncate text-sm font-medium text-gray-900 dark:text-white">
-              {item.qty} x ${item.price.toFixed(2)}
+              {item.qty} x ${parseFloat(item.price).toFixed(2)}
             </div>
           </div>
         ))}
