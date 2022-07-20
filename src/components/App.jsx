@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Nav from "./Nav";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 import MenuAdmin from "./pages/Menu/MenuAdmin";
 import CustomizeItem from "./pages/Menu/CustomizeItem";
 import { useState, useEffect } from "react";
@@ -8,6 +8,11 @@ import { useState, useEffect } from "react";
 import Menu from "./pages/Menu/Menu";
 import CreateItem from "./pages/Menu/CreateItem";
 import EditItem from "./pages/Menu/EditItem";
+import AboutUs from "./pages/AboutUs/AboutUs";
+import HomeAdmin from "./pages/Home/HomeAdmin";
+import HomeAdminEdit from "./pages/Home/HomeAdminEdit";
+import AboutUsAdmin from "./pages/AboutUs/AboutUsAdmin";
+import AboutUsAdminEdit from "./pages/AboutUs/AboutUsAdminEdit";
 
 const api = import.meta.env.VITE_API_ENDPOINT || "http://localhost:4040";
 
@@ -32,7 +37,6 @@ function App() {
   function itemToApp(item) {
     setOrderItem(item);
   }
-  console.log(orderItem);
 
   useEffect(() => {
     async function getMenuItems() {
@@ -59,8 +63,6 @@ function App() {
   }
 
   async function editMenuItem(item, product) {
-    console.log(item);
-    console.log(product);
     const res = await fetch(`${api}/menu/${item}`, {
       method: "put",
       headers: {
@@ -86,6 +88,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         {/* <Route path="/menu" element={<Menu />} /> */}
+        <Route path="/about_us" element={<AboutUs />} />
+        <Route path="/admin/about_us" element={<AboutUsAdmin />} />
+        <Route path="/admin/about_us/edit" element={<AboutUsAdminEdit />} />
+        <Route path="/admin/home" element={<HomeAdmin />} />
+        <Route path="/admin/home/edit" element={<HomeAdminEdit />} />
         <Route
           path="/menu/:cate"
           element={<Menu menuItems={menuItems} itemToApp={itemToApp} />}

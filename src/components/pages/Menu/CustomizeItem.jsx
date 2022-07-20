@@ -19,10 +19,7 @@ function CustomizeItem({ itemToApp }) {
     const newItem = { item, customization };
     itemToApp(newItem);
     // navigate(`#`)
-    console.log(newItem);
   }
-
-  console.log(customization);
 
   function handleCustomizeSugar(e) {
     setCustomization(() => ({

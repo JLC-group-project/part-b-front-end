@@ -107,10 +107,6 @@ function Menu({ editMenuItem }) {
             })}
           </select>
         </div>
-        <h1>{console.log(product)}</h1>
-        <h1>{`${product.name}`}</h1>
-        <h1>{`${product.price}`}</h1>
-        <h1>{`${product.category}`}</h1>
         <div>
           <button
             onClick={(e) => handleEdit(e, item, product)}
