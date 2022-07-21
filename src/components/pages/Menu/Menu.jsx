@@ -10,7 +10,7 @@ function Menu({ menuItems, itemToApp, onAdd }) {
 
   function handleAdd(e, item) {
     e.preventDefault;
-    const newItem = { item, customization: null };
+    const newItem = { item, customisation: null };
     itemToApp(newItem);
     // navigate(`#`)
   }
@@ -48,7 +48,7 @@ function Menu({ menuItems, itemToApp, onAdd }) {
                   {/*Ternary Operators to change the button as bakery do not need customize */}
                   {item.category === "Drinks" ? (
                     <Link
-                      to={`/menu/${item.category}/${item.name}`}
+                      to={`/menu/${item.name}/${item.price}/${item._id}`}
                       className="inline-flex menuItems-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                       item={item}
                     >
@@ -56,8 +56,9 @@ function Menu({ menuItems, itemToApp, onAdd }) {
                     </Link>
                   ) : (
                     <button
-                      // onClick={(e) => handleAdd(e, item)}
-                        onClick={() => onAdd(item)}
+                      onClick={(e) => handleAdd(e, item)}
+                      // onClick={() => onAdd(item)}
+                      // onClick={console.log(item)}
                       className="inline-flex menuItems-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
                       Add To Cart

@@ -27,9 +27,8 @@ function App() {
   const { products } = data;
   const [orderItem, setOrderItem] = useState();
   
-  console.log(orderItem);
   function itemToApp(item) {
-    setOrderItem(item);
+    onAdd(item);
   }
 
   //hardcode items object and customize to transfer to the components need them
@@ -89,27 +88,28 @@ function App() {
   
   // this function adds product to cart
   const onAdd = (product) => {
-    const exist = cartItems.find((x) => x._id === product._id);
+    const exist = cartItems.find((x) => x.item._id === product.item._id);
     if (exist) {
       setCartItems(
         cartItems.map((x) =>
-          x._id === product._id ? { ...exist, qty: exist.qty + 1 } : x
+          x.item._id === product.item._id ? { ...exist, qty: exist.qty + 1 } : x
         )
       );
     } else {
-      setCartItems([...cartItems, { ...product, qty: 1 }]);
+      setCartItems([...cartItems, { item:product.item,customisation:product.customisation, qty: 1 }]);
     }
   };
 
+    
   // this function removes items from the cart
   const onRemove = (product) => {
-    const exist = cartItems.find((x) => x._id === product._id);
+    const exist = cartItems.find((x) => x.item._id === product.item._id);
     if (exist.qty === 1) {
-      setCartItems(cartItems.filter((x) => x._id !== product._id));
+      setCartItems(cartItems.filter((x) => x.item._id !== product._id));
     } else {
       setCartItems(
         cartItems.map((x) =>
-          x._id === product._id ? { ...exist, qty: exist.qty - 1 } : x
+          x.item._id === product.item._id ? { ...exist, qty: exist.qty - 1 } : x
         )
       );
     }
@@ -157,7 +157,7 @@ function App() {
           }
         />
         <Route
-          path="/menu/:cate/:item"
+          path="/menu/:item/:id/:price"
           element={<CustomizeItem itemToApp={itemToApp} onAdd={onAdd} />}
         />
         <Route

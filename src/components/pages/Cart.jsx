@@ -1,9 +1,10 @@
 import React from "react";
 import Product from "../Product";
 import { Routes, Route, useNavigate } from "react-router-dom";
+import { response } from "express";
 
 function Cart({ cartItems, onAdd, onRemove, setCartItems }) {
-  const itemsPrice = cartItems.reduce((a, c) => a + c.qty * c.price, 0);
+  const itemsPrice = cartItems.reduce((a, c) => a + c.qty * c.item.price, 0);
   const taxPrice = itemsPrice * 0.14;
   const totalPrice = itemsPrice + taxPrice;
   const api = import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000";
@@ -20,11 +21,12 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems }) {
       let orderBody = {
         item: item.id,
         quantity: item.qty,
+        total_cost: totalPrice,
       };
     }
   }
-  async function addOrder() {
-    const currentOrders = retrieveOrders();
+  async function postOrder() {
+    // const currentOrders = retrieveOrders();
     // const newCheckout = { cartItems, totalPrice };
     const res = await fetch(`${api}/orders`, {
       method: "post",
@@ -34,10 +36,15 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems }) {
       },
       // put orders in body
       body: JSON.stringify({
-        orders: currentOrders,
+        orders: cartItems,
         complete: false,
-        price: 30,
-      }),
+        total_price: totalPrice,
+      })
+        .then((resp) => resp.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => console.log(err))
     });
     // const returnedEntry = await res.json();
     // dispatch({
@@ -46,6 +53,7 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems }) {
     // });
     // return newCheckout;
   }
+
 
   async function submit(e) {
     e.preventDefault();
@@ -77,11 +85,11 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems }) {
     }, {});
   }
 
-  // const handleCheckout = (event) => {
-  //   event.preventDefault();
-  //   // const cart = sanitizedLineItems(cartItems);
-  //   console.log(cartItems);
-  // };
+  const handleCheckout = (event) => {
+    event.preventDefault();
+    // const cart = sanitizedLineItems(cartItems);
+    console.log(cartItems);
+  };
 
   const handleReset = (event) => {
     event.preventDefault();
@@ -96,21 +104,21 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems }) {
           Cart Items
         </h2>
         {cartItems.length === 0 && <div>Cart is empty</div>}
-        {cartItems.map((item) => (
+        {cartItems.map((order) => (
           // one item
-          <div key={item.id}>
+          <div key={order.item._id}>
             <div className="truncate text-sm font-medium text-gray-900 dark:text-white">
-              {item.name}
+              {order.item.name}
             </div>
             <div>
               <button
-                onClick={() => onRemove(item)}
+                onClick={() => onRemove(order)}
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               >
                 -
               </button>{" "}
               <button
-                onClick={() => onAdd(item)}
+                onClick={() => onAdd(order)}
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               >
                 +
@@ -118,7 +126,7 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems }) {
             </div>
 
             <div className="truncate text-sm font-medium text-gray-900 dark:text-white">
-              {item.qty} x ${parseFloat(item.price).toFixed(2)}
+              {order.qty} x ${parseFloat(order.item.price).toFixed(2)}
             </div>
           </div>
         ))}
@@ -159,7 +167,7 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems }) {
             <div>
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={addOrder}
+                onClick={postOrder}
               >
                 Checkout
               </button>
