@@ -10,7 +10,10 @@ function Menu({ menuItems, itemToApp, onAdd }) {
 
   function handleAdd(e, item) {
     e.preventDefault;
-    const newItem = { item, customisation: null };
+    const newItem = {
+      item,
+      customisation: { milk: "Nil", ice: "Nil", sugar: "Nil", size: "Nil" },
+    };
     itemToApp(newItem);
     // navigate(`#`)
   }

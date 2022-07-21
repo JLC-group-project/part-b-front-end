@@ -1,13 +1,13 @@
 import React from "react";
 import Product from "../Product";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { response } from "express";
+
 
 function Cart({ cartItems, onAdd, onRemove, setCartItems }) {
-  const itemsPrice = cartItems.reduce((a, c) => a + c.qty * c.item.price, 0);
+  const itemsPrice = cartItems.reduce((a, c) => a + c.quantity * c.item.price, 0);
   const taxPrice = itemsPrice * 0.14;
   const totalPrice = itemsPrice + taxPrice;
-  const api = import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000";
+  const api = import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000/api/v1";
   const navigate = useNavigate();
 
   const navigateToProductDisplay = () => {
@@ -16,16 +16,18 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems }) {
   };
 
   function retrieveOrders() {
-    let orders = [];
-    for (item of cartItems) {
-      let orderBody = {
-        item: item.id,
-        quantity: item.qty,
-        total_cost: totalPrice,
-      };
+    let newOrders = cartItems
+    console.log(newOrders.length)
+    for (let i = 0; i < newOrders.length; i++) {
+      newOrders[i].item = cartItems[i].item._id
+      console.log(cartItems[i].item._id)
     }
+    console.log(newOrders)
+    postOrder(newOrders)
+    // console.log(newOrders);
   }
-  async function postOrder() {
+
+  async function postOrder(newOrders) {
     // const currentOrders = retrieveOrders();
     // const newCheckout = { cartItems, totalPrice };
     const res = await fetch(`${api}/orders`, {
@@ -36,16 +38,14 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems }) {
       },
       // put orders in body
       body: JSON.stringify({
-        orders: cartItems,
+        orders: newOrders,
         complete: false,
-        total_price: totalPrice,
+        total_price: totalPrice.toFixed(2),
       })
-        .then((resp) => resp.json())
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((err) => console.log(err))
+        
     });
+    const returnOrder = await res.json();
+    console.log(returnOrder)
     // const returnedEntry = await res.json();
     // dispatch({
     //   type: "newCheckout",
@@ -126,7 +126,7 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems }) {
             </div>
 
             <div className="truncate text-sm font-medium text-gray-900 dark:text-white">
-              {order.qty} x ${parseFloat(order.item.price).toFixed(2)}
+              {order.quantity} x ${parseFloat(order.item.price).toFixed(2)}
             </div>
           </div>
         ))}
@@ -167,7 +167,7 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems }) {
             <div>
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={postOrder}
+                onClick={retrieveOrders}
               >
                 Checkout
               </button>

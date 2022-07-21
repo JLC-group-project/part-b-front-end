@@ -92,11 +92,11 @@ function App() {
     if (exist) {
       setCartItems(
         cartItems.map((x) =>
-          x.item._id === product.item._id ? { ...exist, qty: exist.qty + 1 } : x
+          x.item._id === product.item._id ? { ...exist, quantity: exist.quantity + 1 } : x
         )
       );
     } else {
-      setCartItems([...cartItems, { item:product.item,customisation:product.customisation, qty: 1 }]);
+      setCartItems([...cartItems, { item:product.item,customisation:product.customisation, quantity: 1 }]);
     }
   };
 
@@ -104,12 +104,12 @@ function App() {
   // this function removes items from the cart
   const onRemove = (product) => {
     const exist = cartItems.find((x) => x.item._id === product.item._id);
-    if (exist.qty === 1) {
+    if (exist.quantity === 1) {
       setCartItems(cartItems.filter((x) => x.item._id !== product._id));
     } else {
       setCartItems(
         cartItems.map((x) =>
-          x.item._id === product.item._id ? { ...exist, qty: exist.qty - 1 } : x
+          x.item._id === product.item._id ? { ...exist, quantity: exist.quantity - 1 } : x
         )
       );
     }

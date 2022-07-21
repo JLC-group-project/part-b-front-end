@@ -19,7 +19,7 @@ function CustomizeItem({ itemToApp, onAdd }) {
   function handleAdd(e, item, price, id, customisation) {
     e.preventDefault;
     const newItem = {
-      item:{ name: item, price: price, id: id },
+      item:{ name: item, price: price, _id: id },
       customisation,
     };
     console.log(newItem);
