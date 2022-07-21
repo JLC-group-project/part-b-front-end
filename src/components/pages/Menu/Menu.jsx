@@ -36,7 +36,7 @@ function Menu({ menuItems, itemToApp }) {
             item.category === cate && (
               <div className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                 <div>
-                  <img className="rounded-t-lg" src={item.image_url} />
+                  <img className="rounded-t-lg" src={`${item.image_url}`} />
                 </div>
                 <div className="p-5">
                   <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">

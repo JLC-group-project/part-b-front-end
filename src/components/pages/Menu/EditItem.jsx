@@ -11,18 +11,6 @@ function Menu({ editMenuItem }) {
   const categories = ["Drinks", "Bakery"];
   const navigate = useNavigate();
 
-  // function onChangePicture(e) {
-  //   if (e.target.files[0]) {
-  //     console.log("picture: ", e.target.files);
-  //     setPicture(e.target.files[0]);
-  //     const reader = new FileReader();
-  //     reader.addEventListener("load", () => {
-  //       setImg(reader.result);
-  //     });
-  //     reader.readAsDataURL(e.target.files[0]);
-  //   }
-  // }
-
   function handleProductName(e) {
     setProduct(() => ({
       ...product,
@@ -49,10 +37,14 @@ function Menu({ editMenuItem }) {
     location.reload(false);
   }
 
+  function getImageUrl(url) {
+    setProduct({ ...product, image_url: url });
+  }
+
   return (
     <div>
       <h3>Edit {item}</h3>
-      <Cloudinary />
+      <Cloudinary getImageUrl={getImageUrl} />
       <div className="form">
         <div className="mb-4">
           <label

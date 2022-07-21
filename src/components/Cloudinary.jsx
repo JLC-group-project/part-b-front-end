@@ -12,7 +12,7 @@ function Cloudinary({ getImageUrl }) {
     data.append("file", image);
     data.append("upload_preset", "coderscafe");
     data.append("cloud_name", "dapawns9w");
-    fetch("https://api.cloudinary.com/v1_1/coderscafe/image/upload", {
+    fetch("https://api.cloudinary.com/v1_1/dapawns9w/image/upload", {
       method: "post",
       body: data,
     })
