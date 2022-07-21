@@ -1,11 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useAuth0 } from "@auth0/auth0-react";
+import LogoutButton from './LogoutButton';
+import LoginButton from './LoginButton';
 
-function Nav() {
+function AuthNav() {
+  const { user, isAuthenticated } = useAuth0();
 
   return (
     <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-6">
-      <Link to="/">
+      <Link to="/admin">
         <div className="flex items-center flex-shrink-0 text-white mr-6">
           <svg
             className="fill-current h-8 w-8 mr-2"
@@ -36,22 +40,42 @@ function Nav() {
       <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
         <div className="text-sm lg:flex-grow">
           <Link
-            to="menu"
+            to="/admin/menu"
             className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
           >
             Menu
           </Link>
+          <Link
+            to="/admin/orders"
+            className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+          >
+            Orders
+          </Link>
+          <Link
+            to="/admin/orders/history"
+            className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+          >
+            History
+          </Link>
+          <Link
+            to="/admin/profile"
+            className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+          >
+            Profile
+          </Link>
         </div>
         <div>
-          <a
-            className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
-          >
-            Cart
-          </a>
+          {isAuthenticated && (
+            <a
+              className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
+            >
+              <LogoutButton />
+            </a>
+          )}
         </div>
       </div>
     </nav>
   );
 }
 
-export default Nav
+export default AuthNav
