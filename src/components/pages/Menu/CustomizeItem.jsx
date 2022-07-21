@@ -1,12 +1,12 @@
-import { Link, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useState } from "react";
 
-function CustomizeItem({ itemToApp, api }) {
+function CustomizeItem({ itemToApp }) {
   const ices = ["Hot", "None", "Little", "Iced"];
   const milks = ["Lactose free", "Almond milk", "Skim milk", "Regular"];
   const sizes = ["Large", "Medium", "Small"];
   const sugars = [1, 2, 3, 4, 5];
-  const { item, category } = useParams();
+  const { item, id, price } = useParams();
   const [customisation, setCustomisation] = useState({
     size: "Medium",
     sugar: "1",
@@ -14,19 +14,13 @@ function CustomizeItem({ itemToApp, api }) {
     ice: "Iced",
   });
 
-  async function handleAdd(e, id, customisation) {
-    // const newItem = { item, customization };
-    // itemToApp(newItem);
-    // navigate(`#`)
-    
+  function handleAdd(e, item, price, id, customisation) {
     e.preventDefault;
-    const res = await fetch(`${api}/menu/${id}`);
-    const currentItem = await res.json();
-    const newItem = { item: currentItem, customisation };
-    let cart = JSON.parse(sessionStorage.getItem("cart"));
-    cart = [...cart, newItem]
-    console.log(cart)
-    sessionStorage.setItem("cart", JSON.stringify(cart))
+    const newItem = {
+      item: { name: item, price: price, id: id },
+      customisation,
+    };
+    itemToApp(newItem);
   }
 
   function handleCustomizeSugar(e) {
@@ -153,7 +147,7 @@ function CustomizeItem({ itemToApp, api }) {
         </select>
       </div>
       <button
-        onClick={(e) => handleAdd(e, item, customisation)}
+        onClick={(e) => handleAdd(e, item, id, price, customization)}
         className="inline-flex menuItems-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       >
         Add To Cart

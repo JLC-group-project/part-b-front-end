@@ -10,18 +10,6 @@ function CreateItem({ addMenuItem }) {
   // const [img, setImg] = useState(null);
   const categories = ["Drinks", "Bakery"];
 
-  // function onChangePicture(e) {
-  //   if (e.target.files[0]) {
-  //     console.log("picture: ", e.target.files);
-  //     setPicture(e.target.files[0]);
-  //     const reader = new FileReader();
-  //     reader.addEventListener("load", () => {
-  //       setImg(reader.result);
-  //     });
-  //     reader.readAsDataURL(e.target.files[0]);
-  //   }
-  // }
-
   function handleProductName(e) {
     setProduct(() => ({
       ...product,
@@ -37,10 +25,14 @@ function CreateItem({ addMenuItem }) {
   }
 
   function handleProductCategory(e) {
-    setProduct((item) => ({
+    setProduct(() => ({
       ...product,
       category: e.target.value,
     }));
+  }
+
+  function getImageUrl(url) {
+    setProduct({ ...product, image_url: url });
   }
 
   async function submit(e, product) {
@@ -53,6 +45,9 @@ function CreateItem({ addMenuItem }) {
     <div>
       <h3>Create Product</h3>
       <div className="form">
+        <div>
+          <Cloudinary getImageUrl={getImageUrl} />
+        </div>
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
