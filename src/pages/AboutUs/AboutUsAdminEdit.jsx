@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Cloudinary from "../../Cloudinary";
+import Cloudinary from "../../components/Cloudinary";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 function AboutUsAdminEdit({ api }) {

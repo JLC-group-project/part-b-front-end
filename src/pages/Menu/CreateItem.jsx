@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Cloudinary from "../../Cloudinary";
+import Cloudinary from "../../components/Cloudinary";
 
 function CreateItem({ addMenuItem }) {
   const [product, setProduct] = useState({});

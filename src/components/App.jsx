@@ -1,17 +1,17 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Nav from "./Nav";
-import Home from "./pages/Home/Home";
-import MenuAdmin from "./pages/Menu/MenuAdmin";
-import CustomizeItem from "./pages/Menu/CustomizeItem";
+import Home from "../pages/Home/Home";
+import MenuAdmin from "../pages/Menu/MenuAdmin";
+import CustomizeItem from "../pages/Menu/CustomizeItem";
 import { useState, useEffect } from "react";
-import Menu from "./pages/Menu/Menu";
-import CreateItem from "./pages/Menu/CreateItem";
-import EditItem from "./pages/Menu/EditItem";
-import AboutUs from "./pages/AboutUs/AboutUs";
-import HomeAdmin from "./pages/Home/HomeAdmin";
-import HomeAdminEdit from "./pages/Home/HomeAdminEdit";
-import AboutUsAdmin from "./pages/AboutUs/AboutUsAdmin";
-import AboutUsAdminEdit from "./pages/AboutUs/AboutUsAdminEdit";
+import Menu from "../pages/Menu/Menu";
+import CreateItem from "../pages/Menu/CreateItem";
+import EditItem from "../pages/Menu/EditItem";
+import AboutUs from "../pages/AboutUs/AboutUs";
+import HomeAdmin from "../pages/Home/HomeAdmin";
+import HomeAdminEdit from "../pages/Home/HomeAdminEdit";
+import AboutUsAdmin from "../pages/AboutUs/AboutUsAdmin";
+import AboutUsAdminEdit from "../pages/AboutUs/AboutUsAdminEdit";
 
 const api = import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000/api/v1";
 
