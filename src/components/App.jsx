@@ -9,7 +9,7 @@ import CheckoutForm from "./pages/CheckoutForm";
 import ProductDisplay from "./pages/ProductDisplay";
 import Home from "./pages/Home/Home";
 import MenuAdmin from "./pages/Menu/MenuAdmin";
-import CustomizeItem from "./pages/Menu/CustomizeItem";
+import CustomiseItem from "./pages/Menu/CustomiseItem";
 // import Menu from "./pages/Menu/Menu";
 import Menu from "./pages/Menu/Menu";
 import CreateItem from "./pages/Menu/CreateItem";
@@ -158,7 +158,7 @@ function App() {
         />
         <Route
           path="/menu/:item/:id/:price"
-          element={<CustomizeItem itemToApp={itemToApp} onAdd={onAdd} />}
+          element={<CustomiseItem itemToApp={itemToApp} onAdd={onAdd} />}
         />
         <Route
           path="/admin/menu/:cate"
