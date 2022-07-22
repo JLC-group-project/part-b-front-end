@@ -1,8 +1,7 @@
 import { React, useEffect, useState } from "react";
-import Card from "../components/Card";
+import Card from "../../components/Card";
+import OrderAccordion from "../../components/OrderAccordion";
 import Order from "./Order";
-import OrderHistory from "./OrderHistory";
-import OrderAccordion from "../components/OrderAccordion";
 
 
 function Orders({ orders, history }) {

@@ -9,6 +9,7 @@ function Order({ total_price, orders }) {
           <p>Name: {order.item.name}</p>
           {order.customisation.milk != "Nil" && (
             <>
+              <hr/>
               <p>Customisation</p>
               <p>Milk:{order.customisation.milk}</p>
               <p>Ice:{order.customisation.ice}</p>
@@ -16,6 +17,7 @@ function Order({ total_price, orders }) {
               <p>Size:{order.customisation.size}</p>
             </>
           )}
+          <hr/>
           <p>Price: ${order.item.price}</p>
           <hr />
           <br />
