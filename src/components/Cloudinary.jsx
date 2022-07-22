@@ -1,16 +1,18 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function Cloudinary() {
+function Cloudinary({ getImageUrl }) {
   const [image, setImage] = useState();
   const [url, setUrl] = useState();
+  const [loading, setLoading] = useState(true);
 
   function uploadImage() {
+    setLoading(false);
     const data = new FormData();
     data.append("file", image);
     data.append("upload_preset", "coderscafe");
     data.append("cloud_name", "dapawns9w");
-    fetch("https://api.cloudinary.com/v1_1/coderscafe/image/upload", {
+    fetch("https://api.cloudinary.com/v1_1/dapawns9w/image/upload", {
       method: "post",
       body: data,
     })
@@ -20,12 +22,18 @@ function Cloudinary() {
       })
       .catch((err) => console.log(err));
   }
+
+  useEffect(() => {
+    getImageUrl(url);
+  }, [url]);
+
   return (
     <div>
       <div>
         <input
           type="file"
           onChange={(e) => setImage(e.target.files[0])}
+          required
         ></input>
         <button
           onClick={uploadImage}
@@ -35,8 +43,8 @@ function Cloudinary() {
         </button>
       </div>
       <div>
-        <h1>Uploaded image will be displayed here</h1>
-        <img src={url} />
+        <h1>Preview:</h1>
+        <div>{loading || url ? <img src={url} /> : <h3>Loading...</h3>}</div>
       </div>
     </div>
   );

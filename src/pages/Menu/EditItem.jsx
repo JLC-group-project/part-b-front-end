@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
-import Cloudinary from "../../Cloudinary";
+import Cloudinary from "../../components/Cloudinary";
 
 function Menu({ editMenuItem }) {
   const { item, cate } = useParams();
@@ -10,18 +10,6 @@ function Menu({ editMenuItem }) {
   const [img, setImg] = useState(null);
   const categories = ["Drinks", "Bakery"];
   const navigate = useNavigate();
-
-  // function onChangePicture(e) {
-  //   if (e.target.files[0]) {
-  //     console.log("picture: ", e.target.files);
-  //     setPicture(e.target.files[0]);
-  //     const reader = new FileReader();
-  //     reader.addEventListener("load", () => {
-  //       setImg(reader.result);
-  //     });
-  //     reader.readAsDataURL(e.target.files[0]);
-  //   }
-  // }
 
   function handleProductName(e) {
     setProduct(() => ({
@@ -49,10 +37,14 @@ function Menu({ editMenuItem }) {
     location.reload(false);
   }
 
+  function getImageUrl(url) {
+    setProduct({ ...product, image_url: url });
+  }
+
   return (
     <div>
       <h3>Edit {item}</h3>
-      <Cloudinary />
+      <Cloudinary getImageUrl={getImageUrl} />
       <div className="form">
         <div className="mb-4">
           <label
