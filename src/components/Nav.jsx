@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Nav() {
+function Nav(props) {
   return (
     <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-6">
       <Link to="/">
@@ -54,12 +54,19 @@ function Nav() {
           </Link>
         </div>
         <div>
-          <a
-            href="#"
-            className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
+          <Link
+            to="cart"
+            className="inline-block text-sm px-4 py-2 leading-none border rounded
+          text-white border-white hover:border-transparent hover:text-teal-500
+          hover:bg-white mt-4 lg:mt-0"
           >
-            Download
-          </a>
+            Cart{" "}
+            {props.countCartItems ? (
+              <button>{props.countCartItems}</button>
+            ) : (
+              ""
+            )}
+          </Link>
         </div>
       </div>
     </nav>

@@ -1,21 +1,33 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useState, useEffect } from "react";
+
 import Nav from "./Nav";
 import Home from "../pages/Home/Home";
-import MenuAdmin from "../pages/Menu/MenuAdmin";
-import CustomizeItem from "../pages/Menu/CustomizeItem";
-import { useState, useEffect } from "react";
-import Menu from "../pages/Menu/Menu";
-import CreateItem from "../pages/Menu/CreateItem";
-import EditItem from "../pages/Menu/EditItem";
-import AboutUs from "../pages/AboutUs/AboutUs";
 import HomeAdmin from "../pages/Home/HomeAdmin";
 import HomeAdminEdit from "../pages/Home/HomeAdminEdit";
+import AboutUs from "../pages/AboutUs/AboutUs";
 import AboutUsAdmin from "../pages/AboutUs/AboutUsAdmin";
 import AboutUsAdminEdit from "../pages/AboutUs/AboutUsAdminEdit";
+import Menu from "../pages/Menu/Menu";
+import MenuAdmin from "../pages/Menu/MenuAdmin";
+import CustomiseItem from "../pages/Menu/CustomiseItem";
+import CreateItem from "../pages/Menu/CreateItem";
+import EditItem from "../pages/Menu/EditItem";
+import Cart from "../pages/Cart/Cart";
+import CheckoutForm from "../pages/Cart/CheckoutForm";
+import ProductDisplay from "../pages/Cart/ProductDisplay";
+
 
 const api = import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000/api/v1";
 
 function App() {
+  const [cartItems, setCartItems] = useState([]);
+  const [orderItem, setOrderItem] = useState();
+  
+  function itemToApp(item) {
+    onAdd(item);
+  }
+
   //hardcode items object and customize to transfer to the components need them
   const [menuItems, setMenuItems] = useState([
     {
@@ -28,10 +40,10 @@ function App() {
       name: "Tea",
       price: "$4.50",
     },
-    { category: "Bakery", name: "Bagel", price: "$4.50" },
-    { category: "Bakery", name: "Almond Croissant", price: "$4.50" },
+    {  category: "Bakery", name: "Bagel", price: "$4.50" },
+    {  category: "Bakery", name: "Almond Croissant", price: "$4.50" },
   ]);
-  const [orderItem, setOrderItem] = useState();
+
   const [homePage, setHomePage] = useState({
     title: "About Us",
     body: "About Us Body",
@@ -40,25 +52,6 @@ function App() {
     title: "About Us",
     body: "About Us Body",
   });
-
-  function itemToApp(item) {
-    // setOrderItem(item);
-
-    let cart = JSON.parse(sessionStorage.getItem("cart"));
-    cart = [...cart, item];
-    sessionStorage.setItem("cart", JSON.stringify(cart));
-  }
-
-  // Initialise session storage
-  useEffect(() => {
-    // Access cart from session storage
-    let cart = sessionStorage.getItem("cart");
-    // If cart doesn't exist
-    if (cart === null) {
-      // Initialize cart as an empty array
-      sessionStorage.setItem("cart", JSON.stringify([]));
-    }
-  }, []);
 
   useEffect(() => {
     async function multiFetches() {
@@ -104,12 +97,70 @@ function App() {
     location.reload(false);
   }
 
+  
+  // this function adds product to cart
+  const onAdd = (product) => {
+    const exist = cartItems.find((x) => x.item._id === product.item._id);
+    if (exist) {
+      setCartItems(
+        cartItems.map((x) =>
+          x.item._id === product.item._id ? { ...exist, quantity: exist.quantity + 1 } : x
+        )
+      );
+    } else {
+      setCartItems([...cartItems, { item:product.item,customisation:product.customisation, quantity: 1 }]);
+    }
+  };
+
+    
+  // this function removes items from the cart
+  const onRemove = (product) => {
+    const exist = cartItems.find((x) => x.item._id === product.item._id);
+    if (exist.quantity === 1) {
+      setCartItems(cartItems.filter((x) => x.item._id !== product._id));
+    } else {
+      setCartItems(
+        cartItems.map((x) =>
+          x.item._id === product.item._id ? { ...exist, quantity: exist.quantity - 1 } : x
+        )
+      );
+    }
+  };
+  
   return (
     <BrowserRouter>
-      <Nav />
+      <Nav countCartItems={cartItems.length} />
+      {/* <CheckoutForm /> */}
+
+      {/* <Cart cartItems={cartItems} onAdd={onAdd} onRemove={onRemove} /> */}
+
       <Routes>
         <Route path="/" element={<Home homePage={homePage} />} />
         <Route path="/about_us" element={<AboutUs aboutPage={aboutPage} />} />
+
+        <Route
+          path="/menu/:cate"
+          element={
+            <Menu menuItems={menuItems} itemToApp={itemToApp} onAdd={onAdd} />
+          }
+        />
+        <Route
+          path="/menu/:item/:id/:price"
+          element={<CustomiseItem itemToApp={itemToApp} />}
+        />
+        <Route
+          path="/cart"
+          element={
+            <Cart
+              cartItems={cartItems}
+              onAdd={onAdd}
+              onRemove={onRemove}
+              setCartItems={setCartItems}
+            />
+          }
+        />
+        <Route path="/admin" element={<HomeAdmin homePage={homePage} />} />
+        <Route path="/admin/edit/:id" element={<HomeAdminEdit api={api} />} />
         <Route
           path="/admin/about_us"
           element={<AboutUsAdmin aboutPage={aboutPage} />}
@@ -118,16 +169,7 @@ function App() {
           path="/admin/about_us/edit/:id"
           element={<AboutUsAdminEdit api={api} />}
         />
-        <Route path="/admin" element={<HomeAdmin homePage={homePage} />} />
-        <Route path="/admin/edit/:id" element={<HomeAdminEdit api={api} />} />
-        <Route
-          path="/menu/:cate"
-          element={<Menu menuItems={menuItems} itemToApp={itemToApp} />}
-        />
-        <Route
-          path="/menu/:item/:id/:price"
-          element={<CustomizeItem itemToApp={itemToApp} />}
-        />
+
         <Route
           path="/admin/menu/:cate"
           element={
