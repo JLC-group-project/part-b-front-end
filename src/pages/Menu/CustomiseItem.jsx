@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 
-function CustomizeItem({ itemToApp }) {
+function CustomizeItem({ itemToApp, onAdd }) {
   const ices = ["Hot", "None", "Little", "Iced"];
   const milks = ["Lactose free", "Almond milk", "Skim milk", "Regular"];
   const sizes = ["Large", "Medium", "Small"];
@@ -13,15 +13,23 @@ function CustomizeItem({ itemToApp }) {
     milk: "Regular",
     ice: "Iced",
   });
-
+  
   function handleAdd(e, item, price, id, customisation) {
     e.preventDefault;
     const newItem = {
-      item: { name: item, price: price, id: id },
+      item:{ name: item, price: price, _id: id },
       customisation,
     };
+    console.log(newItem);
+    // onAdd(item,price,id);
     itemToApp(newItem);
   }
+
+  // function addToCart(e) {
+  //    e.preventDefault;
+  //   const newItem = { _id: "62d5697aef6a7a8a4ab88297", item, customisation };
+  //   onAdd(newItem);
+  // }
 
   function handleCustomizeSugar(e) {
     setCustomisation(() => ({
@@ -147,7 +155,8 @@ function CustomizeItem({ itemToApp }) {
         </select>
       </div>
       <button
-        onClick={(e) => handleAdd(e, item, id, price, customization)}
+        onClick={(e) => handleAdd(e, item, id, price, customisation)}
+        // onClick={onAdd(id)}
         className="inline-flex menuItems-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       >
         Add To Cart

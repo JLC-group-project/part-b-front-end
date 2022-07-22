@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 
-function Menu({ menuItems, itemToApp }) {
+function Menu({ menuItems, itemToApp, onAdd }) {
   const { cate } = useParams();
   const [categories, setCategories] = useState(["Drinks", "Bakery"]);
   // const [product, setProduct] = useState();
@@ -10,7 +10,10 @@ function Menu({ menuItems, itemToApp }) {
 
   function handleAdd(e, item) {
     e.preventDefault;
-    const newItem = { item, customisation: null };
+    const newItem = {
+      item,
+      customisation: { milk: "Nil", ice: "Nil", sugar: "Nil", size: "Nil" },
+    };
     itemToApp(newItem);
     // navigate(`/about_us`);
   }
@@ -48,7 +51,7 @@ function Menu({ menuItems, itemToApp }) {
                   {/*Ternary Operators to change the button as bakery do not need customize */}
                   {item.category === "Drinks" ? (
                     <Link
-                      to={`/menu/${item.name}/${item._id}/${item.price}`}
+                      to={`/menu/${item.name}/${item.price}/${item._id}`}
                       className="inline-flex menuItems-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                       item={item}
                     >
@@ -57,6 +60,8 @@ function Menu({ menuItems, itemToApp }) {
                   ) : (
                     <button
                       onClick={(e) => handleAdd(e, item)}
+                      // onClick={() => onAdd(item)}
+                      // onClick={console.log(item)}
                       className="inline-flex menuItems-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
                       Add To Cart
