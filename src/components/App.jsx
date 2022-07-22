@@ -10,19 +10,18 @@ import AboutUsAdmin from "../pages/AboutUs/AboutUsAdmin";
 import AboutUsAdminEdit from "../pages/AboutUs/AboutUsAdminEdit";
 import Menu from "../pages/Menu/Menu";
 import MenuAdmin from "../pages/Menu/MenuAdmin";
-import CustomiseItem from "./pages/Menu/CustomiseItem";
+import CustomiseItem from "../pages/Menu/CustomiseItem";
 import CreateItem from "../pages/Menu/CreateItem";
 import EditItem from "../pages/Menu/EditItem";
-import Cart from "./pages/Cart/Cart";
-import CheckoutForm from "./pages/Cart/CheckoutForm";
-import ProductDisplay from "./pages/Cart/ProductDisplay";
+import Cart from "../pages/Cart/Cart";
+import CheckoutForm from "../pages/Cart/CheckoutForm";
+import ProductDisplay from "../pages/Cart/ProductDisplay";
 
 
 const api = import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000/api/v1";
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
-  const { products } = data;
   const [orderItem, setOrderItem] = useState();
   
   function itemToApp(item) {

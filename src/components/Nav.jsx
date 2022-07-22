@@ -53,7 +53,6 @@ function Nav(props) {
             AboutUs
           </Link>
         </div>
-
         <div>
           <Link
             to="cart"
