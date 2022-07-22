@@ -1,7 +1,8 @@
+import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useState, useEffect } from "react";
-
+import { useAuth0 } from "@auth0/auth0-react";
 import Nav from "./Nav";
+import AuthNav from "./AuthNav";
 import Home from "../pages/Home/Home";
 import HomeAdmin from "../pages/Home/HomeAdmin";
 import HomeAdminEdit from "../pages/Home/HomeAdminEdit";
@@ -16,18 +17,16 @@ import EditItem from "../pages/Menu/EditItem";
 import Cart from "../pages/Cart/Cart";
 import CheckoutForm from "../pages/Cart/CheckoutForm";
 import ProductDisplay from "../pages/Cart/ProductDisplay";
+import Orders from "../pages/Orders/Orders";
+import Profile from "../pages/Profile";
+import ProtectedRoute from "./ProtectedRoute";
 
 
 const api = import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000/api/v1";
+const url = import.meta.env.VITE_URL || "http://localhost:3000";
 
 function App() {
-  const [cartItems, setCartItems] = useState([]);
-  const [orderItem, setOrderItem] = useState();
   
-  function itemToApp(item) {
-    onAdd(item);
-  }
-
   //hardcode items object and customize to transfer to the components need them
   const [menuItems, setMenuItems] = useState([
     {
@@ -53,19 +52,34 @@ function App() {
     body: "About Us Body",
   });
 
+  // Authentication Hook
+  const {user, isAuthenticated, isLoading} = useAuth0();
+  
+  // Orders Hook
+  const [orders, setOrders] = useState([]);
+  
+  const [cartItems, setCartItems] = useState([]);
+  const [orderItem, setOrderItem] = useState();
+  
   useEffect(() => {
     async function multiFetches() {
-      const [res1, res2, res3] = await Promise.all([
+      const [res1, res2, res3, res4] = await Promise.all([
         fetch(`${api}/menu`),
         fetch(`${api}/pages/62d78186109da67b9e32bc6e`),
         fetch(`${api}/pages/62d781c0109da67b9e32bc71`),
+        fetch(`${api}/orders`),
       ]);
       setMenuItems(await res1.json());
       setAboutPage(await res2.json());
       setHomePage(await res3.json());
+      setOrders(await res4.json());
     }
     multiFetches();
   }, []);
+  
+  function itemToApp(item) {
+    onAdd(item);
+  }
 
   async function addMenuItem(product) {
     const res = await fetch(`${api}/menu`, {
@@ -97,7 +111,6 @@ function App() {
     location.reload(false);
   }
 
-  
   // this function adds product to cart
   const onAdd = (product) => {
     const exist = cartItems.find((x) => x.item._id === product.item._id);
@@ -129,15 +142,19 @@ function App() {
   
   return (
     <BrowserRouter>
-      <Nav countCartItems={cartItems.length} />
+      {isAuthenticated ? (
+        <AuthNav />
+      ) : (
+        <Nav countCartItems={cartItems.length} />
+      )}
       {/* <CheckoutForm /> */}
 
       {/* <Cart cartItems={cartItems} onAdd={onAdd} onRemove={onRemove} /> */}
 
       <Routes>
+        {/* End User Routes */}
         <Route path="/" element={<Home homePage={homePage} />} />
         <Route path="/about_us" element={<AboutUs aboutPage={aboutPage} />} />
-
         <Route
           path="/menu/:cate"
           element={
@@ -159,33 +176,55 @@ function App() {
             />
           }
         />
-        <Route path="/admin" element={<HomeAdmin homePage={homePage} />} />
-        <Route path="/admin/edit/:id" element={<HomeAdminEdit api={api} />} />
+        {/* Admin Routes */}
+        <Route
+          path="/admin"
+          element={<ProtectedRoute component={HomeAdmin} homePage={homePage} />}
+        />
+        <Route
+          path="/admin/edit/:id"
+          element={<ProtectedRoute component={HomeAdminEdit} api={api} />}
+        />
         <Route
           path="/admin/about_us"
-          element={<AboutUsAdmin aboutPage={aboutPage} />}
-        />
-        <Route
-          path="/admin/about_us/edit/:id"
-          element={<AboutUsAdminEdit api={api} />}
-        />
-
-        <Route
-          path="/admin/menu/:cate"
           element={
-            <MenuAdmin menuItems={menuItems} deleteMenuItem={deleteMenuItem} />
+            <ProtectedRoute component={AboutUsAdmin} aboutPage={aboutPage} />
           }
         />
         <Route
-          path="/admin/menu/create"
-          element={<CreateItem addMenuItem={addMenuItem} />}
+          path="/admin/about_us/edit/:id"
+          element={<ProtectedRoute component={AboutUsAdminEdit} api={api} />}
         />
-
+        {/* Menu Routes */}
+        <Route
+          path="/admin/menu/:cate"
+          element={<ProtectedRoute component={MenuAdmin} menuItems={menuItems} deleteMenuItem={deleteMenuItem} />}
+        />
+        <Route
+          path="/admin/menu/create"
+          element={<ProtectedRoute component={CreateItem} addMenuItem={addMenuItem} />}
+        />{" "}
         <Route
           path="/admin/menu/:cate/:item/edit"
-          element={<EditItem editMenuItem={editMenuItem} />}
+          element={<ProtectedRoute component={EditItem} editMenuItem={editMenuItem} />}
         />
-
+        {/* Order Routes */}
+        <Route
+          path="/admin/orders"
+          element={<ProtectedRoute component={Orders} orders={orders} history={false}/>}
+        />
+        <Route
+          path="/admin/orders/history"
+          element={
+            <ProtectedRoute component={Orders} orders={orders} history={true} />
+          }
+        />
+        <Route
+          path="/admin/profile"
+          element={<ProtectedRoute component={Profile} />}
+        />
+        
+        {/* Missing Pages */}
         <Route path="*" element={<h4>Page not Found!</h4>} />
       </Routes>
     </BrowserRouter>
