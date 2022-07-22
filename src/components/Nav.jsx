@@ -36,8 +36,8 @@ function Nav(props) {
             )}
           </Link>
         </div>
-        <div className="">
-          <div className="text-s md:text-l 2l:text-xl flex  justify-center pt-3">
+        <div>
+          <div className="text-s md:text-l lg:text-xl flex  justify-center p-3">
             <Link
               to="/"
               className="block  lg:inline-block lg:mt-0 text-teal-200 hover:text-white px-6"

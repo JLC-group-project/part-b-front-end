@@ -2,8 +2,13 @@ import React from "react";
 
 function Footer() {
   return (
-    <div className="text-l text-center m-6">
-      All rights reserved by Coder's Cafe
+    <div className="p-2">
+      <div></div>
+      <div>
+        <p className="text-xs md:text-xl text-center">
+          © All rights reserved by Coder's Cafe
+        </p>
+      </div>
     </div>
   );
 }

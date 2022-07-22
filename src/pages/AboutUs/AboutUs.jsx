@@ -11,8 +11,10 @@ function AboutUs({ aboutPage }) {
         />
       </div>
       <div className="flex-col pt-7">
-        <h1 className="text-4xl text-center">{aboutPage.title} </h1>
-        <h4 className="text-xl text-center mt-4">{aboutPage.body} </h4>
+        <h1 className="text-2xl md:text-4xl text-center">{aboutPage.title} </h1>
+        <h4 className="text-l md:text-2xl text-center mt-4">
+          {aboutPage.body}{" "}
+        </h4>
       </div>
     </div>
   );
