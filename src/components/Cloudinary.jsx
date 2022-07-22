@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import loading from "../assets/loading.svg";
 
 function Cloudinary({ getImageUrl }) {
   const [image, setImage] = useState();
@@ -44,7 +45,13 @@ function Cloudinary({ getImageUrl }) {
       </div>
       <div>
         <h1>Preview:</h1>
-        <div>{loading || url ? <img src={url} /> : <h3>Loading...</h3>}</div>
+        <div>
+          {loading || url ? (
+            <img src={url} />
+          ) : (
+            <img src={loading} alt="Loading" />
+          )}
+        </div>
       </div>
     </div>
   );

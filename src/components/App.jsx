@@ -20,13 +20,12 @@ import ProductDisplay from "../pages/Cart/ProductDisplay";
 import Orders from "../pages/Orders/Orders";
 import Profile from "../pages/Profile";
 import ProtectedRoute from "./ProtectedRoute";
-
+import Footer from "./Footer";
 
 const api = import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000/api/v1";
 const url = import.meta.env.VITE_URL || "http://localhost:3000";
 
 function App() {
-  
   //hardcode items object and customize to transfer to the components need them
   const [menuItems, setMenuItems] = useState([
     {
@@ -39,8 +38,8 @@ function App() {
       name: "Tea",
       price: "$4.50",
     },
-    {  category: "Bakery", name: "Bagel", price: "$4.50" },
-    {  category: "Bakery", name: "Almond Croissant", price: "$4.50" },
+    { category: "Bakery", name: "Bagel", price: "$4.50" },
+    { category: "Bakery", name: "Almond Croissant", price: "$4.50" },
   ]);
 
   const [homePage, setHomePage] = useState({
@@ -53,14 +52,14 @@ function App() {
   });
 
   // Authentication Hook
-  const {user, isAuthenticated, isLoading} = useAuth0();
-  
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
   // Orders Hook
   const [orders, setOrders] = useState([]);
-  
+
   const [cartItems, setCartItems] = useState([]);
   const [orderItem, setOrderItem] = useState();
-  
+
   useEffect(() => {
     async function multiFetches() {
       const [res1, res2, res3, res4] = await Promise.all([
@@ -76,7 +75,7 @@ function App() {
     }
     multiFetches();
   }, []);
-  
+
   function itemToApp(item) {
     onAdd(item);
   }
@@ -117,15 +116,23 @@ function App() {
     if (exist) {
       setCartItems(
         cartItems.map((x) =>
-          x.item._id === product.item._id ? { ...exist, quantity: exist.quantity + 1 } : x
+          x.item._id === product.item._id
+            ? { ...exist, quantity: exist.quantity + 1 }
+            : x
         )
       );
     } else {
-      setCartItems([...cartItems, { item:product.item,customisation:product.customisation, quantity: 1 }]);
+      setCartItems([
+        ...cartItems,
+        {
+          item: product.item,
+          customisation: product.customisation,
+          quantity: 1,
+        },
+      ]);
     }
   };
 
-    
   // this function removes items from the cart
   const onRemove = (product) => {
     const exist = cartItems.find((x) => x.item._id === product.item._id);
@@ -134,12 +141,14 @@ function App() {
     } else {
       setCartItems(
         cartItems.map((x) =>
-          x.item._id === product.item._id ? { ...exist, quantity: exist.quantity - 1 } : x
+          x.item._id === product.item._id
+            ? { ...exist, quantity: exist.quantity - 1 }
+            : x
         )
       );
     }
   };
-  
+
   return (
     <BrowserRouter>
       {isAuthenticated ? (
@@ -198,20 +207,36 @@ function App() {
         {/* Menu Routes */}
         <Route
           path="/admin/menu/:cate"
-          element={<ProtectedRoute component={MenuAdmin} menuItems={menuItems} deleteMenuItem={deleteMenuItem} />}
+          element={
+            <ProtectedRoute
+              component={MenuAdmin}
+              menuItems={menuItems}
+              deleteMenuItem={deleteMenuItem}
+            />
+          }
         />
         <Route
           path="/admin/menu/create"
-          element={<ProtectedRoute component={CreateItem} addMenuItem={addMenuItem} />}
+          element={
+            <ProtectedRoute component={CreateItem} addMenuItem={addMenuItem} />
+          }
         />{" "}
         <Route
           path="/admin/menu/:cate/:item/edit"
-          element={<ProtectedRoute component={EditItem} editMenuItem={editMenuItem} />}
+          element={
+            <ProtectedRoute component={EditItem} editMenuItem={editMenuItem} />
+          }
         />
         {/* Order Routes */}
         <Route
           path="/admin/orders"
-          element={<ProtectedRoute component={Orders} orders={orders} history={false}/>}
+          element={
+            <ProtectedRoute
+              component={Orders}
+              orders={orders}
+              history={false}
+            />
+          }
         />
         <Route
           path="/admin/orders/history"
@@ -223,10 +248,10 @@ function App() {
           path="/admin/profile"
           element={<ProtectedRoute component={Profile} />}
         />
-        
         {/* Missing Pages */}
         <Route path="*" element={<h4>Page not Found!</h4>} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }
