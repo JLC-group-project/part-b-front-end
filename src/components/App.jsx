@@ -151,107 +151,123 @@ function App() {
 
   return (
     <BrowserRouter>
-      {isAuthenticated ? (
-        <AuthNav />
-      ) : (
-        <Nav countCartItems={cartItems.length} />
-      )}
-      {/* <CheckoutForm /> */}
+      <div className="min-h-screen relative">
+        {isAuthenticated ? (
+          <AuthNav />
+        ) : (
+          <Nav countCartItems={cartItems.length} />
+        )}
+        {/* <CheckoutForm /> */}
 
-      {/* <Cart cartItems={cartItems} onAdd={onAdd} onRemove={onRemove} /> */}
+        {/* <Cart cartItems={cartItems} onAdd={onAdd} onRemove={onRemove} /> */}
 
-      <Routes>
-        {/* End User Routes */}
-        <Route path="/" element={<Home homePage={homePage} />} />
-        <Route path="/about_us" element={<AboutUs aboutPage={aboutPage} />} />
-        <Route
-          path="/menu/:cate"
-          element={
-            <Menu menuItems={menuItems} itemToApp={itemToApp} onAdd={onAdd} />
-          }
-        />
-        <Route
-          path="/menu/:item/:id/:price"
-          element={<CustomiseItem itemToApp={itemToApp} />}
-        />
-        <Route
-          path="/cart"
-          element={
-            <Cart
-              cartItems={cartItems}
-              onAdd={onAdd}
-              onRemove={onRemove}
-              setCartItems={setCartItems}
-            />
-          }
-        />
-        {/* Admin Routes */}
-        <Route
-          path="/admin"
-          element={<ProtectedRoute component={HomeAdmin} homePage={homePage} />}
-        />
-        <Route
-          path="/admin/edit/:id"
-          element={<ProtectedRoute component={HomeAdminEdit} api={api} />}
-        />
-        <Route
-          path="/admin/about_us"
-          element={
-            <ProtectedRoute component={AboutUsAdmin} aboutPage={aboutPage} />
-          }
-        />
-        <Route
-          path="/admin/about_us/edit/:id"
-          element={<ProtectedRoute component={AboutUsAdminEdit} api={api} />}
-        />
-        {/* Menu Routes */}
-        <Route
-          path="/admin/menu/:cate"
-          element={
-            <ProtectedRoute
-              component={MenuAdmin}
-              menuItems={menuItems}
-              deleteMenuItem={deleteMenuItem}
-            />
-          }
-        />
-        <Route
-          path="/admin/menu/create"
-          element={
-            <ProtectedRoute component={CreateItem} addMenuItem={addMenuItem} />
-          }
-        />{" "}
-        <Route
-          path="/admin/menu/:cate/:item/edit"
-          element={
-            <ProtectedRoute component={EditItem} editMenuItem={editMenuItem} />
-          }
-        />
-        {/* Order Routes */}
-        <Route
-          path="/admin/orders"
-          element={
-            <ProtectedRoute
-              component={Orders}
-              orders={orders}
-              history={false}
-            />
-          }
-        />
-        <Route
-          path="/admin/orders/history"
-          element={
-            <ProtectedRoute component={Orders} orders={orders} history={true} />
-          }
-        />
-        <Route
-          path="/admin/profile"
-          element={<ProtectedRoute component={Profile} />}
-        />
-        {/* Missing Pages */}
-        <Route path="*" element={<h4>Page not Found!</h4>} />
-      </Routes>
-      <Footer />
+        <Routes>
+          {/* End User Routes */}
+          <Route path="/" element={<Home homePage={homePage} />} />
+          <Route path="/about_us" element={<AboutUs aboutPage={aboutPage} />} />
+          <Route
+            path="/menu/:cate"
+            element={
+              <Menu menuItems={menuItems} itemToApp={itemToApp} onAdd={onAdd} />
+            }
+          />
+          <Route
+            path="/menu/:item/:id/:price"
+            element={<CustomiseItem itemToApp={itemToApp} />}
+          />
+          <Route
+            path="/cart"
+            element={
+              <Cart
+                cartItems={cartItems}
+                onAdd={onAdd}
+                onRemove={onRemove}
+                setCartItems={setCartItems}
+              />
+            }
+          />
+          {/* Admin Routes */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute component={HomeAdmin} homePage={homePage} />
+            }
+          />
+          <Route
+            path="/admin/edit/:id"
+            element={<ProtectedRoute component={HomeAdminEdit} api={api} />}
+          />
+          <Route
+            path="/admin/about_us"
+            element={
+              <ProtectedRoute component={AboutUsAdmin} aboutPage={aboutPage} />
+            }
+          />
+          <Route
+            path="/admin/about_us/edit/:id"
+            element={<ProtectedRoute component={AboutUsAdminEdit} api={api} />}
+          />
+          {/* Menu Routes */}
+          <Route
+            path="/admin/menu/:cate"
+            element={
+              <ProtectedRoute
+                component={MenuAdmin}
+                menuItems={menuItems}
+                deleteMenuItem={deleteMenuItem}
+              />
+            }
+          />
+          <Route
+            path="/admin/menu/create"
+            element={
+              <ProtectedRoute
+                component={CreateItem}
+                addMenuItem={addMenuItem}
+              />
+            }
+          />{" "}
+          <Route
+            path="/admin/menu/:cate/:item/edit"
+            element={
+              <ProtectedRoute
+                component={EditItem}
+                editMenuItem={editMenuItem}
+              />
+            }
+          />
+          {/* Order Routes */}
+          <Route
+            path="/admin/orders"
+            element={
+              <ProtectedRoute
+                component={Orders}
+                orders={orders}
+                history={false}
+              />
+            }
+          />
+          <Route
+            path="/admin/orders/history"
+            element={
+              <ProtectedRoute
+                component={Orders}
+                orders={orders}
+                history={true}
+              />
+            }
+          />
+          <Route
+            path="/admin/profile"
+            element={<ProtectedRoute component={Profile} />}
+          />
+          {/* Missing Pages */}
+          <Route path="*" element={<h4>Page not Found!</h4>} />
+        </Routes>
+        <div>
+          <Footer />
+        </div>
+      </div>
     </BrowserRouter>
   );
 }

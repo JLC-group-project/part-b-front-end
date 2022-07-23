@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function Nav(props) {
   return (
     <nav className="bg-teal-500 px-2 py-4 md:px-4 lg:px-6 flex justify-center">
-      <div className="w-full lg:w-[1600px]">
+      <div className="w-full lg:w-[1680px]">
         <div className="flex  justify-between px-4">
           <Link to="/">
             <div className="flex items-center flex-shrink-0 text-white mr-6">

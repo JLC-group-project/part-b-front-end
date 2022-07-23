@@ -7,7 +7,7 @@ function AboutUs({ aboutPage }) {
         <img
           src={aboutPage.image_url}
           alt="AboutUs_image"
-          className="w-full lg:w-[1600px]"
+          className="w-full lg:w-[1680px]"
         />
       </div>
       <div className="flex-col pt-7">

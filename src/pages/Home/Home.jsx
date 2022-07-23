@@ -7,7 +7,7 @@ function Home({ homePage }) {
         <img
           src={`${homePage.image_url}`}
           alt="Home_image"
-          className="w-full lg:w-[1600px]"
+          className="w-full lg:w-[1680px]"
         />
       </div>
       <div>

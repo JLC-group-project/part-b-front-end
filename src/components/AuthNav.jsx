@@ -9,7 +9,7 @@ function AuthNav() {
 
   return (
     <nav className="bg-teal-500 px-2 py-4 md:px-4 lg:px-6 flex justify-center">
-      <div className="w-full lg:w-[1600px]">
+      <div className="w-full lg:w-[1680px]">
         <div className="flex  justify-between px-4">
           <Link to="/admin">
             <div className="flex items-center flex-shrink-0 text-white mr-6">
@@ -42,6 +42,12 @@ function AuthNav() {
         <div>
           <div className="text-s md:text-l lg:text-xl flex  justify-center p-3 flex-wrap">
             <Link
+              to="/admin"
+              className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white px-6"
+            >
+              Home
+            </Link>
+            <Link
               to="/admin/menu/Drinks"
               className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white px-6"
             >
@@ -51,7 +57,7 @@ function AuthNav() {
               to="/admin/about_us"
               className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white px-6"
             >
-              AboutUs
+              About Us
             </Link>
             <Link
               to="/admin/orders"
