@@ -19,8 +19,8 @@ function Menu({ menuItems, itemToApp, onAdd }) {
   }
 
   return (
-    <>
-      <div>
+    <div className="flex w-full lg:w-[1680px]">
+      <div className="invisible md:visible md:max-w-[1680] md:w-1/4">
         <Link to="/menu/Drinks">
           <h1>MENU</h1>
         </Link>
@@ -32,47 +32,49 @@ function Menu({ menuItems, itemToApp, onAdd }) {
           ))}
         </ul>
       </div>
-      <div>
-        <h2>{cate}</h2>
-        {menuItems.map(
-          (item) =>
-            item.category === cate && (
-              <div className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-                <div>
-                  <img className="rounded-t-lg" src={`${item.image_url}`} />
+      <div className=" md:w-3/4">
+        <h1 className="text-5xl font-bold">{cate}</h1>
+        <div className="flex flex-wrap">
+          {menuItems.map(
+            (item) =>
+              item.category === cate && (
+                <div className="sm:max-w-sm md:max-w-m bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                  <div>
+                    <img className="rounded-t-lg" src={`${item.image_url}`} />
+                  </div>
+                  <div className="p-5">
+                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                      {item.name}
+                    </h5>
+                    <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                      {`$${item.price}`}
+                    </p>
+                    {/*Ternary Operators to change the button as bakery do not need customize */}
+                    {item.category === "Drinks" ? (
+                      <Link
+                        to={`/menu/${item.name}/${item.price}/${item._id}`}
+                        className="inline-flex menuItems-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        item={item}
+                      >
+                        Customize
+                      </Link>
+                    ) : (
+                      <button
+                        onClick={(e) => handleAdd(e, item)}
+                        // onClick={() => onAdd(item)}
+                        // onClick={console.log(item)}
+                        className="inline-flex menuItems-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                      >
+                        Add To Cart
+                      </button>
+                    )}
+                  </div>
                 </div>
-                <div className="p-5">
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    {item.name}
-                  </h5>
-                  <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                    {`$${item.price}`}
-                  </p>
-                  {/*Ternary Operators to change the button as bakery do not need customize */}
-                  {item.category === "Drinks" ? (
-                    <Link
-                      to={`/menu/${item.name}/${item.price}/${item._id}`}
-                      className="inline-flex menuItems-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                      item={item}
-                    >
-                      Customize
-                    </Link>
-                  ) : (
-                    <button
-                      onClick={(e) => handleAdd(e, item)}
-                      // onClick={() => onAdd(item)}
-                      // onClick={console.log(item)}
-                      className="inline-flex menuItems-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    >
-                      Add To Cart
-                    </button>
-                  )}
-                </div>
-              </div>
-            )
-        )}
+              )
+          )}
+        </div>
       </div>
-    </>
+    </div>
   );
 }
 
