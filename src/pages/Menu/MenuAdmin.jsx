@@ -78,6 +78,16 @@ function Menu({ menuItems, deleteMenuItem }) {
               </li>
             ))}
           </ul>
+          <div className="mt-4 ml-3 ">
+            <Link
+              to="/admin/menu/create"
+              className="inline-flex justify-center h-[48px] w-full text-xl texts-center p-3 leading-none border rounded
+              text-gray-500 border-gray-500 hover:border-transparent hover:text-white
+              hover:bg-gray-700  lg:mt-0"
+            >
+              CREATE
+            </Link>
+          </div>
         </div>
         <div className=" flex-wrap pl-4 md:w-3/4 ">
           <h1 className="text-5xl font-bold m-4">{cate}</h1>

@@ -1,13 +1,13 @@
 import React from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
-function Cart({ cartItems, onAdd, onRemove, setCartItems }) {
-  const itemsPrice = cartItems.reduce(
+function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems }) {
+  const totalPrice = cartItems.reduce(
     (a, c) => a + c.quantity * c.item.price,
     0
   );
-  const taxPrice = itemsPrice * 0.14;
-  const totalPrice = itemsPrice + taxPrice;
+  const taxPrice = totalPrice * 0.1;
+
   const api =
     import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000/api/v1";
   const navigate = useNavigate();
@@ -95,90 +95,103 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems }) {
     setCartItems([]);
   };
 
+  function findImageUrl(order) {
+    const menuItem = menuItems.find((i) => i._id === order.item._id);
+    return menuItem.image_url;
+  }
+
   return (
-    <div>
-      {/* container */}
-      <div className="mb-4 flex items-center justify-between bg-orange-200">
-        <h2 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
-          Cart Items
-        </h2>
-        {cartItems.length === 0 && <div>Cart is empty</div>}
-        {cartItems.map((order) => (
-          // one item
-          <div key={order.item._id}>
-            <div className="truncate text-sm font-medium text-gray-900 dark:text-white">
-              {order.item.name}
-            </div>
-            <div>
-              <button
-                onClick={() => onRemove(order)}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              >
-                -
-              </button>{" "}
-              <button
-                onClick={() => onAdd(order)}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              >
-                +
-              </button>
-            </div>
-
-            <div className="truncate text-sm font-medium text-gray-900 dark:text-white">
-              {order.quantity} x ${parseFloat(order.item.price).toFixed(2)}
-            </div>
+    <div className="flex justify-center">
+      <div className="w-[1680px]">
+        {/* title*/}
+        <div className="m-10">
+          <h2 className="text-4xl text-center  font-bold  text-gray-900 dark:text-gray-500">
+            Your Orders
+          </h2>
+        </div>
+        <div className="flex">
+          <div className="mb-4 flex-col items-center w-2/3 justify-between ">
+            {cartItems.length === 0 && <h1>Cart is empty</h1>}
+            {cartItems.map((order) => (
+              // one item
+              <div className="bg-gray-800 rounded  mt-5 flex ">
+                <div className="mr-10">
+                  <img
+                    src={findImageUrl(order)}
+                    className="w-[200px] rounded h-[200px]"
+                  />
+                </div>
+                <div className="mt-6 relative">
+                  <ul>
+                    <div>
+                      <li
+                        key={order.item._id}
+                        className="truncate text-sm font-medium text-gray-900 dark:text-white"
+                      >
+                        <h1 className="text-2xl">
+                          {order.quantity} x {order.item.name}
+                        </h1>
+                        <h1 className="text-xl">
+                          ${order.quantity * order.item.price}
+                        </h1>
+                      </li>
+                    </div>
+                  </ul>
+                  <div className="flex absolute bottom-3">
+                    <button
+                      onClick={() => onRemove(order)}
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-16 rounded-l-lg"
+                    >
+                      -
+                    </button>
+                    <p className="flex items-center justify-center text-2xl  font-bold text-gray-800  bg-white w-24">
+                      {order.quantity}
+                    </p>
+                    <button
+                      onClick={() => onAdd(order)}
+                      className="bg-blue-500 w-16 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r-lg"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+            {cartItems.length !== 0 && (
+              <div>
+                <hr className="mt-5" />
+                <div className="flex justify-between p-3">
+                  <div className="truncate text-3xl font-bold text-gray-900 ">
+                    Total
+                  </div>
+                  <div className="truncate text-3xl font-bold  text-gray-900">
+                    ${totalPrice}
+                  </div>
+                </div>
+                <div>
+                  <div className="truncate pl-3 text-sm font-medium text-gray-900 ">
+                    (GST included)
+                  </div>
+                </div>
+                <hr />
+              </div>
+            )}
           </div>
-        ))}
-
-        {cartItems.length !== 0 && (
-          <>
-            <hr></hr>
-            <div>
-              <div className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                Items Price
-              </div>
-              <div className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                ${itemsPrice.toFixed(2)}
-              </div>
-            </div>
-            <div>
-              <div className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                GST
-              </div>
-              <div className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                ${taxPrice.toFixed(2)}
-              </div>
-            </div>
-
-            <div>
-              <div>
-                <strong className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                  Total Price
-                </strong>
-              </div>
-              <div>
-                <strong className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                  ${totalPrice.toFixed(2)}
-                </strong>
-              </div>
-            </div>
-            <hr />
-            <div>
-              <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={retrieveOrders}
-              >
-                Checkout
-              </button>
-              <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={handleReset}
-              >
-                Reset
-              </button>
-            </div>
-          </>
-        )}
+          <div className="w-1/4">
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={retrieveOrders}
+            >
+              Checkout
+            </button>
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={handleReset}
+            >
+              Reset
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
