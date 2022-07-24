@@ -1,12 +1,15 @@
 import React from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
-
 function Cart({ cartItems, onAdd, onRemove, setCartItems }) {
-  const itemsPrice = cartItems.reduce((a, c) => a + c.quantity * c.item.price, 0);
+  const itemsPrice = cartItems.reduce(
+    (a, c) => a + c.quantity * c.item.price,
+    0
+  );
   const taxPrice = itemsPrice * 0.14;
   const totalPrice = itemsPrice + taxPrice;
-  const api = import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000/api/v1";
+  const api =
+    import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000/api/v1";
   const navigate = useNavigate();
 
   const navigateToProductDisplay = () => {
@@ -15,14 +18,13 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems }) {
   };
 
   function retrieveOrders() {
-    let newOrders = cartItems
-    console.log(newOrders.length)
-    for (let i = 0; i < newOrders.length; i++) {
-      newOrders[i].item = cartItems[i].item._id
-      console.log(cartItems[i].item._id)
-    }
-    console.log(newOrders)
-    postOrder(newOrders)
+    let newOrders = cartItems;
+    console.log(newOrders.length);
+    // for (let i = 0; i < newOrders.length; i++) {
+    //   newOrders[i].item = cartItems[i].item._id;
+    // }
+    console.log(newOrders);
+    postOrder(newOrders);
     // console.log(newOrders);
   }
 
@@ -40,11 +42,10 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems }) {
         orders: newOrders,
         complete: false,
         total_price: totalPrice.toFixed(2),
-      })
-        
+      }),
     });
     const returnOrder = await res.json();
-    console.log(returnOrder)
+    console.log(returnOrder);
     // const returnedEntry = await res.json();
     // dispatch({
     //   type: "newCheckout",
@@ -52,7 +53,6 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems }) {
     // });
     // return newCheckout;
   }
-
 
   async function submit(e) {
     e.preventDefault();
