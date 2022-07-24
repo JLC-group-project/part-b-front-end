@@ -70,9 +70,15 @@ function Orders({ orders, history }) {
 
   return (
     <div className="flex-col ">
-      <div className="flex justify-center my-8">
-        <h1 className="text-5xl font-bold">Orders List</h1>
-      </div>
+      {history === false ? (
+        <div className="flex justify-center my-8">
+          <h1 className="text-5xl font-bold">Orders List</h1>
+        </div>
+      ) : (
+        <div className="flex justify-center my-8">
+          <h1 className="text-5xl font-bold">Orders History</h1>
+        </div>
+      )}
       <div className=" flex justify-center ">
         <div className="flex flex-wrap round w-[1680px] justify-between text-white ">
           {visibleOrders.length > 0 ? (
@@ -107,12 +113,14 @@ function Orders({ orders, history }) {
                     <OrderAccordion title={order._id}>
                       <Order {...order} />
                       <br />
-                      <button
-                        onClick={(event) => handleClick2()}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                      >
-                        Print
-                      </button>
+                      <div className="absolute bottom-4 right-5 hidden">
+                        <button
+                          onClick={(event) => handleClick2()}
+                          className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
+                        >
+                          Print
+                        </button>
+                      </div>
                     </OrderAccordion>
                   )}
                 </div>
