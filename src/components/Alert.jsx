@@ -3,12 +3,12 @@ import React from 'react'
 function Alert({children}) {
   return (
     <div
-      class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+      className="text-red-500 text-xs italic mt-3"
       role="alert"
     >
-      <strong class="font-bold">
+      {/* <strong className="font-bold"> */}
         {children}
-      </strong>
+      {/* </strong> */}
     </div>
   );
 }

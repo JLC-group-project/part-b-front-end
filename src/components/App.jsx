@@ -59,6 +59,7 @@ function App() {
 
   const [cartItems, setCartItems] = useState([]);
   const [orderItem, setOrderItem] = useState();
+  const [totalPrice, setTotalPrice] = useState(0)
 
   useEffect(() => {
     async function multiFetches() {
@@ -77,7 +78,7 @@ function App() {
   }, []);
 
   function itemToApp(item) {
-    onAdd(item);
+    onAdd(item, item.item.price);
   }
 
   async function addMenuItem(product) {
@@ -111,7 +112,7 @@ function App() {
   }
 
   // this function adds product to cart
-  const onAdd = (product) => {
+  const onAdd = (product, itemPrice) => {
     const exist = cartItems.find((x) => x.item._id === product.item._id);
     if (exist) {
       setCartItems(
@@ -129,12 +130,13 @@ function App() {
           customisation: product.customisation,
           quantity: 1,
         },
-      ]);
+      ]); 
     }
+    setTotalPrice(totalPrice + parseFloat(itemPrice));
   };
 
   // this function removes items from the cart
-  const onRemove = (product) => {
+  const onRemove = (product, itemPrice) => {
     const exist = cartItems.find((x) => x.item._id === product.item._id);
     if (exist.quantity === 1) {
       setCartItems(cartItems.filter((x) => x.item._id !== product.item._id));
@@ -147,6 +149,7 @@ function App() {
         )
       );
     }
+    setTotalPrice(totalPrice - parseFloat(itemPrice));
   };
 
   return (
@@ -163,7 +166,10 @@ function App() {
         <div className="pb-20">
           <Routes>
             {/* End User Routes */}
-            <Route path="/cart/checkout" element={<CheckoutForm cartItems={cartItems} />} />
+            <Route
+              path="/cart/checkout"
+              element={<CheckoutForm cartItems={cartItems} totalPrice={totalPrice} />}
+            />
             <Route path="/" element={<Home homePage={homePage} />} />
             <Route
               path="/about_us"

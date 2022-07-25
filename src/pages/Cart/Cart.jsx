@@ -139,7 +139,7 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems }) {
                   </ul>
                   <div className="flex absolute bottom-3">
                     <button
-                      onClick={() => onRemove(order)}
+                      onClick={() => onRemove(order, order.item.price)}
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-16 rounded-l-lg"
                     >
                       -
@@ -148,7 +148,7 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems }) {
                       {order.quantity}
                     </p>
                     <button
-                      onClick={() => onAdd(order)}
+                      onClick={() => onAdd(order, order.item.price)}
                       className="bg-blue-500 w-16 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r-lg"
                     >
                       +
