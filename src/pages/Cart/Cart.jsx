@@ -9,11 +9,6 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems,onDelete }) {
   const api = import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000/api/v1";
   const navigate = useNavigate();
 
-  const navigateToProductDisplay = () => {
-    // 👇️ navigate to /contacts
-    navigate("../ProductDisplay");
-  };
-
   function retrieveOrders() {
     let newOrders = cartItems
     console.log(newOrders.length)
@@ -52,48 +47,6 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems,onDelete }) {
     // });
     // return newCheckout;
   }
-
-
-  async function submit(e) {
-    e.preventDefault();
-    const id = await addOrder(cartItems);
-    nav(`/entry/${id}`);
-  }
-
-  // const newArray = cartItems.map(e =>e.id, e.name, e.qty);
-  // const iterator = cartItems.values()
-
-  // for (const value of iterator) {
-  //   console.log(value)
-  // }
-
-  function sanitizedLineItems(lineItems) {
-    return lineItems.reduce((data, lineItem) => {
-      const item = data;
-      let variantData = null;
-      if (lineItem.length > 1) {
-        variantData = {
-          [lineItem[0].group_id]: lineItem[0].option_id,
-        };
-      }
-      item[lineItem.id] = {
-        quantity: lineItem.qty,
-        id: lineItem.id,
-      };
-      return item;
-    }, {});
-  }
-
-  const handleCheckout = (event) => {
-    event.preventDefault();
-    // const cart = sanitizedLineItems(cartItems);
-    console.log(cartItems);
-  };
-
-  const handleReset = (event) => {
-    event.preventDefault();
-    setCartItems([]);
-  };
 
   return (
     <div>
