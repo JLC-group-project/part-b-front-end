@@ -91,7 +91,7 @@ function CreateItem({ addMenuItem }) {
                 <select
                   required
                   id="default"
-                  className="bg-gray-200 border border-gray-200 text-gray-700 mb-6 text-m  rounded focus:ring-blue-500 focus:border-gray-200 block w-full p-2.5 placeholder-gray-400 "
+                  className="bg-gray-200 border border-gray-200 text-gray-400 mb-6 text-m  rounded focus:ring-blue-500 focus:border-gray-200 block w-full p-2.5 placeholder-gray-400 "
                   onChange={(event) => handleProductCategory(event)}
                 >
                   <option>Choose the Category</option>
