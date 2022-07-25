@@ -109,7 +109,7 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems }) {
             Your Orders
           </h2>
         </div>
-        <div className="flex">
+        <div className="">
           <div className="mb-4 flex-col items-center w-2/3 justify-between ">
             {cartItems.length === 0 && <h1>Cart is empty</h1>}
             {cartItems.map((order) => (
