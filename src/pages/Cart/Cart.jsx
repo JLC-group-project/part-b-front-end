@@ -102,15 +102,15 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems }) {
 
   return (
     <div className="flex justify-center">
-      <div className="w-[1680px]">
+      <div className="w-[1200px]">
         {/* title*/}
         <div className="m-10">
           <h2 className="text-4xl text-center  font-bold  text-gray-900">
             Your Orders
           </h2>
         </div>
-        <div className="flex">
-          <div className="mb-4 flex-col items-center w-2/3 justify-between ">
+        <div className="flex flex-wrap justify-end">
+          <div className="mb-4 flex-col items-center w-full justify-between ">
             {cartItems.length === 0 && <h1>Cart is empty</h1>}
             {cartItems.map((order) => (
               // one item
@@ -177,18 +177,18 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems }) {
               </div>
             )}
           </div>
-          <div className="w-1/4">
+          <div className="">
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              className="bg-blue-500 w-28 text-l hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded"
               onClick={retrieveOrders}
             >
               Checkout
             </button>
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              className="bg-red-600 w-28 text-l hover:bg-red-700 text-white font-bold py-2 px-4 mx-2 rounded"
               onClick={handleReset}
             >
-              Reset
+              Cancel
             </button>
           </div>
         </div>
