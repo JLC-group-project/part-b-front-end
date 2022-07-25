@@ -8,7 +8,7 @@ function HomeAdmin({ homePage }) {
         <img
           src={`${homePage.image_url}`}
           alt="Home_image"
-          className="w-full lg:w-[1680px]"
+          className="max-w-[600px]"
         />
       </div>
       <div className="flex-col pt-7">
@@ -18,7 +18,7 @@ function HomeAdmin({ homePage }) {
         </h4>
       </div>
       <div className="flex justify-center ">
-        <div className="text-end w-full lg:w-[1680px]">
+        <div className="text-center mt-4">
           <Link
             to={`/admin/edit/${homePage._id}`}
             className="inline-flex menuItems-center py-2 px-3 text-lg font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-800"

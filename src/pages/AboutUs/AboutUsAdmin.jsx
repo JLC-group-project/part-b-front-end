@@ -8,7 +8,7 @@ function AboutUsAdmin({ aboutPage }) {
         <img
           src={aboutPage.image_url}
           alt="AboutUs_image"
-          className="w-full lg:w-[1680px]"
+          className="max-w-[1200px]"
         />
       </div>
       <div className="flex-col pt-7">
@@ -18,10 +18,10 @@ function AboutUsAdmin({ aboutPage }) {
         </h4>
       </div>
       <div className="flex justify-center ">
-        <div className="text-end w-full lg:w-[1680px]">
+        <div className="text-center w-full mt-4 lg:w-[1680px]">
           <Link
             to={`/admin/about_us/edit/${aboutPage._id}`}
-            className="inline-flex menuItems-center py-2 px-3 text-lg font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 focus:ring-blue-800"
+            className="inline-flex menuItems-center py-2 px-3 text-lg font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-800"
           >
             Edit
           </Link>
