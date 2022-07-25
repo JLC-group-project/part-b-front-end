@@ -6,8 +6,7 @@ import Cloudinary from "../../components/Cloudinary";
 function CreateItem({ addMenuItem }) {
   const [product, setProduct] = useState({});
   const navigate = useNavigate();
-  // const [picture, setPicture] = useState();
-  // const [img, setImg] = useState(null);
+
   const categories = ["Drinks", "Bakery"];
 
   function handleProductName(e) {
@@ -43,81 +42,89 @@ function CreateItem({ addMenuItem }) {
 
   return (
     <div>
-      <h3>Create Product</h3>
-      <div className="form">
-        <div>
-          <Cloudinary getImageUrl={getImageUrl} />
+      <h1 className="text-3xl m-4 text-center">Create Product</h1>
+      <div className="pb-16">
+        <Cloudinary getImageUrl={getImageUrl} />
+      </div>
+      <div className="flex-col ">
+        <div className="justify-center flex">
+          <div className="w-full max-w-sm ">
+            <div className="flex-col md:items-center mb-6">
+              <div className="md:w-2/5">
+                <label className="block text-gray-500 font-bold  mb-1  pr-4">
+                  Product Name:
+                </label>
+              </div>
+              <div className="md:w-full">
+                <input
+                  className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white "
+                  type="text"
+                  placeholder="Latte"
+                  required
+                  onChange={(event) => handleProductName(event)}
+                />
+              </div>
+            </div>
+            <div className="flex-col md:items-center mb-6">
+              <div className="md:w-/5">
+                <label className="block text-gray-500 font-bold  mb-1  pr-4">
+                  Product Price:
+                </label>
+              </div>
+              <div className="md:w-full">
+                <input
+                  className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white "
+                  type="text"
+                  placeholder="5.00"
+                  required
+                  onChange={(event) => handleProductPrice(event)}
+                />
+              </div>
+            </div>
+            <div className="flex-col md:items-center mb-6  ">
+              <div className="md:w-3/5">
+                <label className="block text-gray-500 font-bold  mb-1  pr-4">
+                  Product Category:
+                </label>
+              </div>
+              <div className="md:w-full">
+                <select
+                  required
+                  id="default"
+                  className="bg-gray-200 border border-gray-200 text-gray-400 mb-6 text-m  rounded focus:ring-blue-500 focus:border-gray-200 block w-full p-2.5 placeholder-gray-400 "
+                  onChange={(event) => handleProductCategory(event)}
+                >
+                  <option>Choose the Category</option>
+                  {categories.map((each, index) => {
+                    return (
+                      <option key={index} value={each}>
+                        {each}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="product price"
-          >
-            Product Name:
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="text"
-            placeholder="Latte"
-            required
-            onChange={(event) => handleProductName(event)}
-          />
-        </div>
-        <div className="mb-6">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="product price"
-          >
-            Product Price:
-          </label>
-          <input
-            className="shadow appearance-none border border-grey-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-            type="number"
-            placeholder="5.00"
-            required
-            onChange={(event) => handleProductPrice(event)}
-          />
-        </div>
-        <div>
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="productprice"
-            required
-          >
-            Product Category:
-          </label>
-          <select
-            required
-            id="default"
-            className="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            onChange={(event) => handleProductCategory(event)}
-          >
-            <option>Choose the Category</option>
-            {categories.map((each, index) => {
-              return (
-                <option key={index} value={each}>
-                  {each}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-        <div>
-          <button
-            onClick={(e) => submit(e, product)}
-            className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Save
-          </button>
-        </div>
-        <div>
-          <Link
-            to="/admin/menu/Drinks"
-            className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-            variant="danger"
-          >
-            Cancel
-          </Link>
+        <div className="flex justify-center">
+          <div className="px-4">
+            <button
+              onClick={(e) => submit(e, product)}
+              className="inline-flex w-32 justify-center py-2  text-m font-medium text-center text-white focus:ring-4 focus:outline-none bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 rounded"
+            >
+              Save
+            </button>
+          </div>
+          <div className="px-4">
+            <Link
+              to="/admin/menu/Drinks"
+              className="inline-flex w-32 justify-center py-2  text-m font-medium text-center text-white focus:ring-4 focus:outline-none bg-red-600 hover:bg-red-700 focus:ring-red-800 rounded"
+              variant="danger"
+            >
+              Cancel
+            </Link>
+          </div>
         </div>
       </div>
     </div>

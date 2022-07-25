@@ -1,10 +1,9 @@
 import { React, useEffect, useState } from "react";
-import Card from "../../components/Card";
+// import Card from "../../components/Card";
 import OrderAccordion from "../../components/OrderAccordion";
 import Order from "./Order";
 
-
-function Orders({ orders, history }) {
+function Orders({ orders, history, api }) {
   const [visibleOrders, setVisibleOrders] = useState([]);
   const [update, setUpdate] = useState({});
 
@@ -48,7 +47,7 @@ function Orders({ orders, history }) {
   }
 
   function handleClick(id, event, index) {
-    fetch(`http://localhost:4000/api/v1/orders/${id}`, {
+    fetch(`${api}/orders/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -70,40 +69,69 @@ function Orders({ orders, history }) {
   }
 
   return (
-    <>
-      {visibleOrders.length > 0 ? (
-        visibleOrders.map((order, index) => (
-          <>
-            {history === false ? (
-              <Card key={order._id}>
-                <Order {...order} />
-                <br />
-                <button
-                  onClick={(event) => handleClick(order._id, event, index)}
-                  // onClick={(event) => removeOrder(order._id, event, index)}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                >
-                  Complete
-                </button>
-              </Card>
-            ) : (
-              <OrderAccordion title={order._id}>
-                  <Order {...order} />
-                  <br />
-                  <button
-                    onClick={(event) => handleClick2()}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                  >
-                    Print
-                  </button>
-              </OrderAccordion>
-            )}
-          </>
-        ))
+    <div className="flex-col ">
+      {history === false ? (
+        <div className="flex justify-center my-8">
+          <h1 className="text-5xl font-bold">Orders List</h1>
+        </div>
       ) : (
-        <h1>Empty List</h1>
+        <div className="flex justify-center my-8">
+          <h1 className="text-5xl font-bold">Orders History</h1>
+        </div>
       )}
-    </>
+      <div className=" flex justify-center ">
+        <div className="flex flex-wrap round w-[1680px] justify-evenly text-white ">
+          {visibleOrders.length > 0 ? (
+            visibleOrders.map((order, index) => (
+              <div className="rounded  shadow-lg min-w-[300px]  min-h-[100px] overflow-hidden  mx-5 mt-8 bg-gray-700 relative">
+                <h1
+                  className="text-center overflow-hidden before:h-[1px] after:h-[1px] after:bg-white font-bold
+           after:inline-block after:relative after:align-middle after:w-1/3 
+           before:bg-white before:inline-block before:relative before:align-middle 
+           before:w-1/3 before:right-2 after:left-2 text-xl p-4"
+                >{`Order [${index + 1}]`}</h1>
+                <div>
+                  {history === false ? (
+                    <div className="mb-5 px-6 py-4">
+                      {/* <Card key={order._id}> */}
+                      <Order {...order} />
+                      <br />
+                      <div className="absolute bottom-4 right-5">
+                        <button
+                          onClick={(event) =>
+                            handleClick(order._id, event, index)
+                          }
+                          // onClick={(event) => removeOrder(order._id, event, index)}
+                          className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
+                        >
+                          Complete
+                        </button>
+                      </div>
+                      {/* </Card> */}
+                    </div>
+                  ) : (
+                    <OrderAccordion title={order._id}>
+                      <Order {...order} />
+                      <br />
+                      <div className="absolute bottom-4 right-5 hidden">
+                        <button
+                          onClick={(event) => handleClick2()}
+                          className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
+                        >
+                          Print
+                        </button>
+                      </div>
+                    </OrderAccordion>
+                  )}
+                </div>
+              </div>
+            ))
+          ) : (
+            <h1>Empty List</h1>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 export default Orders;
