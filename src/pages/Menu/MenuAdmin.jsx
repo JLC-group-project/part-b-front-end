@@ -59,7 +59,7 @@ function Menu({ menuItems, deleteMenuItem }) {
                       <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">
                         {item.name}
                       </h5>
-                      <p className="mb-3 font-normal text-gray-700 text-gray-400">
+                      <p className="mb-3 font-normal text-white">
                         {`$${item.price}`}
                       </p>
                       <div className="flex justify-end ">

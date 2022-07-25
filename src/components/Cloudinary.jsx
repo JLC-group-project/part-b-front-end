@@ -13,9 +13,9 @@ function Cloudinary({ getImageUrl }) {
     setLoad(true);
     const data = new FormData();
     data.append("file", image);
-    data.append("upload_preset", "coderscafe");
-    data.append("cloud_name", "dapawns9w");
-    fetch("https://api.cloudinary.com/v1_1/dapawns9w/image/upload", {
+    data.append("upload_preset", import.meta.env.VITE_PRESET);
+    data.append("cloud_name", import.meta.env.VITE_CLOUDINARY_NAME);
+    fetch(import.meta.env.VITE_CLOUDINARY_API, {
       method: "post",
       body: data,
     })
