@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 
-function CustomizeItem({ itemToApp, onAdd }) {
+function CustomizeItem({ itemToApp }) {
   const ices = ["Hot", "None", "Little", "Iced"];
   const milks = ["Lactose free", "Almond milk", "Skim milk", "Regular"];
   const sizes = ["Large", "Medium", "Small"];
@@ -24,12 +24,6 @@ function CustomizeItem({ itemToApp, onAdd }) {
     // onAdd(item,price,id);
     itemToApp(newItem);
   }
-
-  // function addToCart(e) {
-  //    e.preventDefault;
-  //   const newItem = { _id: "62d5697aef6a7a8a4ab88297", item, customisation };
-  //   onAdd(newItem);
-  // }
 
   function handleCustomizeSugar(e) {
     setCustomisation(() => ({
@@ -61,7 +55,7 @@ function CustomizeItem({ itemToApp, onAdd }) {
 
   return (
     <div>
-      <div className="flex justify-center my-10">
+      <div className="flex justify-center py-10">
         <h1 className="text-4xl font-bold ">Customisation</h1>
       </div>
       <div className="flex justify-center">

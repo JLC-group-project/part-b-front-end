@@ -8,7 +8,7 @@ function AuthNav() {
   const { user, isAuthenticated } = useAuth0();
 
   return (
-    <nav className="bg-teal-500 px-2 py-4 md:px-4 lg:px-6 flex justify-center">
+    <nav className="bg-gray-700 px-2 py-4 md:px-4 lg:px-6 flex justify-center">
       <div className="w-full lg:w-[1680px]">
         <div className="flex  justify-between px-4">
           <Link to="/admin">
@@ -31,8 +31,8 @@ function AuthNav() {
             {isAuthenticated && (
               <a
                 className="inline-block sm:text-sm px-4 py-2 md:text-l px-4 py-2 leading-none border rounded
-              text-white border-white hover:border-transparent hover:text-teal-500
-              hover:bg-white  lg:mt-0"
+              text-white border-white hover:border-transparent 
+              hover:bg-gray-400  lg:mt-0"
               >
                 <LogoutButton />
               </a>
@@ -40,40 +40,43 @@ function AuthNav() {
           </div>
         </div>
         <div>
-          <div className="text-s md:text-l lg:text-xl flex  justify-center p-3 flex-wrap">
+          <div
+            className="text-s md:text-l lg:text-xl flex  justify-center p-3 flex-wrap text-white
+"
+          >
             <Link
               to="/admin"
-              className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white px-6"
+              className="block lg:inline-block lg:mt-0 hover:text-gray-400 px-6"
             >
               Home
             </Link>
             <Link
               to="/admin/menu/Drinks"
-              className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white px-6"
+              className="block lg:inline-block lg:mt-0 hover:text-gray-400 px-6"
             >
               Menu
             </Link>
             <Link
               to="/admin/about_us"
-              className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white px-6"
+              className="block lg:inline-block lg:mt-0 hover:text-gray-400 px-6"
             >
               About Us
             </Link>
             <Link
               to="/admin/orders"
-              className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white px-6"
+              className="block lg:inline-block lg:mt-0 hover:text-gray-400 px-6"
             >
               Orders
             </Link>
             <Link
               to="/admin/orders/history"
-              className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white px-6"
+              className="block lg:inline-block lg:mt-0 hover:text-gray-400 px-6"
             >
               History
             </Link>
             <Link
               to="/admin/profile"
-              className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white px-6"
+              className="block lg:inline-block lg:mt-0 hover:text-gray-400 px-6"
             >
               Profile
             </Link>

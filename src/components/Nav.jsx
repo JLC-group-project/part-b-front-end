@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Nav(props) {
   return (
-    <nav className="bg-teal-500 px-2 py-4 md:px-4 lg:px-6 flex justify-center">
+    <nav className="bg-gray-700 px-2 py-4 md:px-4 lg:px-6 flex justify-center">
       <div className="w-full lg:w-[1680px]">
         <div className="flex  justify-between px-4">
           <Link to="/">
@@ -25,10 +25,10 @@ function Nav(props) {
           <Link
             to="cart"
             className="inline-block sm:text-sm px-4 py-2 md:text-l px-4 py-2 leading-none border rounded
-          text-white border-white hover:border-transparent hover:text-teal-500
+          text-white border-white hover:border-transparent hover:text-gray-700
           hover:bg-white  lg:mt-0"
           >
-            Cart{" "}
+            Cart
             {props.countCartItems ? (
               <button>{`(${props.countCartItems})`}</button>
             ) : (
@@ -37,22 +37,22 @@ function Nav(props) {
           </Link>
         </div>
         <div>
-          <div className="text-s md:text-l lg:text-xl flex  justify-center p-3">
+          <div className="text-s md:text-l lg:text-xl flex  justify-center p-3  text-white ">
             <Link
               to="/"
-              className="block  lg:inline-block lg:mt-0 text-teal-200 hover:text-white px-6"
+              className="block  hover:text-gray-400 lg:inline-block lg:mt-0 px-6"
             >
               Home
             </Link>
             <Link
               to="/menu/Drinks"
-              className="block  lg:inline-block lg:mt-0 text-teal-200 hover:text-white px-6"
+              className="block  hover:text-gray-400 lg:inline-block lg:mt-0 px-6"
             >
               Menu
             </Link>
             <Link
               to="/about_us"
-              className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white px-6"
+              className="block hover:text-gray-400 lg:inline-block lg:mt-0 px-6"
             >
               About Us
             </Link>
