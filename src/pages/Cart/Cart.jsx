@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Link } from "react-router-dom";
 
 function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems }) {
   const totalPrice = cartItems.reduce(
@@ -178,12 +178,13 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems }) {
             )}
           </div>
           <div className="">
-            <button
+            <Link
+              to="checkout"
               className="bg-blue-500 w-28 text-l hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded"
-              onClick={retrieveOrders}
+              // onClick={retrieveOrders}
             >
               Checkout
-            </button>
+            </Link>
             <button
               className="bg-red-600 w-28 text-l hover:bg-red-700 text-white font-bold py-2 px-4 mx-2 rounded"
               onClick={handleReset}
