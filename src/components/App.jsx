@@ -163,6 +163,7 @@ function App() {
         <div className="pb-20">
           <Routes>
             {/* End User Routes */}
+            <Route path="/cart/checkout" element={<CheckoutForm/>} />
             <Route path="/" element={<Home homePage={homePage} />} />
             <Route
               path="/about_us"
