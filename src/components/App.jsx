@@ -126,6 +126,10 @@ function App() {
       );
     }
   };
+
+  const onDelete = (product) => {
+    setCartItems(cartItems.filter((x) => x.item._id !== product.item._id));
+  }
   
   return (
     <BrowserRouter>
@@ -156,6 +160,7 @@ function App() {
               onAdd={onAdd}
               onRemove={onRemove}
               setCartItems={setCartItems}
+              onDelete={onDelete}
             />
           }
         />

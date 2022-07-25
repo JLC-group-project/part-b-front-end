@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
 
-function Cart({ cartItems, onAdd, onRemove, setCartItems }) {
+function Cart({ cartItems, onAdd, onRemove, setCartItems,onDelete }) {
   const itemsPrice = cartItems.reduce((a, c) => a + c.quantity * c.item.price, 0);
   const taxPrice = itemsPrice * 0.14;
   const totalPrice = itemsPrice + taxPrice;
@@ -121,6 +121,12 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems }) {
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               >
                 +
+              </button>
+              <button
+                onClick={() => onDelete(order)}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Delete
               </button>
             </div>
 
