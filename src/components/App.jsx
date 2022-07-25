@@ -257,6 +257,7 @@ function App() {
                   component={Orders}
                   orders={orders}
                   history={false}
+                  api={api}
                 />
               }
             />

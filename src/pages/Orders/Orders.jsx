@@ -3,7 +3,7 @@ import { React, useEffect, useState } from "react";
 import OrderAccordion from "../../components/OrderAccordion";
 import Order from "./Order";
 
-function Orders({ orders, history }) {
+function Orders({ orders, history, api }) {
   const [visibleOrders, setVisibleOrders] = useState([]);
   const [update, setUpdate] = useState({});
 
@@ -47,7 +47,7 @@ function Orders({ orders, history }) {
   }
 
   function handleClick(id, event, index) {
-    fetch(`http://localhost:4000/api/v1/orders/${id}`, {
+    fetch(`${api}/orders/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
