@@ -24,8 +24,8 @@ function Nav(props) {
           </Link>
           <Link
             to="cart"
-            className="inline-block sm:text-sm px-4 py-2 md:text-l px-4 py-2 leading-none border rounded
-          text-white border-white hover:border-transparent hover:text-gray-700
+            className="inline-block sm:text-sm px-4 py-2 md:text-l leading-none border rounded
+          text-white border-white hover:border-transparent hover:text-gray-400
           hover:bg-white  lg:mt-0"
           >
             Cart

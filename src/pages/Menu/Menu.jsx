@@ -25,7 +25,7 @@ function Menu({ menuItems, itemToApp, onAdd }) {
           <Link to="/menu/Drinks" className="inline-block mb-4">
             <h1 className="text-3xl font-bold pl-3 ">Menu</h1>
           </Link>
-          <ul className="text-sm w-full font-medium  dark:text-gray-500 ">
+          <ul className="text-sm w-full font-medium  text-gray-500 ">
             {categories.map((cat, index) => (
               <li
                 key={index}
@@ -44,7 +44,7 @@ function Menu({ menuItems, itemToApp, onAdd }) {
             {menuItems.map(
               (item) =>
                 item.category === cate && (
-                  <div className="sm:max-w-xs md:max-w-xs bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-700 m-4 dark:border-gray-200">
+                  <div className="sm:max-w-xs md:max-w-xs rounded-lg border shadow-md bg-gray-700 m-4 border-gray-200">
                     <div>
                       <img
                         className="rounded-t-lg h-[318px] w-[318px]"
@@ -52,10 +52,10 @@ function Menu({ menuItems, itemToApp, onAdd }) {
                       />
                     </div>
                     <div className="p-5">
-                      <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                      <h5 className="mb-2 text-2xl font-bold tracking-tight  text-white">
                         {item.name}
                       </h5>
-                      <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                      <p className="mb-3 font-normal text-gray-400">
                         {`$${item.price}`}
                       </p>
                       {/*Ternary Operators to change the button as bakery do not need customize */}
@@ -63,7 +63,7 @@ function Menu({ menuItems, itemToApp, onAdd }) {
                         {item.category === "Drinks" ? (
                           <Link
                             to={`/menu/${item.name}/${item.price}/${item._id}`}
-                            className="inline-flex menuItems-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            className="inline-flex menuItems-center py-2 px-3 text-sm font-medium text-center text-white rounded-lg  focus:ring-4 focus:outline-none bg-blue-600 hover:bg-blue-700 focus:ring-blue-800"
                             item={item}
                           >
                             Customize
@@ -73,7 +73,7 @@ function Menu({ menuItems, itemToApp, onAdd }) {
                             onClick={(e) => handleAdd(e, item)}
                             // onClick={() => onAdd(item)}
                             // onClick={console.log(item)}
-                            className="inline-flex menuItems-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            className="w-32 inline-flex justify-center menuItems-center py-2 px-3 text-m font-medium text-center text-white  rounded focus:ring-4 focus:outline-none bg-blue-600 hover:bg-blue-700 focus:ring-blue-800"
                           >
                             Add To Cart
                           </button>

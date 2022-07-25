@@ -29,13 +29,13 @@ function AuthNav() {
           </Link>
           <div>
             {isAuthenticated && (
-              <a
-                className="inline-block sm:text-sm px-4 py-2 md:text-l px-4 py-2 leading-none border rounded
+              <button
+                className="inline-block sm:text-sm px-4 py-2 md:text-l leading-none border rounded
               text-white border-white hover:border-transparent 
               hover:bg-gray-400  lg:mt-0"
               >
                 <LogoutButton />
-              </a>
+              </button>
             )}
           </div>
         </div>

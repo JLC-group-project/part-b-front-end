@@ -105,7 +105,7 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems }) {
       <div className="w-[1680px]">
         {/* title*/}
         <div className="m-10">
-          <h2 className="text-4xl text-center  font-bold  text-gray-900 dark:text-gray-500">
+          <h2 className="text-4xl text-center  font-bold  text-gray-900">
             Your Orders
           </h2>
         </div>
@@ -126,7 +126,7 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems }) {
                     <div>
                       <li
                         key={order.item._id}
-                        className="truncate text-sm font-medium text-gray-900 dark:text-white"
+                        className="truncate text-sm font-medium  text-white"
                       >
                         <h1 className="text-2xl">
                           {order.quantity} x {order.item.name}
@@ -165,7 +165,7 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems }) {
                     Total
                   </div>
                   <div className="truncate text-3xl font-bold  text-gray-900">
-                    ${totalPrice}
+                    {`$${totalPrice.toFixed(2)}`}
                   </div>
                 </div>
                 <div>
