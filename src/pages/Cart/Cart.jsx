@@ -132,7 +132,7 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems }) {
                           {order.quantity} x {order.item.name}
                         </h1>
                         <h1 className="text-xl">
-                          ${order.quantity * order.item.price}
+                          ${(order.quantity * order.item.price).toFixed(2)}
                         </h1>
                       </li>
                     </div>

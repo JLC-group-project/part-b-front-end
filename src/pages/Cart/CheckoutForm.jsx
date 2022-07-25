@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function CheckoutForm() {
-  return (
-    <div>CheckoutForm</div>
-  )
+  return <div>CheckoutForm</div>;
 }
 
-export default CheckoutForm
+export default CheckoutForm;
