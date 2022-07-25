@@ -57,7 +57,7 @@ function CreateItem({ addMenuItem }) {
               </div>
               <div className="md:w-full">
                 <input
-                  className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-500"
+                  className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white "
                   type="text"
                   placeholder="Latte"
                   required
@@ -73,7 +73,7 @@ function CreateItem({ addMenuItem }) {
               </div>
               <div className="md:w-full">
                 <input
-                  className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-500"
+                  className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white "
                   type="text"
                   placeholder="5.00"
                   required
@@ -111,7 +111,7 @@ function CreateItem({ addMenuItem }) {
           <div className="px-4">
             <button
               onClick={(e) => submit(e, product)}
-              className="inline-flex w-32 justify-center py-2  text-m font-medium text-center text-white focus:ring-4 focus:outline-none bg-blue-600 hover:bg-blue-700 focus:ring-blue-800"
+              className="inline-flex w-32 justify-center py-2  text-m font-medium text-center text-white focus:ring-4 focus:outline-none bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 rounded"
             >
               Save
             </button>
@@ -119,7 +119,7 @@ function CreateItem({ addMenuItem }) {
           <div className="px-4">
             <Link
               to="/admin/menu/Drinks"
-              className="inline-flex w-32 justify-center py-2  text-m font-medium text-center text-whitefocus:ring-4 focus:outline-none bg-red-600 hover:bg-red-700 focus:ring-red-800"
+              className="inline-flex w-32 justify-center py-2  text-m font-medium text-center text-white focus:ring-4 focus:outline-none bg-red-600 hover:bg-red-700 focus:ring-red-800 rounded"
               variant="danger"
             >
               Cancel

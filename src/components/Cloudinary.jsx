@@ -84,7 +84,7 @@ function Cloudinary({ getImageUrl }) {
             <div className="flex justify-center p-2">
               <button
                 onClick={uploadImage}
-                className="w-full px-4 py-2 text-white bg-teal-500 rounded shadow-xl"
+                className="w-full px-4 py-2 text-white bg-gray-500 rounded shadow-xl hover:bg-gray-700"
               >
                 Upload
               </button>
