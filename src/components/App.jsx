@@ -137,7 +137,7 @@ function App() {
   const onRemove = (product) => {
     const exist = cartItems.find((x) => x.item._id === product.item._id);
     if (exist.quantity === 1) {
-      setCartItems(cartItems.filter((x) => x.item._id !== product._id));
+      setCartItems(cartItems.filter((x) => x.item._id !== product.item._id));
     } else {
       setCartItems(
         cartItems.map((x) =>
