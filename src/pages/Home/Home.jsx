@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import Loading from "../../components/Loading";
 
 function Home({ homePage }) {
-  return (
+  return homePage ? (
     <div>
       <div className="flex justify-center ">
         <img
@@ -21,7 +22,9 @@ function Home({ homePage }) {
         </div>
       </div>
     </div>
-  );
+  ) : (
+      <Loading />
+  )
 }
 
 export default Home;

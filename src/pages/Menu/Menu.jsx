@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import Loading from "../../components/Loading";
 
 function Menu({ menuItems, itemToApp, onAdd }) {
   const { cate } = useParams();
@@ -18,7 +19,7 @@ function Menu({ menuItems, itemToApp, onAdd }) {
     // navigate(`/about_us`);
   }
 
-  return (
+  return menuItems ? (
     <div className="flex justify-center">
       <div className="flex  w-full justify-center md:w-[1480px]">
         <div className=" invisible mt-8 md:visible md:w-1/5 md:h-m">
@@ -87,6 +88,8 @@ function Menu({ menuItems, itemToApp, onAdd }) {
         </div>
       </div>
     </div>
+  ) : (
+      <Loading />
   );
 }
 

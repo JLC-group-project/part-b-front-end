@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
+import Loading from "../../components/Loading";
 
 function HomeAdmin({ homePage }) {
-  return (
+  return homePage ? (
     <div>
       <div className="flex justify-center ">
         <img
@@ -28,6 +29,8 @@ function HomeAdmin({ homePage }) {
         </div>
       </div>
     </div>
+  ) : (
+      <Loading />
   );
 }
 

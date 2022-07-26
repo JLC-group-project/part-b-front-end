@@ -26,30 +26,9 @@ const api = "http://localhost:4000/api/v1";
 const url = import.meta.env.VITE_URL || "http://localhost:3000";
 
 function App() {
-  //hardcode items object and customize to transfer to the components need them
-  const [menuItems, setMenuItems] = useState([
-    {
-      category: "Drinks",
-      name: "Latte",
-      price: "$5.00",
-    },
-    {
-      category: "Drinks",
-      name: "Tea",
-      price: "$4.50",
-    },
-    { category: "Bakery", name: "Bagel", price: "$4.50" },
-    { category: "Bakery", name: "Almond Croissant", price: "$4.50" },
-  ]);
-
-  const [homePage, setHomePage] = useState({
-    title: "About Us",
-    body: "About Us Body",
-  });
-  const [aboutPage, setAboutPage] = useState({
-    title: "About Us",
-    body: "About Us Body",
-  });
+  const [menuItems, setMenuItems] = useState();
+  const [homePage, setHomePage] = useState();
+  const [aboutPage, setAboutPage] = useState();
 
   // Authentication Hook
   const { user, isAuthenticated, isLoading } = useAuth0();
