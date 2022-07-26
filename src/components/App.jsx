@@ -22,7 +22,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Footer from "./Footer";
 import Success from "../pages/Cart/Success";
 
-const api = "http://localhost:4000/api/v1";
+const api = import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000/api/v1";
 const url = import.meta.env.VITE_URL || "http://localhost:3000";
 
 function App() {
