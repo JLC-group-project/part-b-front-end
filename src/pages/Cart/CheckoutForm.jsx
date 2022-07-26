@@ -4,11 +4,13 @@ import * as Yup from "yup";
 import Alert from "../../components/Alert";
 import { useNavigate } from "react-router-dom";
 
-function CheckoutForm({ cartItems, totalPrice, api}) {
+function CheckoutForm({ cartItems, totalPrice, api }) {
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
-  
-  async function postOrder(customer) {
+
+  const navigate = useNavigate();
+
+  async function postOrder(customer_info) {
     const res = await fetch(`${api}/orders`, {
       method: "post",
       headers: {
@@ -18,14 +20,14 @@ function CheckoutForm({ cartItems, totalPrice, api}) {
       // put orders and customer info in body
       body: JSON.stringify({
         complete: false,
-        customer_info: customer,
+        customer_info,
         orders: cartItems,
         total_price: totalPrice.toFixed(2),
       }),
     });
     const returnOrder = await res.json();
-    useNavigate(`./success/${returnOrder._id}`)
     console.log(returnOrder);
+    navigate(`./success/${returnOrder._id}`);
   }
 
   // Pass the useFormik() hook initial form values and a submit function that will
@@ -53,31 +55,26 @@ function CheckoutForm({ cartItems, totalPrice, api}) {
         .required("This field is required"),
       phoneNumber: Yup.string()
         .matches(phoneRegExp, "Phone number is not valid")
-        .required("This field is required")
-        .test(
-          "len",
-          "Must be 8 or 10 numbers",
-          (val) => val.toString().length === 8 || val.toString().length === 10
-        ),
+        .required("This field is required"),
+      // .test(
+      //   "len",
+      //   "Must be 8 or 10 numbers",
+      //   (val) => val.toString().length === 8 || val.toString().length === 10
+      // ),
     }),
     onSubmit: (values) => {
-      // console.log(values)
-      // alert(JSON.stringify(values, null, 2));
       const customerInfo = {
-        customer_info: {
-          first_name: values.firstName,
-          last_name: values.lastName,
-          email: values.email,
-          phone_number: values.phoneNumber,
-        }
-      }
+        first_name: values.firstName,
+        last_name: values.lastName,
+        email: values.email,
+        phone_number: values.phoneNumber,
+      };
       console.log(customerInfo);
-      postOrder(customerInfo)
+      postOrder(customerInfo);
     },
   });
   return (
     <>
-      {/* <div className="w-full max-w-lg"> */}
       <div className="flex-col m-4">
         <div className="justify-center flex">
           <div className="w-full max-w-lg ">
