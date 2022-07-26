@@ -1,14 +1,21 @@
 import React from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
-
-function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems,onDelete }) {
+function Cart({
+  cartItems,
+  onAdd,
+  onRemove,
+  setCartItems,
+  menuItems,
+  onDelete,
+}) {
   const totalPrice = cartItems.reduce(
     (a, c) => a + c.quantity * c.item.price,
     0
   );
   const taxPrice = totalPrice * 0.1;
-  const api = import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000/api/v1";
+  const api =
+    import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000/api/v1";
   const navigate = useNavigate();
 
   function retrieveOrders() {
@@ -72,40 +79,31 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems,onDelete }) 
             {cartItems.length === 0 && <h1>Cart is empty</h1>}
             {cartItems.map((order) => (
               // one item
-              <div className="bg-gray-800 rounded  mt-5 flex ">
+              <div className="bg-gray-800 rounded  mt-5 flex relative">
                 <div className="mr-10">
                   <img
                     src={findImageUrl(order)}
                     className="w-[200px] rounded h-[200px]"
                   />
                 </div>
+                <div></div>
                 <div className="mt-6 relative">
-                  <div className="flex justify-between w-full">
-                    <ul>
-                      <div>
-                        <li
-                          key={order.item._id}
-                          className="truncate text-sm font-medium  text-white"
-                        >
-                          <h1 className="text-2xl">
-                            {order.quantity} x {order.item.name}
-                          </h1>
-
-                          <h1 className="text-xl">
-                            ${(order.quantity * order.item.price).toFixed(2)}
-                          </h1>
-                        </li>
-                      </div>
-                    </ul>
-                    <div className="">
-                      <button
-                        onClick={() => onDelete(order)}
-                        className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  <ul>
+                    <div>
+                      <li
+                        key={order.item._id}
+                        className="truncate text-sm font-medium  text-white"
                       >
-                        X
-                      </button>
+                        <h1 className="text-2xl">
+                          {order.quantity} x {order.item.name}
+                        </h1>
+
+                        <h1 className="text-xl">
+                          ${(order.quantity * order.item.price).toFixed(2)}
+                        </h1>
+                      </li>
                     </div>
-                  </div>
+                  </ul>
                   <div className="flex absolute bottom-3">
                     <button
                       onClick={() => onRemove(order)}
@@ -123,6 +121,14 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems,onDelete }) 
                       +
                     </button>
                   </div>
+                </div>
+                <div className="absolute top-5 right-5">
+                  <button
+                    onClick={() => onDelete(order)}
+                    className="text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-700 font-bold rounded-full text-m  text-center w-6 h-6"
+                  >
+                    X
+                  </button>
                 </div>
               </div>
             ))}
