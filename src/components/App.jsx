@@ -151,8 +151,8 @@ function App() {
 
   const onDelete = (product) => {
     setCartItems(cartItems.filter((x) => x.item._id !== product.item._id));
-  }
-  
+  };
+
   return (
     <BrowserRouter>
       <div className="min-h-screen relative">
@@ -164,7 +164,7 @@ function App() {
         {/* <CheckoutForm /> */}
 
         {/* <Cart cartItems={cartItems} onAdd={onAdd} onRemove={onRemove} /> */}
-        <div className="pb-20">
+        <div className="pb-20 overflow-hidden">
           <Routes>
             {/* End User Routes */}
             <Route path="/" element={<Home homePage={homePage} />} />
@@ -293,4 +293,3 @@ function App() {
 }
 
 export default App;
-

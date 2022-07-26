@@ -86,7 +86,6 @@ function Cart({
                     className="w-[200px] rounded h-[200px]"
                   />
                 </div>
-                <div></div>
                 <div className="mt-6 relative">
                   <ul>
                     <div>
