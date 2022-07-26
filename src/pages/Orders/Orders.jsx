@@ -83,7 +83,7 @@ function Orders({ orders, history, api }) {
         <div className="flex flex-wrap round w-[1680px] justify-evenly text-white ">
           {visibleOrders.length > 0 ? (
             visibleOrders.map((order, index) => (
-              <div className="rounded  shadow-lg min-w-[300px]  min-h-[100px] overflow-hidden  mx-5 mt-8 bg-gray-700 relative">
+              <div key={order._id} className="rounded  shadow-lg min-w-[300px]  min-h-[100px] overflow-hidden  mx-5 mt-8 bg-gray-700 relative">
                 <h1
                   className="text-center overflow-hidden before:h-[1px] after:h-[1px] after:bg-white font-bold
            after:inline-block after:relative after:align-middle after:w-1/3 

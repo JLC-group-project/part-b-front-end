@@ -6,7 +6,7 @@ function Order({ total_price, orders }) {
       <div className="mb-10">
         <ul>
           {orders.map((order, index) => (
-            <div className="mb-6">
+            <div key={index} className="mb-6">
               <h1 className="text-xl text-center mb-3">{`ITEM [${
                 index + 1
               }]`}</h1>

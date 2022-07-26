@@ -16,13 +16,13 @@ import CreateItem from "../pages/Menu/CreateItem";
 import EditItem from "../pages/Menu/EditItem";
 import Cart from "../pages/Cart/Cart";
 import CheckoutForm from "../pages/Cart/CheckoutForm";
-import ProductDisplay from "../pages/Cart/ProductDisplay";
 import Orders from "../pages/Orders/Orders";
 import Profile from "../pages/Profile";
 import ProtectedRoute from "./ProtectedRoute";
 import Footer from "./Footer";
+import Success from "../pages/Cart/Success";
 
-const api = import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000/api/v1";
+const api = "http://localhost:4000/api/v1";
 const url = import.meta.env.VITE_URL || "http://localhost:3000";
 
 function App() {
@@ -168,7 +168,15 @@ function App() {
             {/* End User Routes */}
             <Route
               path="/cart/checkout"
-              element={<CheckoutForm cartItems={cartItems} totalPrice={totalPrice} />}
+              element={
+                <CheckoutForm cartItems={cartItems} totalPrice={totalPrice} api={api} />
+              }
+            />
+            <Route
+              path="/cart/checkout/success/:id"
+              element={
+                <Success api={api} />
+              }
             />
             <Route path="/" element={<Home homePage={homePage} />} />
             <Route

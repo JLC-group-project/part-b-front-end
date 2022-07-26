@@ -44,7 +44,7 @@ function Menu({ menuItems, itemToApp, onAdd }) {
             {menuItems.map(
               (item) =>
                 item.category === cate && (
-                  <div className="sm:max-w-xs md:max-w-xs rounded-lg border shadow-md bg-gray-700 m-4 border-gray-200">
+                  <div key={item._id} className="sm:max-w-xs md:max-w-xs rounded-lg border shadow-md bg-gray-700 m-4 border-gray-200">
                     <div>
                       <img
                         className="rounded-t-lg h-[318px] w-[318px]"

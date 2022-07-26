@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route, useNavigate, Link } from "react-router-dom";
 
 function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems }) {
+
   const totalPrice = cartItems.reduce(
     (a, c) => a + c.quantity * c.item.price,
     0
@@ -16,6 +17,14 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems }) {
     // 👇️ navigate to /contacts
     navigate("../ProductDisplay");
   };
+
+  function checkEmptyCart() {
+    if (cartItems.length != 0) {
+      navigate("./checkout")
+    } else {
+      alert("Cart is Empty");
+    }
+  }
 
   function retrieveOrders() {
     let newOrders = cartItems;
@@ -112,9 +121,9 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems }) {
         <div className="flex flex-wrap justify-end">
           <div className="mb-4 flex-col items-center w-full justify-between ">
             {cartItems.length === 0 && <h1>Cart is empty</h1>}
-            {cartItems.map((order) => (
+            {cartItems.map((order,index) => (
               // one item
-              <div className="bg-gray-800 rounded  mt-5 flex ">
+              <div key={index} className="bg-gray-800 rounded  mt-5 flex ">
                 <div className="mr-10">
                   <img
                     src={findImageUrl(order)}
@@ -178,13 +187,13 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems }) {
             )}
           </div>
           <div className="">
-            <Link
-              to="checkout"
+            <button
+              // to="checkout"
               className="bg-blue-500 w-28 text-l hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded"
-              // onClick={retrieveOrders}
+              onClick={checkEmptyCart}
             >
               Checkout
-            </Link>
+            </button>
             <button
               className="bg-red-600 w-28 text-l hover:bg-red-700 text-white font-bold py-2 px-4 mx-2 rounded"
               onClick={handleReset}
