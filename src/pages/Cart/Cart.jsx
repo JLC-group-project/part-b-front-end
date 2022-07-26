@@ -1,21 +1,15 @@
 import React from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
-function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems }) {
+
+function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems,onDelete }) {
   const totalPrice = cartItems.reduce(
     (a, c) => a + c.quantity * c.item.price,
     0
   );
   const taxPrice = totalPrice * 0.1;
-
-  const api =
-    import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000/api/v1";
+  const api = import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000/api/v1";
   const navigate = useNavigate();
-
-  const navigateToProductDisplay = () => {
-    // 👇️ navigate to /contacts
-    navigate("../ProductDisplay");
-  };
 
   function retrieveOrders() {
     let newOrders = cartItems;
@@ -54,42 +48,6 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems }) {
     // return newCheckout;
   }
 
-  async function submit(e) {
-    e.preventDefault();
-    const id = await addOrder(cartItems);
-    nav(`/entry/${id}`);
-  }
-
-  // const newArray = cartItems.map(e =>e.id, e.name, e.qty);
-  // const iterator = cartItems.values()
-
-  // for (const value of iterator) {
-  //   console.log(value)
-  // }
-
-  function sanitizedLineItems(lineItems) {
-    return lineItems.reduce((data, lineItem) => {
-      const item = data;
-      let variantData = null;
-      if (lineItem.length > 1) {
-        variantData = {
-          [lineItem[0].group_id]: lineItem[0].option_id,
-        };
-      }
-      item[lineItem.id] = {
-        quantity: lineItem.qty,
-        id: lineItem.id,
-      };
-      return item;
-    }, {});
-  }
-
-  const handleCheckout = (event) => {
-    event.preventDefault();
-    // const cart = sanitizedLineItems(cartItems);
-    console.log(cartItems);
-  };
-
   const handleReset = (event) => {
     event.preventDefault();
     setCartItems([]);
@@ -122,21 +80,32 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems }) {
                   />
                 </div>
                 <div className="mt-6 relative">
-                  <ul>
-                    <div>
-                      <li
-                        key={order.item._id}
-                        className="truncate text-sm font-medium  text-white"
+                  <div className="flex justify-between w-full">
+                    <ul>
+                      <div>
+                        <li
+                          key={order.item._id}
+                          className="truncate text-sm font-medium  text-white"
+                        >
+                          <h1 className="text-2xl">
+                            {order.quantity} x {order.item.name}
+                          </h1>
+
+                          <h1 className="text-xl">
+                            ${(order.quantity * order.item.price).toFixed(2)}
+                          </h1>
+                        </li>
+                      </div>
+                    </ul>
+                    <div className="">
+                      <button
+                        onClick={() => onDelete(order)}
+                        className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                       >
-                        <h1 className="text-2xl">
-                          {order.quantity} x {order.item.name}
-                        </h1>
-                        <h1 className="text-xl">
-                          ${(order.quantity * order.item.price).toFixed(2)}
-                        </h1>
-                      </li>
+                        X
+                      </button>
                     </div>
-                  </ul>
+                  </div>
                   <div className="flex absolute bottom-3">
                     <button
                       onClick={() => onRemove(order)}

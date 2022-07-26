@@ -149,6 +149,10 @@ function App() {
     }
   };
 
+  const onDelete = (product) => {
+    setCartItems(cartItems.filter((x) => x.item._id !== product.item._id));
+  }
+  
   return (
     <BrowserRouter>
       <div className="min-h-screen relative">
@@ -191,6 +195,7 @@ function App() {
                   onAdd={onAdd}
                   onRemove={onRemove}
                   setCartItems={setCartItems}
+                  onDelete={onDelete}
                 />
               }
             />
@@ -288,3 +293,4 @@ function App() {
 }
 
 export default App;
+
