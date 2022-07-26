@@ -1,10 +1,7 @@
-import React, { useState } from "react";
-
+import React from "react";
 
 function CheckoutForm() {
-  <Elements stripe={stripe}>
-    <MyComponent {...props} />
-  </Elements>;
+  return <div>CheckoutForm</div>;
 }
 
 export default CheckoutForm;

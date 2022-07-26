@@ -5,7 +5,7 @@ function Product({ product, onAdd }) {
     <div className="max-w-sm rounded overflow-hidden shadow-lg">
       <img src={product.image} alt={product.name} />
       <h3>Product name: {product.name}</h3>
-      <div>Pirce:${product.price}</div>
+      <div>Price:${product.price}</div>
       <div>
         <button
           onClick={() => onAdd(product)}
