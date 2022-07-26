@@ -5,11 +5,7 @@ import Loading from "../components/Loading";
 const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
 
-  if (isLoading) {
-    return <Loading />
-  }
-
-  return (
+  return isLoading ? (<Loading />) : (
     isAuthenticated && (
       <div>
         <img src={user.picture} alt={user.name} />

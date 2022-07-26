@@ -13,11 +13,11 @@ function Order({ total_price, orders }) {
               <li key={index}>
                 <h1 className="font-bold">
                   Quantity:
-                  <span className="text-2xl">{` ${order.quantity} pcs`}</span>
+                  <span className="text-xl">{` ${order.quantity} pcs`}</span>
                 </h1>
                 <h1 className="font-bold my-2">
                   Name:
-                  <span className="text-2xl">{` ${order.item.name}`}</span>
+                  <span className="text-xl">{` ${order.item.name}`}</span>
                 </h1>
                 {order.customisation.milk != "Nil" && (
                   <>
@@ -46,7 +46,7 @@ function Order({ total_price, orders }) {
           ))}
         </ul>
       </div>
-      <div className="absolute bottom-5 text-l">
+      <div className="relative bottom-5 text-l">
         <h1>Total Price: ${total_price}</h1>
       </div>
     </div>

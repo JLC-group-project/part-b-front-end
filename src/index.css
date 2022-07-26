@@ -23,3 +23,14 @@ input[type=number]::-webkit-outer-spin-button {
   appearance: none;
   margin: 0;
 }
+
+.accordion .accordion-item.active .panel {
+  overflow:auto;
+
+}
+
+.accordion .accordion-item:last-child .title {
+  background: rgb(55 65 81);
+  color: white;
+}
+

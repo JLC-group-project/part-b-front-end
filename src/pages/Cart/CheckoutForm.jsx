@@ -7,8 +7,13 @@ import { useNavigate } from "react-router-dom";
 function CheckoutForm({ cartItems, totalPrice, api }) {
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+  const nameRegExp = /^[a-zA-Z ]*$/;
 
   const navigate = useNavigate();
+
+  function capitaliseFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 
   async function postOrder(customer_info) {
     const res = await fetch(`${api}/orders`, {
@@ -42,12 +47,12 @@ function CheckoutForm({ cartItems, totalPrice, api }) {
     validationSchema: Yup.object({
       firstName: Yup.string()
         .trim()
-        .matches(/^[a-zA-Z]+$/, "Only letters allowed")
+        .matches(nameRegExp, "Only letters allowed")
         .max(25, "Must be 25 characters or less")
         .required("This field is required"),
       lastName: Yup.string()
         .trim()
-        .matches(/^[a-zA-Z]+$/, "Only letters allowed")
+        .matches(nameRegExp, "Only letters allowed")
         .max(25, "Must be 25 characters or less")
         .required("This field is required"),
       email: Yup.string()
@@ -64,10 +69,10 @@ function CheckoutForm({ cartItems, totalPrice, api }) {
     }),
     onSubmit: (values) => {
       const customerInfo = {
-        first_name: values.firstName,
-        last_name: values.lastName,
+        first_name: capitaliseFirstLetter(values.firstName),
+        last_name: capitaliseFirstLetter(values.lastName),
         email: values.email,
-        phone_number: values.phoneNumber,
+        phone_number: (values.phoneNumber).toString(),
       };
       console.log(customerInfo);
       postOrder(customerInfo);
@@ -161,7 +166,7 @@ function CheckoutForm({ cartItems, totalPrice, api }) {
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                       id="phoneNumber"
                       name="phoneNumber"
-                      type="number"
+                      type="tel"
                       onChange={formik.handleChange}
                       value={formik.values.phoneNumber}
                       placeholder="0452334455"

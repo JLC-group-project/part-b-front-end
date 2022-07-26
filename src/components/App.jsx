@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import Nav from "./Nav";
 import AuthNav from "./AuthNav";
@@ -59,7 +59,7 @@ function App() {
 
   const [cartItems, setCartItems] = useState([]);
   const [orderItem, setOrderItem] = useState();
-  const [totalPrice, setTotalPrice] = useState(0)
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     async function multiFetches() {
@@ -76,6 +76,14 @@ function App() {
     }
     multiFetches();
   }, []);
+
+  useEffect(() => {
+    const currentPrice = cartItems.reduce(
+      (a, c) => a + c.quantity * c.item.price,
+      0
+    );
+    setTotalPrice(currentPrice);
+  }, [cartItems]);
 
   function itemToApp(item) {
     onAdd(item, item.item.price);
@@ -130,9 +138,9 @@ function App() {
           customisation: product.customisation,
           quantity: 1,
         },
-      ]); 
+      ]);
     }
-    setTotalPrice(totalPrice + parseFloat(itemPrice));
+    // setTotalPrice(totalPrice + parseFloat(itemPrice));
   };
 
   // this function removes items from the cart
@@ -149,7 +157,11 @@ function App() {
         )
       );
     }
-    setTotalPrice(totalPrice - parseFloat(itemPrice));
+    // setTotalPrice(totalPrice - parseFloat(itemPrice));
+  };
+
+  const onDelete = (product) => {
+    setCartItems(cartItems.filter((x) => x.item._id !== product.item._id));
   };
 
   return (
@@ -163,20 +175,26 @@ function App() {
         {/* <CheckoutForm /> */}
 
         {/* <Cart cartItems={cartItems} onAdd={onAdd} onRemove={onRemove} /> */}
-        <div className="pb-20">
+        <div className="pb-20 overflow-hidden">
           <Routes>
             {/* End User Routes */}
             <Route
               path="/cart/checkout"
               element={
-                <CheckoutForm cartItems={cartItems} totalPrice={totalPrice} api={api} />
+                cartItems.length !== 0 ? (
+                  <CheckoutForm
+                    cartItems={cartItems}
+                    totalPrice={totalPrice}
+                    api={api}
+                  />
+                ) : (
+                  <Navigate to="/cart" />
+                )
               }
             />
             <Route
               path="/cart/checkout/success/:id"
-              element={
-                <Success api={api} />
-              }
+              element={<Success api={api} />}
             />
             <Route path="/" element={<Home homePage={homePage} />} />
             <Route
@@ -206,6 +224,7 @@ function App() {
                   onAdd={onAdd}
                   onRemove={onRemove}
                   setCartItems={setCartItems}
+                  onDelete={onDelete}
                 />
               }
             />

@@ -1,22 +1,15 @@
 import React from "react";
 import { Routes, Route, useNavigate, Link } from "react-router-dom";
 
-function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems }) {
-
+function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems, onDelete,}) {
   const totalPrice = cartItems.reduce(
     (a, c) => a + c.quantity * c.item.price,
     0
   );
   const taxPrice = totalPrice * 0.1;
-
   const api =
     import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000/api/v1";
   const navigate = useNavigate();
-
-  const navigateToProductDisplay = () => {
-    // 👇️ navigate to /contacts
-    navigate("../ProductDisplay");
-  };
 
   function checkEmptyCart() {
     if (cartItems.length != 0) {
@@ -63,42 +56,6 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems }) {
     // return newCheckout;
   }
 
-  async function submit(e) {
-    e.preventDefault();
-    const id = await addOrder(cartItems);
-    nav(`/entry/${id}`);
-  }
-
-  // const newArray = cartItems.map(e =>e.id, e.name, e.qty);
-  // const iterator = cartItems.values()
-
-  // for (const value of iterator) {
-  //   console.log(value)
-  // }
-
-  function sanitizedLineItems(lineItems) {
-    return lineItems.reduce((data, lineItem) => {
-      const item = data;
-      let variantData = null;
-      if (lineItem.length > 1) {
-        variantData = {
-          [lineItem[0].group_id]: lineItem[0].option_id,
-        };
-      }
-      item[lineItem.id] = {
-        quantity: lineItem.qty,
-        id: lineItem.id,
-      };
-      return item;
-    }, {});
-  }
-
-  const handleCheckout = (event) => {
-    event.preventDefault();
-    // const cart = sanitizedLineItems(cartItems);
-    console.log(cartItems);
-  };
-
   const handleReset = (event) => {
     event.preventDefault();
     setCartItems([]);
@@ -123,13 +80,14 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems }) {
             {cartItems.length === 0 && <h1>Cart is empty</h1>}
             {cartItems.map((order,index) => (
               // one item
-              <div key={index} className="bg-gray-800 rounded  mt-5 flex ">
+              <div key={index} className="bg-gray-800 rounded relative mt-5 flex ">
                 <div className="mr-10">
                   <img
                     src={findImageUrl(order)}
                     className="w-[200px] rounded h-[200px]"
                   />
                 </div>
+                <div></div>
                 <div className="mt-6 relative">
                   <ul>
                     <div>
@@ -140,6 +98,7 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems }) {
                         <h1 className="text-2xl">
                           {order.quantity} x {order.item.name}
                         </h1>
+
                         <h1 className="text-xl">
                           ${(order.quantity * order.item.price).toFixed(2)}
                         </h1>
@@ -163,6 +122,14 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems }) {
                       +
                     </button>
                   </div>
+                </div>
+                <div className="absolute top-5 right-5">
+                  <button
+                    onClick={() => onDelete(order)}
+                    className="text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-700 font-bold rounded-full text-m  text-center w-6 h-6"
+                  >
+                    X
+                  </button>
                 </div>
               </div>
             ))}
@@ -198,7 +165,7 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems }) {
               className="bg-red-600 w-28 text-l hover:bg-red-700 text-white font-bold py-2 px-4 mx-2 rounded"
               onClick={handleReset}
             >
-              Cancel
+              Clear
             </button>
           </div>
         </div>
