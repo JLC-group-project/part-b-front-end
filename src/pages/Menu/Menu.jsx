@@ -6,9 +6,8 @@ import Loading from "../../components/Loading";
 function Menu({ menuItems, itemToApp, onAdd }) {
   const { cate } = useParams();
   const [categories, setCategories] = useState(["Drinks", "Bakery"]);
-  // const [product, setProduct] = useState();
-  const navigate = useNavigate();
 
+  // add the product to cart component
   function handleAdd(e, item) {
     e.preventDefault;
     const newItem = {
@@ -16,12 +15,12 @@ function Menu({ menuItems, itemToApp, onAdd }) {
       customisation: { milk: "Nil", ice: "Nil", sugar: "Nil", size: "Nil" },
     };
     itemToApp(newItem);
-    // navigate(`/about_us`);
   }
 
   return menuItems ? (
     <div className="flex justify-center">
       <div className="flex  w-full justify-center md:w-[1480px]">
+        {/* this is the sidenav bar*/}
         <div className=" invisible mt-8 md:visible md:w-1/5 md:h-m">
           <Link to="/menu/Drinks" className="inline-block mb-4">
             <h1 className="text-3xl font-bold pl-3 ">Menu</h1>
@@ -39,13 +38,17 @@ function Menu({ menuItems, itemToApp, onAdd }) {
             ))}
           </ul>
         </div>
+        {/* this is the card component to display all the products fetched from the database */}
         <div className=" flex-wrap pl-4 md:w-3/4 ">
           <h1 className="text-5xl font-bold m-4">{cate}</h1>
           <div className="flex flex-wrap">
             {menuItems.map(
               (item) =>
                 item.category === cate && (
-                  <div key={item._id} className="sm:max-w-xs md:max-w-xs rounded-lg border shadow-md bg-gray-700 m-4 border-gray-200">
+                  <div
+                    key={item._id}
+                    className="sm:max-w-xs md:max-w-xs rounded-lg border shadow-md bg-gray-700 m-4 border-gray-200"
+                  >
                     <div>
                       <img
                         className="rounded-t-lg h-[318px] w-[318px]"
@@ -89,7 +92,7 @@ function Menu({ menuItems, itemToApp, onAdd }) {
       </div>
     </div>
   ) : (
-      <Loading />
+    <Loading />
   );
 }
 

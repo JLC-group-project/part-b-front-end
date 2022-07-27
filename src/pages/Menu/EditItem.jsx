@@ -6,29 +6,34 @@ import Cloudinary from "../../components/Cloudinary";
 function Menu({ editMenuItem }) {
   const { item, cate } = useParams();
   const [product, setProduct] = useState({});
-
   const categories = ["Drinks", "Bakery"];
   const navigate = useNavigate();
-
+  // change the product name
   function handleProductName(e) {
     setProduct(() => ({
       ...product,
       name: e.target.value,
     }));
   }
+  // change the product price
   function handleProductPrice(e) {
     setProduct(() => ({
       ...product,
       price: e.target.value,
     }));
   }
+  // change the product category
   function handleProductCategory(e) {
     setProduct((item) => ({
       ...product,
       category: e.target.value,
     }));
   }
-
+  // change the product image url value
+  function getImageUrl(url) {
+    setProduct({ ...product, image_url: url });
+  }
+  // update the products with the values admin has been setup
   async function handleEdit(e, item, product) {
     e.preventDefault;
     await editMenuItem(item, product);
@@ -36,18 +41,16 @@ function Menu({ editMenuItem }) {
     location.reload(false);
   }
 
-  function getImageUrl(url) {
-    setProduct({ ...product, image_url: url });
-  }
-
   return (
     <div>
       <h1 className="text-3xl m-4 text-center">Edit {item}</h1>
+      {/* import the clodinary let the user upload the images to cloudinary*/}
       <div className="pb-16">
         <Cloudinary getImageUrl={getImageUrl} />
       </div>
       <div className="flex-col ">
         <div className="justify-center flex">
+          {/* set the value of product name , price, and category */}
           <div className="w-full max-w-sm ">
             <div className="flex-col md:items-center mb-6">
               <div className="md:w-2/5">
@@ -107,6 +110,7 @@ function Menu({ editMenuItem }) {
             </div>
           </div>
         </div>
+        {/* call the function when press the button, to post to the database of new product, or cancel the creating */}
         <div className="flex justify-center">
           <div className="px-4">
             <button

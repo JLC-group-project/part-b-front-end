@@ -6,7 +6,7 @@ function Menu({ menuItems, deleteMenuItem }) {
   const { cate } = useParams();
   const categories = ["Drinks", "Bakery"];
   const navigate = useNavigate();
-
+  // when press the delete button ,this function will be called
   async function handleDeleted(e, item) {
     e.preventDefault;
     await deleteMenuItem(item);
@@ -16,6 +16,7 @@ function Menu({ menuItems, deleteMenuItem }) {
   return menuItems ? (
     <div className="flex justify-center">
       <div className="flex  w-full justify-center md:w-[1480px]">
+        {/* this is the sidenav bar*/}
         <div className=" invisible mt-8 md:visible md:w-1/5 md:h-m">
           <Link to="/admin/menu/Drinks" className="inline-block mb-4">
             <h1 className="text-3xl font-bold pl-3 ">Menu</h1>
@@ -43,6 +44,7 @@ function Menu({ menuItems, deleteMenuItem }) {
             </Link>
           </div>
         </div>
+        {/* this is the card component to display all the products fetched from the database , edit button will navigate the page to edit product page. delete will call the function to delete the products from thr database */}
         <div className=" flex-wrap pl-4 md:w-3/4 ">
           <h1 className="text-5xl font-bold m-4">{cate}</h1>
           <div className="flex flex-wrap">
@@ -93,7 +95,7 @@ function Menu({ menuItems, deleteMenuItem }) {
       </div>
     </div>
   ) : (
-      <Loading />
+    <Loading />
   );
 }
 
