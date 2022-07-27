@@ -1,23 +1,11 @@
 import { React, useEffect, useState } from "react";
-// import Card from "../../components/Card";
 import OrderAccordion from "../../components/OrderAccordion";
 import Order from "./Order";
 
 function Orders({ orders, history, api }) {
   const [visibleOrders, setVisibleOrders] = useState([]);
-  const [update, setUpdate] = useState({});
 
-  // useEffect(() => {
-  //   fetch("http://localhost:4000/orders")
-  //     .then((response) => response.json())
-  //     .then((json) => {
-  //       console.log(`order: ${json}`)
-  //       // let incompleteOrders = json.filter((order) => order.complete == false);
-  //       // setOrders(incompleteOrders);
-  //       // setOrders(json);
-  //     });
-  // }, []);
-
+  // Filter the array to display currently processed orders or completed orders
   useEffect(() => {
     let displayOrders = [];
     if (history === false) {
@@ -28,24 +16,14 @@ function Orders({ orders, history, api }) {
     setVisibleOrders(displayOrders);
   }, [history, orders]);
 
+  // Remove order from orders list and refresh the page
   function removeOrder(event, index) {
     const newOrder = [...visibleOrders];
-    console.log("key index: ", index);
     newOrder.splice(index, 1);
-    console.log(newOrder);
-    console.log(event.target);
     window.location.reload(false);
-
-    // orders.forEach((value, index) => {
-    //   console.log(index)
-    //    console.log(value)
-    // if (value._id === id) {
-    //   console.log(newOrders)
-    //   setVisibleOrders(newOrders)
-    // }
-    // })
   }
 
+  // Update complete status of an order to true, update database and refresh the page 
   function handleClick(id, event, index) {
     fetch(`${api}/orders/${id}`, {
       method: "PUT",
@@ -58,8 +36,6 @@ function Orders({ orders, history, api }) {
     })
       .then((response) => response.json())
       .then((json) => {
-        // console.log(`put: ${json}`)
-        setUpdate(json);
         removeOrder(event, index);
       });
   }
@@ -70,6 +46,7 @@ function Orders({ orders, history, api }) {
 
   return (
     <div className="flex-col ">
+      {/* Check if we're on order page or order history page */}
       {history === false ? (
         <div className="flex justify-center my-8">
           <h1 className="text-5xl font-bold">Orders List</h1>
@@ -81,7 +58,9 @@ function Orders({ orders, history, api }) {
       )}
       <div className=" flex justify-center ">
         <div className="flex flex-wrap round w-[1680px] justify-evenly text-white">
+          {/* Checking if list is empty, if it is then display "Empty List"  */}
           {visibleOrders.length > 0 ? (
+            // Display an order from one customer
             visibleOrders.map((order, index) => (
               <div
                 key={order._id}
@@ -118,9 +97,10 @@ function Orders({ orders, history, api }) {
                   <hr className="mt-4" />
                 </div>
                 <div>
+                  {/* Check if we're on order page or order history page */}
                   {history === false ? (
                     <div className="mb-5 px-6 py-4">
-                      {/* <Card key={order._id}> */}
+                      {/* Display all the items in the cart */}
                       <Order {...order} />
                       <br />
                       <div className="absolute bottom-4 right-5">
@@ -128,7 +108,6 @@ function Orders({ orders, history, api }) {
                           onClick={(event) =>
                             handleClick(order._id, event, index)
                           }
-                          // onClick={(event) => removeOrder(order._id, event, index)}
                           className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
                         >
                           Complete
@@ -167,7 +146,7 @@ function Orders({ orders, history, api }) {
            before:bg-white before:inline-block before:relative before:align-middle 
            before:w-1/4 before:right-2 after:left-2 text-xl p-4"
                   >
-                    {"Empty List"}
+                    Empty List
                   </h1>
                 </div>
               </div>

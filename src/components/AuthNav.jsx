@@ -4,8 +4,9 @@ import { useAuth0 } from "@auth0/auth0-react";
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
 
+// Navigation bar for logged in and authenticated users
 function AuthNav() {
-  const { user, isAuthenticated } = useAuth0();
+  const { isAuthenticated } = useAuth0();
 
   return (
     <nav className="bg-gray-700 px-2 py-4 md:px-4 lg:px-6 flex justify-center">
@@ -40,10 +41,7 @@ function AuthNav() {
           </div>
         </div>
         <div>
-          <div
-            className="text-s md:text-l lg:text-xl flex  justify-center p-3 flex-wrap text-white
-"
-          >
+          <div className="text-s md:text-l lg:text-xl flex  justify-center p-3 flex-wrap text-white">
             <Link
               to="/admin"
               className="block lg:inline-block lg:mt-0 hover:text-gray-400 px-6"

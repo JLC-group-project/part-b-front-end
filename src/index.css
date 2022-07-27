@@ -24,11 +24,13 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0;
 }
 
+/* Accordion in order history now has a scroll bar */
 .accordion .accordion-item.active .panel {
   overflow:auto;
 
 }
 
+/* Accordion colour schemes matches the orders card */
 .accordion .accordion-item:last-child .title {
   background: rgb(55 65 81);
   color: white;
