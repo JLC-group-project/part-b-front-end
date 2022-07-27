@@ -28,6 +28,7 @@ function Nav(props) {
           text-white border-white hover:border-transparent hover:text-gray-400
           hover:bg-white  lg:mt-0"
           >
+            {/* Displays the number of items in cart */}
             Cart
             {props.countCartItems ? (
               <button>{`(${props.countCartItems})`}</button>
