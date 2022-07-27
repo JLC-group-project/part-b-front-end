@@ -20,7 +20,7 @@ function AboutUsAdmin({ aboutPage }) {
       <div className="flex-col pt-7">
         <h1 className="text-2xl md:text-4xl text-center">{aboutPage.title} </h1>
         <h4 className="text-l md:text-2xl text-center mt-4">
-          {aboutPage.body}{" "}
+          {aboutPage.body}
         </h4>
       </div>
       {/*Edit button linking to the about us editing page, which admin aide can edit the image, title and body of the about us page*/}

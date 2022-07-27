@@ -18,11 +18,9 @@ function Home({ homePage }) {
       {/*display the home page slogan title and body*/}
       <div>
         <div className="flex-col pt-7">
-          <h1 className="text-2xl md:text-4xl text-center">
-            {homePage.title}{" "}
-          </h1>
+          <h1 className="text-2xl md:text-4xl text-center">{homePage.title}</h1>
           <h4 className="text-l md:text-2xl text-center mt-4">
-            {homePage.body}{" "}
+            {homePage.body}
           </h4>
         </div>
       </div>
