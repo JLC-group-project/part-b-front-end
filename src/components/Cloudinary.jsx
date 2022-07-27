@@ -8,7 +8,7 @@ function Cloudinary({ getImageUrl }) {
   const [width, setWidth] = useState();
   const [height, setHeight] = useState();
   const [load, setLoad] = useState(false);
-
+  // this function will help to post the image to Cloudinary
   function uploadImage() {
     setLoad(true);
     const data = new FormData();
@@ -27,7 +27,7 @@ function Cloudinary({ getImageUrl }) {
       })
       .catch((err) => console.log(err));
   }
-
+  // change the image url state after posting the image to Cloudinay and get the image url from the response
   useEffect(() => {
     getImageUrl(url);
   }, [url]);
@@ -35,6 +35,8 @@ function Cloudinary({ getImageUrl }) {
   return (
     <div className="flex justify-center mt-8">
       <div className="max-w-2xl rounded-lg shadow-xl bg-gray-50">
+        {/*handle the uploading form and uploading button, after the user click the button, it will call uploadImage function*/}
+
         {load ? (
           <div className="m-4">
             <p className="mb-1 text-gray-500">Image Preview</p>

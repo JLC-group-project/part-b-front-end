@@ -2,6 +2,7 @@ import { useParams, Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 function CustomizeItem({ itemToApp }) {
+  //providing the value of drinks attributes.
   const ices = ["Hot", "None", "Little", "Iced"];
   const milks = ["Lactose free", "Almond milk", "Skim milk", "Regular"];
   const sizes = ["Large", "Medium", "Small"];
@@ -24,28 +25,28 @@ function CustomizeItem({ itemToApp }) {
     navigate("/menu/Drinks");
     itemToApp(newItem);
   }
-
+  // change the drinks attributes of sugar
   function handleCustomizeSugar(e) {
     setCustomisation(() => ({
       ...customisation,
       sugar: e.target.value,
     }));
   }
-
+  // change the drinks attributes of ice
   function handleCustomizeIce(e) {
     setCustomisation(() => ({
       ...customisation,
       ice: e.target.value,
     }));
   }
-
+  // change the drinks attributes of size
   function handleCustomizeSize(e) {
     setCustomisation(() => ({
       ...customisation,
       size: e.target.value,
     }));
   }
-
+  // change the drinks attributes of milk
   function handleCustomizeMilk(e) {
     setCustomisation(() => ({
       ...customisation,
@@ -58,6 +59,7 @@ function CustomizeItem({ itemToApp }) {
       <div className="flex justify-center py-10">
         <h1 className="text-4xl font-bold ">Customisation</h1>
       </div>
+      {/*Let the admin change the values of drinks attributes*/}
       <div className="flex justify-center">
         <div className="w-1/4 flex-col">
           <div className="flex-col md:items-center mb-6  ">
@@ -161,6 +163,7 @@ function CustomizeItem({ itemToApp }) {
               </select>
             </div>
           </div>
+          {/*This button will call handleAdd above to post the product object to the database*/}
           <div className="flex justify-end">
             <button
               onClick={(e) => handleAdd(e, item, id, price, customisation)}

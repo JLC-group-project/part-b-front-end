@@ -6,7 +6,7 @@ function HomeAdminEdit({ api }) {
   const [context, setContext] = useState();
   const { id } = useParams();
   const navigate = useNavigate();
-
+  //update the home page object to database
   async function editHomeContent(e, context) {
     e.preventDefault;
     await fetch(`${api}/pages/${id}`, {
@@ -19,21 +19,21 @@ function HomeAdminEdit({ api }) {
     navigate(`/admin`);
     location.reload(false);
   }
-
+  // create an about-us page object with title ,which will be posted to database after everything has been set up
   function handleTitle(e) {
     setContext(() => ({
       ...context,
       title: e.target.value,
     }));
   }
-
+  // create a home page object with body ,which will be posted to database after everything has been set up
   function handleBody(e) {
     setContext(() => ({
       ...context,
       body: e.target.value,
     }));
   }
-
+  // create a home page object with image url ,which will be posted to database after everything has been set up
   function getImageUrl(url) {
     setContext(
       (url = {
@@ -51,6 +51,7 @@ function HomeAdminEdit({ api }) {
       </div>
       <div className="flex-col ">
         <div className="flex justify-center">
+          {/*this form tag will help to set the home page context object*/}
           <form className="w-full max-w-sm ">
             <div className="flex-col md:items-center mb-6">
               <div className="md:w-1/5">
@@ -84,6 +85,7 @@ function HomeAdminEdit({ api }) {
             </div>
           </form>
         </div>
+        {/*save button will save the whole object to database, or cancel the editing*/}
         <div className="flex justify-center">
           <div className="px-4">
             <button
