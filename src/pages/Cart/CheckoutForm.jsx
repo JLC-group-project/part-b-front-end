@@ -104,6 +104,7 @@ function CheckoutForm({ cartItems, totalPrice, api }) {
                       value={formik.values.firstName}
                       placeholder="John"
                     />
+                    {/* Alert for a required field */}
                     {formik.touched.firstName && formik.errors.firstName ? (
                       <Alert>{formik.errors.firstName}</Alert>
                     ) : null}
@@ -124,6 +125,7 @@ function CheckoutForm({ cartItems, totalPrice, api }) {
                       value={formik.values.lastName}
                       placeholder="Smith"
                     />
+                    {/* Alert for a required field */}
                     {formik.touched.lastName && formik.errors.lastName ? (
                       <Alert>{formik.errors.lastName}</Alert>
                     ) : null}
@@ -147,6 +149,7 @@ function CheckoutForm({ cartItems, totalPrice, api }) {
                       value={formik.values.email}
                       placeholder="myemail@gmail.com"
                     />
+                    {/* Alert for a required field */}
                     {formik.touched.email && formik.errors.email ? (
                       <Alert>{formik.errors.email}</Alert>
                     ) : null}
@@ -170,6 +173,7 @@ function CheckoutForm({ cartItems, totalPrice, api }) {
                       value={formik.values.phoneNumber}
                       placeholder="0452334455"
                     />
+                    {/* Alert for a required field */}
                     {formik.touched.phoneNumber && formik.errors.phoneNumber ? (
                       <Alert>{formik.errors.phoneNumber}</Alert>
                     ) : null}
