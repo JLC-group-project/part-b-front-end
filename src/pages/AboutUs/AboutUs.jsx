@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import Loading from "../../components/Loading";
 
 function AboutUs({ aboutPage }) {
-  return (
+  return aboutPage ? (
     <div>
       <div className="flex justify-center ">
         <img
@@ -17,6 +18,8 @@ function AboutUs({ aboutPage }) {
         </h4>
       </div>
     </div>
+  ) : (
+      <Loading />
   );
 }
 

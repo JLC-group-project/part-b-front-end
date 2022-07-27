@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import Loading from "../../components/Loading";
 
 function Menu({ menuItems, deleteMenuItem }) {
   const { cate } = useParams();
@@ -12,7 +13,7 @@ function Menu({ menuItems, deleteMenuItem }) {
     navigate(`/admin/menu/${item.category}`);
   }
 
-  return (
+  return menuItems ? (
     <div className="flex justify-center">
       <div className="flex  w-full justify-center md:w-[1480px]">
         <div className=" invisible mt-8 md:visible md:w-1/5 md:h-m">
@@ -91,6 +92,8 @@ function Menu({ menuItems, deleteMenuItem }) {
         </div>
       </div>
     </div>
+  ) : (
+      <Loading />
   );
 }
 

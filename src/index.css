@@ -14,3 +14,23 @@
   left: 0;
   right: 0;
 }
+
+/* Removes arrows from input type number */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+.accordion .accordion-item.active .panel {
+  overflow:auto;
+
+}
+
+.accordion .accordion-item:last-child .title {
+  background: rgb(55 65 81);
+  color: white;
+}
+

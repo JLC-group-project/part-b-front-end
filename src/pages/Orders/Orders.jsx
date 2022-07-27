@@ -80,16 +80,43 @@ function Orders({ orders, history, api }) {
         </div>
       )}
       <div className=" flex justify-center ">
-        <div className="flex flex-wrap round w-[1680px] justify-evenly text-white ">
+        <div className="flex flex-wrap round w-[1680px] justify-evenly text-white">
           {visibleOrders.length > 0 ? (
             visibleOrders.map((order, index) => (
-              <div className="rounded  shadow-lg min-w-[300px]  min-h-[100px] overflow-hidden  mx-5 mt-8 bg-gray-700 relative">
+              <div
+                key={order._id}
+                className="rounded shadow-lg min-w-[400px]  min-h-[100px] overflow-hidden  mx-5 mt-8 bg-gray-700 relative"
+              >
                 <h1
                   className="text-center overflow-hidden before:h-[1px] after:h-[1px] after:bg-white font-bold
            after:inline-block after:relative after:align-middle after:w-1/3 
            before:bg-white before:inline-block before:relative before:align-middle 
            before:w-1/3 before:right-2 after:left-2 text-xl p-4"
                 >{`Order [${index + 1}]`}</h1>
+                <h1
+                  className="text-center overflow-hidden before:h-[1px] after:h-[1px] after:bg-white font-bold
+           after:inline-block after:relative after:align-middle after:w-1/3 
+           before:bg-white before:inline-block before:relative before:align-middle 
+           before:w-1/3 before:right-2 after:left-2 text-xl p-4"
+                >
+                  {"Customer"}
+                </h1>
+                <div className="px-6">
+                  <h1 className="font-bold">
+                    Name:
+                    <span className="text-xl">{` ${`${order.customer_info.first_name} 
+                      ${order.customer_info.last_name}`}`}</span>
+                  </h1>
+                  <h1 className="font-bold">
+                    Email:
+                    <span className="text-xl">{` ${order.customer_info.email}`}</span>
+                  </h1>
+                  <h1 className="font-bold">
+                    Ph:
+                    <span className="text-xl">{` ${order.customer_info.phone_number}`}</span>
+                  </h1>
+                  <hr className="mt-4" />
+                </div>
                 <div>
                   {history === false ? (
                     <div className="mb-5 px-6 py-4">
@@ -110,24 +137,41 @@ function Orders({ orders, history, api }) {
                       {/* </Card> */}
                     </div>
                   ) : (
-                    <OrderAccordion title={order._id}>
-                      <Order {...order} />
-                      <br />
-                      <div className="absolute bottom-4 right-5 hidden">
-                        <button
-                          onClick={(event) => handleClick2()}
-                          className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
-                        >
-                          Print
-                        </button>
+                    <>
+                      <div className="mb-5 px-6 py-4 ">
+                        <OrderAccordion title={order._id}>
+                          <Order {...order} />
+                          <br />
+                          <div className="absolute bottom-4 right-5 hidden">
+                            <button
+                              onClick={(event) => handleClick2()}
+                              className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
+                            >
+                              Print
+                            </button>
+                          </div>
+                        </OrderAccordion>
                       </div>
-                    </OrderAccordion>
+                    </>
                   )}
                 </div>
               </div>
             ))
           ) : (
-            <h1>Empty List</h1>
+            <div className=" flex justify-center ">
+              <div className="flex flex-wrap round w-[1680px] justify-evenly text-white ">
+                <div className="rounded  shadow-lg min-w-[300px]  overflow-hidden  mx-5 mt-8 bg-gray-700 relative">
+                  <h1
+                    className="text-center overflow-hidden before:h-[1px] after:h-[1px] after:bg-white font-bold
+           after:inline-block after:relative after:align-middle after:w-1/4 
+           before:bg-white before:inline-block before:relative before:align-middle 
+           before:w-1/4 before:right-2 after:left-2 text-xl p-4"
+                  >
+                    {"Empty List"}
+                  </h1>
+                </div>
+              </div>
+            </div>
           )}
         </div>
       </div>

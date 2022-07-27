@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Loading from "../../components/Loading";
 
 function AboutUsAdmin({ aboutPage }) {
-  return (
+  return aboutPage ? (
     <div>
       <div className="flex justify-center ">
         <img
@@ -28,6 +29,8 @@ function AboutUsAdmin({ aboutPage }) {
         </div>
       </div>
     </div>
+  ) : (
+      <Loading />
   );
 }
 

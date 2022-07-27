@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import Nav from "./Nav";
 import AuthNav from "./AuthNav";
@@ -16,40 +16,19 @@ import CreateItem from "../pages/Menu/CreateItem";
 import EditItem from "../pages/Menu/EditItem";
 import Cart from "../pages/Cart/Cart";
 import CheckoutForm from "../pages/Cart/CheckoutForm";
-import ProductDisplay from "../pages/Cart/ProductDisplay";
 import Orders from "../pages/Orders/Orders";
 import Profile from "../pages/Profile";
 import ProtectedRoute from "./ProtectedRoute";
 import Footer from "./Footer";
+import Success from "../pages/Cart/Success";
 
 const api = import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000/api/v1";
 const url = import.meta.env.VITE_URL || "http://localhost:3000";
 
 function App() {
-  //hardcode items object and customize to transfer to the components need them
-  const [menuItems, setMenuItems] = useState([
-    {
-      category: "Drinks",
-      name: "Latte",
-      price: "$5.00",
-    },
-    {
-      category: "Drinks",
-      name: "Tea",
-      price: "$4.50",
-    },
-    { category: "Bakery", name: "Bagel", price: "$4.50" },
-    { category: "Bakery", name: "Almond Croissant", price: "$4.50" },
-  ]);
-
-  const [homePage, setHomePage] = useState({
-    title: "About Us",
-    body: "About Us Body",
-  });
-  const [aboutPage, setAboutPage] = useState({
-    title: "About Us",
-    body: "About Us Body",
-  });
+  const [menuItems, setMenuItems] = useState();
+  const [homePage, setHomePage] = useState();
+  const [aboutPage, setAboutPage] = useState();
 
   // Authentication Hook
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -59,6 +38,7 @@ function App() {
 
   const [cartItems, setCartItems] = useState([]);
   const [orderItem, setOrderItem] = useState();
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     async function multiFetches() {
@@ -76,8 +56,16 @@ function App() {
     multiFetches();
   }, []);
 
+  useEffect(() => {
+    const currentPrice = cartItems.reduce(
+      (a, c) => a + c.quantity * c.item.price,
+      0
+    );
+    setTotalPrice(currentPrice);
+  }, [cartItems]);
+
   function itemToApp(item) {
-    onAdd(item);
+    onAdd(item, item.item.price);
   }
 
   async function addMenuItem(product) {
@@ -111,7 +99,7 @@ function App() {
   }
 
   // this function adds product to cart
-  const onAdd = (product) => {
+  const onAdd = (product, itemPrice) => {
     const exist = cartItems.find((x) => x.item._id === product.item._id);
     if (exist) {
       setCartItems(
@@ -131,10 +119,11 @@ function App() {
         },
       ]);
     }
+    // setTotalPrice(totalPrice + parseFloat(itemPrice));
   };
 
   // this function removes items from the cart
-  const onRemove = (product) => {
+  const onRemove = (product, itemPrice) => {
     const exist = cartItems.find((x) => x.item._id === product.item._id);
     if (exist.quantity === 1) {
       setCartItems(cartItems.filter((x) => x.item._id !== product.item._id));
@@ -147,12 +136,13 @@ function App() {
         )
       );
     }
+    // setTotalPrice(totalPrice - parseFloat(itemPrice));
   };
 
   const onDelete = (product) => {
     setCartItems(cartItems.filter((x) => x.item._id !== product.item._id));
-  }
-  
+  };
+
   return (
     <BrowserRouter>
       <div className="min-h-screen relative">
@@ -164,9 +154,27 @@ function App() {
         {/* <CheckoutForm /> */}
 
         {/* <Cart cartItems={cartItems} onAdd={onAdd} onRemove={onRemove} /> */}
-        <div className="pb-20">
+        <div className="pb-20 overflow-hidden">
           <Routes>
             {/* End User Routes */}
+            <Route
+              path="/cart/checkout"
+              element={
+                cartItems.length !== 0 ? (
+                  <CheckoutForm
+                    cartItems={cartItems}
+                    totalPrice={totalPrice}
+                    api={api}
+                  />
+                ) : (
+                  <Navigate to="/cart" />
+                )
+              }
+            />
+            <Route
+              path="/cart/checkout/success/:id"
+              element={<Success api={api} />}
+            />
             <Route path="/" element={<Home homePage={homePage} />} />
             <Route
               path="/about_us"
@@ -293,4 +301,3 @@ function App() {
 }
 
 export default App;
-

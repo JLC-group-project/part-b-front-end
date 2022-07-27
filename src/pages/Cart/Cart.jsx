@@ -1,14 +1,7 @@
 import React from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Link } from "react-router-dom";
 
-function Cart({
-  cartItems,
-  onAdd,
-  onRemove,
-  setCartItems,
-  menuItems,
-  onDelete,
-}) {
+function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems, onDelete,}) {
   const totalPrice = cartItems.reduce(
     (a, c) => a + c.quantity * c.item.price,
     0
@@ -17,6 +10,14 @@ function Cart({
   const api =
     import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000/api/v1";
   const navigate = useNavigate();
+
+  function checkEmptyCart() {
+    if (cartItems.length != 0) {
+      navigate("./checkout")
+    } else {
+      alert("Cart is Empty");
+    }
+  }
 
   function retrieveOrders() {
     let newOrders = cartItems;
@@ -77,16 +78,15 @@ function Cart({
         <div className="flex flex-wrap justify-end">
           <div className="mb-4 flex-col items-center w-full justify-between ">
             {cartItems.length === 0 && <h1>Cart is empty</h1>}
-            {cartItems.map((order) => (
+            {cartItems.map((order,index) => (
               // one item
-              <div className="bg-gray-800 rounded  mt-5 flex relative">
+              <div key={index} className="bg-gray-800 rounded relative mt-5 flex ">
                 <div className="mr-10">
                   <img
                     src={findImageUrl(order)}
                     className="w-[200px] rounded h-[200px]"
                   />
                 </div>
-                <div></div>
                 <div className="mt-6 relative">
                   <ul>
                     <div>
@@ -106,7 +106,7 @@ function Cart({
                   </ul>
                   <div className="flex absolute bottom-3">
                     <button
-                      onClick={() => onRemove(order)}
+                      onClick={() => onRemove(order, order.item.price)}
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-16 rounded-l-lg"
                     >
                       -
@@ -115,7 +115,7 @@ function Cart({
                       {order.quantity}
                     </p>
                     <button
-                      onClick={() => onAdd(order)}
+                      onClick={() => onAdd(order, order.item.price)}
                       className="bg-blue-500 w-16 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r-lg"
                     >
                       +
@@ -154,8 +154,9 @@ function Cart({
           </div>
           <div className="">
             <button
+              // to="checkout"
               className="bg-blue-500 w-28 text-l hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded"
-              onClick={retrieveOrders}
+              onClick={checkEmptyCart}
             >
               Checkout
             </button>
@@ -163,7 +164,7 @@ function Cart({
               className="bg-red-600 w-28 text-l hover:bg-red-700 text-white font-bold py-2 px-4 mx-2 rounded"
               onClick={handleReset}
             >
-              Cancel
+              Clear
             </button>
           </div>
         </div>
