@@ -23,7 +23,6 @@ import Footer from "./Footer";
 import Success from "../pages/Cart/Success";
 
 const api = import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000/api/v1";
-const url = import.meta.env.VITE_URL || "http://localhost:3000";
 
 function App() {
   const [menuItems, setMenuItems] = useState();
@@ -31,7 +30,7 @@ function App() {
   const [aboutPage, setAboutPage] = useState();
 
   // Authentication Hook
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { isAuthenticated } = useAuth0();
 
   // Orders Hook
   const [orders, setOrders] = useState([]);
@@ -40,6 +39,7 @@ function App() {
   const [orderItem, setOrderItem] = useState();
   const [totalPrice, setTotalPrice] = useState(0);
 
+  // Fetching all data for menu, home, about us and order pages
   useEffect(() => {
     async function multiFetches() {
       const [res1, res2, res3, res4] = await Promise.all([
@@ -56,6 +56,7 @@ function App() {
     multiFetches();
   }, []);
 
+  // Total price is calculated and set to totalPrice state everytime an item is added or removed from the cart
   useEffect(() => {
     const currentPrice = cartItems.reduce(
       (a, c) => a + c.quantity * c.item.price,
@@ -99,7 +100,7 @@ function App() {
   }
 
   // this function adds product to cart
-  const onAdd = (product, itemPrice) => {
+  const onAdd = (product) => {
     const exist = cartItems.find((x) => x.item._id === product.item._id);
     if (exist) {
       setCartItems(
@@ -119,11 +120,10 @@ function App() {
         },
       ]);
     }
-    // setTotalPrice(totalPrice + parseFloat(itemPrice));
   };
 
   // this function removes items from the cart
-  const onRemove = (product, itemPrice) => {
+  const onRemove = (product) => {
     const exist = cartItems.find((x) => x.item._id === product.item._id);
     if (exist.quantity === 1) {
       setCartItems(cartItems.filter((x) => x.item._id !== product.item._id));
@@ -136,7 +136,6 @@ function App() {
         )
       );
     }
-    // setTotalPrice(totalPrice - parseFloat(itemPrice));
   };
 
   const onDelete = (product) => {
@@ -145,36 +144,17 @@ function App() {
 
   return (
     <BrowserRouter>
+      {/* Change navbar dependant on if a user is logged in */}
       <div className="min-h-screen relative">
         {isAuthenticated ? (
           <AuthNav />
         ) : (
           <Nav countCartItems={cartItems.length} />
         )}
-        {/* <CheckoutForm /> */}
 
-        {/* <Cart cartItems={cartItems} onAdd={onAdd} onRemove={onRemove} /> */}
         <div className="pb-20 overflow-hidden">
           <Routes>
             {/* End User Routes */}
-            <Route
-              path="/cart/checkout"
-              element={
-                cartItems.length !== 0 ? (
-                  <CheckoutForm
-                    cartItems={cartItems}
-                    totalPrice={totalPrice}
-                    api={api}
-                  />
-                ) : (
-                  <Navigate to="/cart" />
-                )
-              }
-            />
-            <Route
-              path="/cart/checkout/success/:id"
-              element={<Success api={api} />}
-            />
             <Route path="/" element={<Home homePage={homePage} />} />
             <Route
               path="/about_us"
@@ -194,6 +174,7 @@ function App() {
               path="/menu/:item/:id/:price"
               element={<CustomiseItem itemToApp={itemToApp} />}
             />
+            {/* Cart Routes */}
             <Route
               path="/cart"
               element={
@@ -207,6 +188,25 @@ function App() {
                 />
               }
             />
+            <Route
+              path="/cart/checkout"
+              element={
+                cartItems.length !== 0 ? (
+                  <CheckoutForm
+                    cartItems={cartItems}
+                    totalPrice={totalPrice}
+                    api={api}
+                  />
+                ) : (
+                  <Navigate to="/cart" />
+                )
+              }
+            />
+            <Route
+              path="/cart/checkout/success/:id"
+              element={<Success api={api} />}
+            />
+
             {/* Admin Routes */}
             <Route
               path="/admin"
@@ -252,7 +252,7 @@ function App() {
                   addMenuItem={addMenuItem}
                 />
               }
-            />{" "}
+            />
             <Route
               path="/admin/menu/:cate/:item/edit"
               element={

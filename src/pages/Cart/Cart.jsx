@@ -7,8 +7,6 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems, onDelete,})
     0
   );
   const taxPrice = totalPrice * 0.1;
-  const api =
-    import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000/api/v1";
   const navigate = useNavigate();
 
   function checkEmptyCart() {
@@ -17,43 +15,6 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems, onDelete,})
     } else {
       alert("Cart is Empty");
     }
-  }
-
-  function retrieveOrders() {
-    let newOrders = cartItems;
-    console.log(newOrders.length);
-    // for (let i = 0; i < newOrders.length; i++) {
-    //   newOrders[i].item = cartItems[i].item._id;
-    // }
-    console.log(newOrders);
-    postOrder(newOrders);
-    // console.log(newOrders);
-  }
-
-  async function postOrder(newOrders) {
-    // const currentOrders = retrieveOrders();
-    // const newCheckout = { cartItems, totalPrice };
-    const res = await fetch(`${api}/orders`, {
-      method: "post",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      // put orders in body
-      body: JSON.stringify({
-        orders: newOrders,
-        complete: false,
-        total_price: totalPrice.toFixed(2),
-      }),
-    });
-    const returnOrder = await res.json();
-    console.log(returnOrder);
-    // const returnedEntry = await res.json();
-    // dispatch({
-    //   type: "newCheckout",
-    //   data: returnedCheckout,
-    // });
-    // return newCheckout;
   }
 
   const handleReset = (event) => {
@@ -106,7 +67,7 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems, onDelete,})
                   </ul>
                   <div className="flex absolute bottom-3">
                     <button
-                      onClick={() => onRemove(order, order.item.price)}
+                      onClick={() => onRemove(order)}
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-16 rounded-l-lg"
                     >
                       -
@@ -115,7 +76,7 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems, onDelete,})
                       {order.quantity}
                     </p>
                     <button
-                      onClick={() => onAdd(order, order.item.price)}
+                      onClick={() => onAdd(order)}
                       className="bg-blue-500 w-16 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r-lg"
                     >
                       +
@@ -154,17 +115,17 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems, onDelete,})
           </div>
           <div className="">
             <button
+              className="bg-red-600 w-28 text-l hover:bg-red-700 text-white font-bold py-2 px-4 mx-2 rounded"
+              onClick={handleReset}
+            >
+              Clear
+            </button>
+            <button
               // to="checkout"
               className="bg-blue-500 w-28 text-l hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded"
               onClick={checkEmptyCart}
             >
               Checkout
-            </button>
-            <button
-              className="bg-red-600 w-28 text-l hover:bg-red-700 text-white font-bold py-2 px-4 mx-2 rounded"
-              onClick={handleReset}
-            >
-              Clear
             </button>
           </div>
         </div>

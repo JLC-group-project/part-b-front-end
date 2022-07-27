@@ -5,8 +5,11 @@ import Alert from "../../components/Alert";
 import { useNavigate } from "react-router-dom";
 
 function CheckoutForm({ cartItems, totalPrice, api }) {
+  // Regular expression to accept AUS phone numbers
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+  
+  // Regular expression to accept alphabets only and spaces
   const nameRegExp = /^[a-zA-Z ]*$/;
 
   const navigate = useNavigate();
@@ -15,6 +18,7 @@ function CheckoutForm({ cartItems, totalPrice, api }) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  // POST to database with the customer's order
   async function postOrder(customer_info) {
     const res = await fetch(`${api}/orders`, {
       method: "post",
@@ -31,7 +35,6 @@ function CheckoutForm({ cartItems, totalPrice, api }) {
       }),
     });
     const returnOrder = await res.json();
-    console.log(returnOrder);
     navigate(`./success/${returnOrder._id}`);
   }
 
@@ -44,6 +47,7 @@ function CheckoutForm({ cartItems, totalPrice, api }) {
       email: "",
       phoneNumber: "",
     },
+    // Validation for all input fields
     validationSchema: Yup.object({
       firstName: Yup.string()
         .trim()
@@ -61,12 +65,8 @@ function CheckoutForm({ cartItems, totalPrice, api }) {
       phoneNumber: Yup.string()
         .matches(phoneRegExp, "Phone number is not valid")
         .required("This field is required"),
-      // .test(
-      //   "len",
-      //   "Must be 8 or 10 numbers",
-      //   (val) => val.toString().length === 8 || val.toString().length === 10
-      // ),
     }),
+    // create customer's information body for the order
     onSubmit: (values) => {
       const customerInfo = {
         first_name: capitaliseFirstLetter(values.firstName),
@@ -74,7 +74,6 @@ function CheckoutForm({ cartItems, totalPrice, api }) {
         email: values.email,
         phone_number: (values.phoneNumber).toString(),
       };
-      console.log(customerInfo);
       postOrder(customerInfo);
     },
   });

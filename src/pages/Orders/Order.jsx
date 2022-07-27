@@ -5,6 +5,7 @@ function Order({ total_price, orders }) {
     <div>
       <div className="mb-10">
         <ul>
+          {/* Grabbing each item from the cart and displaying it */}
           {orders.map((order, index) => (
             <div key={index} className="mb-6">
               <h1 className="text-xl text-center mb-3">{`ITEM [${
