@@ -138,6 +138,7 @@ function App() {
     }
   };
 
+  // Deletes a item from the cart
   const onDelete = (product) => {
     setCartItems(cartItems.filter((x) => x.item._id !== product.item._id));
   };

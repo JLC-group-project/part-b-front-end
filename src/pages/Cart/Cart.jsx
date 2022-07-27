@@ -1,14 +1,15 @@
 import React from "react";
-import { Routes, Route, useNavigate, Link } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
-function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems, onDelete,}) {
+function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems, onDelete, }) {
+  // Calculates the total price of all items in the cart
   const totalPrice = cartItems.reduce(
     (a, c) => a + c.quantity * c.item.price,
     0
   );
-  const taxPrice = totalPrice * 0.1;
   const navigate = useNavigate();
 
+  // Check if cart is empty
   function checkEmptyCart() {
     if (cartItems.length != 0) {
       navigate("./checkout")
@@ -17,11 +18,13 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems, onDelete,})
     }
   }
 
+  // Resets the cart
   const handleReset = (event) => {
     event.preventDefault();
     setCartItems([]);
   };
 
+  // Finds the URl of the item in the menu
   function findImageUrl(order) {
     const menuItem = menuItems.find((i) => i._id === order.item._id);
     return menuItem.image_url;
@@ -40,7 +43,6 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems, onDelete,})
           <div className="mb-4 flex-col items-center w-full justify-between ">
             {cartItems.length === 0 && <h1>Cart is empty</h1>}
             {cartItems.map((order,index) => (
-              // one item
               <div key={index} className="bg-gray-800 rounded relative mt-5 flex ">
                 <div className="mr-10">
                   <img
@@ -58,7 +60,6 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems, onDelete,})
                         <h1 className="text-2xl">
                           {order.quantity} x {order.item.name}
                         </h1>
-
                         <h1 className="text-xl">
                           ${(order.quantity * order.item.price).toFixed(2)}
                         </h1>
@@ -114,6 +115,7 @@ function Cart({ cartItems, onAdd, onRemove, setCartItems, menuItems, onDelete,})
             )}
           </div>
           <div className="">
+            {/* Handle reset */}
             <button
               className="bg-red-600 w-28 text-l hover:bg-red-700 text-white font-bold py-2 px-4 mx-2 rounded"
               onClick={handleReset}
