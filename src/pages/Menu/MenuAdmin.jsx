@@ -16,7 +16,7 @@ function Menu({ menuItems, deleteMenuItem }) {
   return menuItems ? (
     <div className="flex justify-center">
       <div className="flex  w-full justify-center md:w-[1480px]">
-        {/* this is the sidenav bar*/}
+        {/* this is the side nav bar*/}
         <div className=" invisible mt-8 md:visible md:w-1/5 md:h-m">
           <Link to="/admin/menu/Drinks" className="inline-block mb-4">
             <h1 className="text-3xl font-bold pl-3 ">Menu</h1>
