@@ -9,6 +9,8 @@ https://github.com/JLC-group-project/part-b-backend
 ### Deployed URL
 https://coderscafe.herokuapp.com/
 
+https://coderscafe.herokuapp.com/admin
+
 
 ### Instructions for API usage
 1. AUTH0
