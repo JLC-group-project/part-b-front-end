@@ -9,6 +9,7 @@ https://github.com/JLC-group-project/part-b-backend
 ### Deployed URL
 https://coderscafe.herokuapp.com/
 
+
 ### Instructions for API usage
 1. AUTH0
    1. Create an account with Auth0
@@ -38,6 +39,7 @@ https://coderscafe.herokuapp.com/
 1. npm install
 2. npm run dev
 3. [localhost:3000](http://localhost:3000/) on your web browser
+4. To access the admin add /admin to the root url e.g. http://localhost:3000/admin
 
 ### Libraries
 - "@auth0/auth0-react": "^1.10.2"
